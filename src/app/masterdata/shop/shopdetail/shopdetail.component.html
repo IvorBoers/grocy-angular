@@ -1,0 +1,15 @@
+<div *ngIf="item">
+  <mat-form-field>
+    <mat-label>Id</mat-label>
+    <input matInput disabled [(ngModel)]="item.id">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="item.name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="item.description">
+  </mat-form-field>
+  <button class="btn btn-primary" (click)="save()" i18n="@@actionSave">Save</button>
+</div>
