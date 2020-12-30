@@ -16,8 +16,8 @@ export class ShoplistComponent implements OnInit, AfterViewInit {
   items: ShoppingLocation[] = [];
   dataSource: MatTableDataSource<ShoppingLocation>;
 
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private shopService: ShoppingLocationService) { }
 
