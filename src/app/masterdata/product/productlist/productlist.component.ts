@@ -1,23 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Product} from "../../../domain/product";
 import {ProductService} from "../productservice/product.service";
+import {AbstractEntityTableComponent} from "../../../shared/abstract-entity-table.component";
 
 @Component({
   selector: 'app-productlist',
   templateUrl: './productlist.component.html',
   styleUrls: ['./productlist.component.scss']
 })
-export class ProductlistComponent implements OnInit {
-  items: Product[];
+export class ProductlistComponent extends AbstractEntityTableComponent<Product> {
 
-
-  constructor(private productService: ProductService) {
+  constructor(productService: ProductService) {
+    super(productService);
+    this.setDisplayedColumns(['name', 'description']);
   }
-
-  ngOnInit() {
-    this.productService.getAll().subscribe(all => {
-      this.items = all;
-    })
-  }
-
 }
