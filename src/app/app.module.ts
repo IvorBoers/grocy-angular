@@ -4,16 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductlistComponent } from './masterdata/product/productlist/productlist.component';
-import { ProductdetailComponent } from './masterdata/product/productdetail/productdetail.component';
-import { LocationlistComponent } from './masterdata/location/locationlist/locationlist.component';
-import { LocationdetailComponent } from './masterdata/location/locationdetail/locationdetail.component';
-import { ShoplistComponent } from './masterdata/shop/shoplist/shoplist.component';
-import { ShopdetailComponent } from './masterdata/shop/shopdetail/shopdetail.component';
-import { QuantityunitlistComponent } from './masterdata/quantityunit/quantityunitlist/quantityunitlist.component';
-import { QuantityunitdetailComponent } from './masterdata/quantityunit/quantityunitdetail/quantityunitdetail.component';
-import { ProductgrouplistComponent } from './masterdata/productgroup/productgrouplist/productgrouplist.component';
-import { ProductgroupdetailComponent } from './masterdata/productgroup/productgroupdetail/productgroupdetail.component';
+import { ProductListComponent } from './masterdata/product/list/product-list.component';
+import { ProductDetailComponent } from './masterdata/product/detail/product-detail.component';
+import { LocationListComponent } from './masterdata/location/list/location-list.component';
+import { LocationDetailComponent } from './masterdata/location/detail/location-detail.component';
+import { QuantityunitListComponent } from './masterdata/quantityunit/list/quantityunit-list.component';
+import { QuantityunitDetailComponent } from './masterdata/quantityunit/detail/quantityunit-detail.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
@@ -26,20 +22,25 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
+import {StockLocationDetailComponent} from "./masterdata/stock-location/detail/stock-location-detail.component";
+import {StockLocationListComponent} from "./masterdata/stock-location/list/stock-location-list.component";
+import {ShoppingLocationListComponent} from "./masterdata/shopping-location/list/shopping-location-list.component";
+import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/detail/shopping-location-detail.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductlistComponent,
-    ProductdetailComponent,
-    LocationlistComponent,
-    LocationdetailComponent,
-    ShoplistComponent,
-    ShopdetailComponent,
-    QuantityunitlistComponent,
-    QuantityunitdetailComponent,
-    ProductgrouplistComponent,
-    ProductgroupdetailComponent
+    ProductListComponent,
+    ProductDetailComponent,
+    LocationListComponent,
+    LocationDetailComponent,
+    ShoppingLocationListComponent,
+    ShoppingLocationDetailComponent,
+    QuantityunitListComponent,
+    QuantityunitDetailComponent,
+    StockLocationDetailComponent,
+    StockLocationListComponent,
+
   ],
   imports: [
     BrowserModule,

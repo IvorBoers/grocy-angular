@@ -22,6 +22,7 @@ export abstract class EntityService<T extends Entity> {
 
   getAll(): Observable<T[]> {
     const url = this.getEntityApiUrl() + EntityService.getApiKeyPostfix();
+    console.log("retrieving all " + url);
     return this.http.get<T[]>(url);
   }
 
