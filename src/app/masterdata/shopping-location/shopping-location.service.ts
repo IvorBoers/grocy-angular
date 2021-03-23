@@ -9,10 +9,7 @@ import {HttpClient} from "@angular/common/http";
 export class ShoppingLocationService extends EntityService<ShoppingLocation> {
 
   constructor(http: HttpClient) {
-    super(http);
+    super(http, "shopping_locations");
   }
 
-  entityApiName(): string {
-    return "shopping_locations";
-  }
 }

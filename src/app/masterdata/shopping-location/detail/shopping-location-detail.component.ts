@@ -1,37 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ShoppingLocationService} from "../shopping-location.service";
 import {ShoppingLocation} from "../../../domain/shopping-location";
 import {MatSnackBar} from "@angular/material/snack-bar";
-
+import {AbstractDetailComponent} from "../../../shared/abstract-detail-component";
 @Component({
   selector: 'app-shoppinglocationdetail',
   templateUrl: './shopping-location-detail.component.html',
   styleUrls: ['./shopping-location-detail.component.scss']
 })
-export class ShoppingLocationDetailComponent implements OnInit {
-  item: ShoppingLocation;
+export class ShoppingLocationDetailComponent extends AbstractDetailComponent<ShoppingLocation>{
 
-  constructor(private route: ActivatedRoute, private shopService: ShoppingLocationService, private _snackBar: MatSnackBar) { }
-
-  ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.shopService.getOne(id).subscribe(one => this.item = one);
+  constructor(route: ActivatedRoute, _snackBar: MatSnackBar, shopService: ShoppingLocationService) {
+    super(route, _snackBar, shopService)
   }
 
-  openSnackBar(message: string, entity: string) {
-    this._snackBar.open(message, entity, {
-      duration: 2000,
-    });
+  getEntityName(): string {
+    return "shoppinglocation";
   }
 
-  save() {
-    this.shopService.update(this.item).subscribe(response => {
-      if (response != null && response.error_message !== undefined) {
-        this.openSnackBar("Error: " + response.error_message, "shoppinglocation");
-      } else {
-        this.openSnackBar("Saved", "shoppinglocation");
-      }
-    });
-  }
 }

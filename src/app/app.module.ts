@@ -26,6 +26,11 @@ import {StockLocationDetailComponent} from "./masterdata/stock-location/detail/s
 import {StockLocationListComponent} from "./masterdata/stock-location/list/stock-location-list.component";
 import {ShoppingLocationListComponent} from "./masterdata/shopping-location/list/shopping-location-list.component";
 import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/detail/shopping-location-detail.component";
+import {BarcodeScannerLivestreamModule} from "ngx-barcode-scanner";
+import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
+import { BarcodedialogComponent } from './barcodedialog/barcodedialog.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -40,11 +45,14 @@ import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/de
     QuantityunitDetailComponent,
     StockLocationDetailComponent,
     StockLocationListComponent,
+    BarcodescannerComponent,
+    BarcodedialogComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BarcodeScannerLivestreamModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
@@ -57,9 +65,13 @@ import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/de
     MatSnackBarModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,
+    MatMenuModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

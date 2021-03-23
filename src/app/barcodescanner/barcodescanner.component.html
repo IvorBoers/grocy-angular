@@ -1,0 +1,19 @@
+<div class="grocy-scanner-container">
+  <barcode-scanner-livestream
+    type="ean"
+    (valueChanges)="onValueChanges($event)"
+    (started)="(onStarted)"
+  ></barcode-scanner-livestream>
+</div>
+<div class="grocy-scanner-result-container">
+  <div *ngIf="barcodeScan.currentCode">
+    Code: {{barcodeScan.currentCode}} ({{barcodeScan.currentProbability | percent: '1.2'}})
+  </div>
+  <div *ngIf="errorMessage">
+    <div>
+      Error: {{errorMessage}}
+    </div>
+    <div *ngIf="productDetailsResponse">
+      Dit is {{productDetailsResponse.product.name}}
+  </div>
+</div>

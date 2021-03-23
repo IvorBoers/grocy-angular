@@ -1,53 +1,38 @@
 import {Entity} from "../domain/entity";
 import {Observable} from "rxjs";
-import {Constants} from "./constants";
 import {HttpClient} from "@angular/common/http";
 import {AddResponse} from "../domain/add-response";
 import {UpdateResponse} from "../domain/update-response";
+import {AbstractGrocyService} from "./abstract-grocy-service";
 
-export abstract class EntityService<T extends Entity> {
+export abstract class EntityService<T extends Entity> extends AbstractGrocyService {
 
-  protected constructor(private http: HttpClient) {
-  }
-
-  abstract entityApiName(): string;
-
-  private static getApiKeyPostfix() {
-    return "?GROCY-API-KEY=" + Constants.API_KEY;
-  }
-
-  private getEntityApiUrl() {
-    return Constants.GROCY_URL + "/api/objects/" + this.entityApiName();
+  protected constructor(http: HttpClient, private entityName: string) {
+    super(http, "objects/" + entityName);
   }
 
   getAll(): Observable<T[]> {
-    const url = this.getEntityApiUrl() + EntityService.getApiKeyPostfix();
-    console.log("retrieving all " + url);
-    return this.http.get<T[]>(url);
+    return this.http.get<T[]>(this.getUrl());
   }
 
   getOne(id: number): Observable<T> {
-    const url = this.getEntityApiUrl() + "/" + id + EntityService.getApiKeyPostfix();
-    return this.http.get<T>(url);
+    return this.http.get<T>(this.getUrl("/" + id));
   }
 
   add(item: T): Observable<AddResponse> {
-    const url = this.getEntityApiUrl() + EntityService.getApiKeyPostfix();
-    return this.http.post<AddResponse>(url, item);
+    return this.http.post<AddResponse>(this.getUrl(), item);
   }
 
   update(item: T): Observable<UpdateResponse> {
-    const url = this.getEntityApiUrl() + "/" + item.id + EntityService.getApiKeyPostfix();
     let updatedItem = Object.assign({}, item);
     delete updatedItem.id;
     delete updatedItem["userfields"];
 
-    return this.http.put<UpdateResponse>(url, updatedItem);
+    return this.http.put<UpdateResponse>(this.getUrl("/" + item.id), updatedItem);
   }
 
   delete(item: T): Observable<UpdateResponse> {
-    const url = this.getEntityApiUrl() + "/" + item.id + EntityService.getApiKeyPostfix();
-    return this.http.delete<UpdateResponse>(url);
+    return this.http.delete<UpdateResponse>(this.getUrl("/" + item.id));
   }
 
 

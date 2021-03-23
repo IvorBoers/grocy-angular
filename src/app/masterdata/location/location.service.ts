@@ -9,10 +9,7 @@ import {Location} from "../../domain/location";
 export class LocationService extends EntityService<Location>{
 
   constructor(http: HttpClient) {
-    super(http);
+    super(http, "locations");
   }
 
-  entityApiName(): string {
-    return "locations";
-  }
 }

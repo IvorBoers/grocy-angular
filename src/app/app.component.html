@@ -1,11 +1,15 @@
 
 <div class="content" role="main">
   <mat-toolbar color="primary">
-    <button  mat-button routerLink="/masterdata/locations">Locations</button>
-    <button  mat-button routerLink="/masterdata/stocklocations">Stocklocations</button>
-    <button  mat-button routerLink="/masterdata/shoppinglocations">Shops</button>
-    <button  mat-button routerLink="/masterdata/products">Products</button>
-    <button  mat-button routerLink="/masterdata/quantityunits">Quantityunits</button>
+    <button mat-icon-button (click)="openScanDialog()" aria-label="Open scan dialog"><mat-icon>qr_code_scanner</mat-icon></button>
+    <button mat-button [matMenuTriggerFor]="masterdata">Masterdata</button>
+    <mat-menu #masterdata="matMenu">
+      <button mat-button routerLink="/masterdata/locations">Locations</button>
+      <button mat-button routerLink="/masterdata/stocklocations">Stocklocations</button>
+      <button mat-button routerLink="/masterdata/shoppinglocations">Shops</button>
+      <button mat-button routerLink="/masterdata/products">Products</button>
+      <button mat-button routerLink="/masterdata/quantityunits">Quantityunits</button>
+    </mat-menu>
   </mat-toolbar>
 </div>
 

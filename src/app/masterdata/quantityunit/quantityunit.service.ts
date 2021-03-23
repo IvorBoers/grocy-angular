@@ -9,10 +9,7 @@ import {Quantityunit} from "../../domain/quantityunit";
 export class QuantityunitService extends EntityService<Quantityunit>{
 
   constructor(http: HttpClient) {
-    super(http);
+    super(http, "quantity_units");
   }
 
-  entityApiName(): string {
-    return "quantity_units";
-  }
 }

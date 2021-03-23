@@ -9,10 +9,7 @@ import {StockLocation} from "../../domain/stock-location";
 export class StockLocationService extends EntityService<StockLocation>{
 
   constructor(http: HttpClient) {
-    super(http);
+    super(http, "stock_current_locations");
   }
 
-  entityApiName(): string {
-    return "stock_current_locations";
-  }
 }
