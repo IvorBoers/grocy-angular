@@ -11,5 +11,29 @@
     <mat-label>Description</mat-label>
     <input matInput [(ngModel)]="item.description">
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>Location</mat-label>
+    <mat-select [(value)]="item.location_id">
+      <mat-option *ngFor="let loc of locations" value="{{loc.id}}" >{{loc.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Unit of purchase</mat-label>
+    <mat-select [(value)]="item.qu_id_purchase">
+      <mat-option *ngFor="let qu of quantityUnits" value="{{qu.id}}" >{{qu.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Unit of stock</mat-label>
+    <mat-select [(value)]="item.qu_id_stock">
+      <mat-option *ngFor="let qu of quantityUnits" value="{{qu.id}}" >{{qu.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <button mat-button class="btn btn-primary" (click)="save()" i18n="@@actionSave">Save</button>
 </div>
+<ul>
+  <li *ngFor="let code of barcodes">
+    {{code.barcode}}
+  </li>
+</ul>

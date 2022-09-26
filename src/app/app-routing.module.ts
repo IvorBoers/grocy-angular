@@ -10,6 +10,8 @@ import {StockLocationDetailComponent} from "./masterdata/stock-location/detail/s
 import {StockLocationListComponent} from "./masterdata/stock-location/list/stock-location-list.component";
 import {ShoppingLocationListComponent} from "./masterdata/shopping-location/list/shopping-location-list.component";
 import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/detail/shopping-location-detail.component";
+import {ProductgroupDetailComponent} from "./masterdata/productgroup/detail/productgroup-detail.component";
+import {ProductgroupListComponent} from "./masterdata/productgroup/list/productgroup-list.component";
 
 
 const routes: Routes = [
@@ -22,7 +24,9 @@ const routes: Routes = [
   {path: 'masterdata/quantityunits', component: QuantityunitListComponent },
   {path: 'masterdata/quantityunit/:id', component: QuantityunitDetailComponent },
   {path: 'masterdata/products', component: ProductListComponent },
-  {path: 'masterdata/product/:id', component: ProductDetailComponent}
+  {path: 'masterdata/product/:id', component: ProductDetailComponent},
+  {path: 'masterdata/productgroups', component: ProductgroupListComponent },
+  {path: 'masterdata/productgroups/:id', component: ProductgroupDetailComponent}
 ];
 
 @NgModule({

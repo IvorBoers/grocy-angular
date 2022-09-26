@@ -7,12 +7,17 @@ import {EntityService} from "./entity-service";
 @Component({template: ''})
 export abstract class AbstractDetailComponent<T extends Entity> implements OnInit {
   item: T;
+  id;
 
   protected constructor(private route: ActivatedRoute, private _snackBar: MatSnackBar, private service: EntityService<T>) { }
 
   ngOnInit() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.service.getOne(id).subscribe(one => this.item = one);
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.service.getOne(this.id).subscribe(one => this.setItem(one));
+  }
+
+  setItem(one: T) {
+    return this.item = one;
   }
 
   abstract getEntityName(): string;

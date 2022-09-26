@@ -31,12 +31,17 @@ import { BarcodescannerComponent } from './barcodescanner/barcodescanner.compone
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import { BarcodedialogComponent } from './barcodedialog/barcodedialog.component';
 import {MatMenuModule} from "@angular/material/menu";
+import {MatSelectModule} from "@angular/material/select";
+import {ProductgroupDetailComponent} from "./masterdata/productgroup/detail/productgroup-detail.component";
+import {ProductgroupListComponent} from "./masterdata/productgroup/list/productgroup-list.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
     ProductDetailComponent,
+    ProductgroupListComponent,
+    ProductgroupDetailComponent,
     LocationListComponent,
     LocationDetailComponent,
     ShoppingLocationListComponent,
@@ -67,7 +72,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
