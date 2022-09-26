@@ -37,3 +37,12 @@
     {{code.barcode}}
   </li>
 </ul>
+<ul>
+  <li *ngFor="let product of products">
+    {{product.title}}
+    <span *ngFor="let image of product.imageInfo.primaryView">
+      <img  src="{{image.url}}" >
+    </span>
+
+  </li>
+</ul>

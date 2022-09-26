@@ -12,6 +12,8 @@ import {Productgroup} from "../../../domain/productgroup";
 import {ProductgroupService} from "../../productgroup/productgroup.service";
 import {BarcodeService} from "../../barcode/barcode.service";
 import {ProductBarcode} from "../../../domain/product-barcode";
+import {JumboService} from "../../../external/jumbo-service";
+import {ProductsDatum} from "../../../external/jumbo/domain/jumbo-response";
 
 @Component({
   selector: 'app-product-detail',
@@ -23,12 +25,14 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   quantityUnits: Quantityunit[] = [];
   productgroups: Productgroup[] = [];
   barcodes: ProductBarcode[] = [];
+  products: ProductsDatum[] = [];
 
   constructor(route: ActivatedRoute, _snackBar: MatSnackBar, service: ProductService,
               private locationService: LocationService,
               private quService: QuantityunitService,
               private productgroupService: ProductgroupService,
-              private barcodeService: BarcodeService
+              private barcodeService: BarcodeService,
+              private jumboService: JumboService
   ) {
     super(route, _snackBar, service)
   }
@@ -38,7 +42,15 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
     this.locationService.getAll().subscribe(result => this.locations = result)
     this.quService.getAll().subscribe(result => this.quantityUnits = result)
     this.productgroupService.getAll().subscribe(result => this.productgroups = result)
-    this.barcodeService.getByProductId(this.id).subscribe(result => this.barcodes = result)
+    this.barcodeService.getByProductId(this.id).subscribe(result => {
+      this.barcodes = result;
+      this.barcodes.forEach(barcode => {
+        this.jumboService.searchProducts(barcode.barcode).subscribe(result => {
+          // console.log(result);
+          result.products.data.forEach(product => this.products.push(product))
+        })
+      })
+    })
   }
 
   getEntityName(): string {
