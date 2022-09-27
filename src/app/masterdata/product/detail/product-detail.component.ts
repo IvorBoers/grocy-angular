@@ -13,7 +13,7 @@ import {ProductgroupService} from "../../productgroup/productgroup.service";
 import {BarcodeService} from "../../barcode/barcode.service";
 import {ProductBarcode} from "../../../domain/product-barcode";
 import {JumboService} from "../../../external/jumbo-service";
-import {ProductsDatum} from "../../../external/jumbo/domain/jumbo-response";
+import {ProductData} from "../../../external/jumbo/domain/product-data";
 
 @Component({
   selector: 'app-product-detail',
@@ -25,7 +25,7 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   quantityUnits: Quantityunit[] = [];
   productgroups: Productgroup[] = [];
   barcodes: ProductBarcode[] = [];
-  products: ProductsDatum[] = [];
+  products: ProductData[] = [];
 
   constructor(route: ActivatedRoute, _snackBar: MatSnackBar, service: ProductService,
               private locationService: LocationService,

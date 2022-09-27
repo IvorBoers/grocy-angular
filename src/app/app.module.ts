@@ -34,6 +34,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatSelectModule} from "@angular/material/select";
 import {ProductgroupDetailComponent} from "./masterdata/productgroup/detail/productgroup-detail.component";
 import {ProductgroupListComponent} from "./masterdata/productgroup/list/productgroup-list.component";
+import { JumboProductComponent } from './external/jumbo/jumbo-product/jumbo-product.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {ProductgroupListComponent} from "./masterdata/productgroup/list/productg
     StockLocationListComponent,
     BarcodescannerComponent,
     BarcodedialogComponent,
+    JumboProductComponent,
 
   ],
   imports: [

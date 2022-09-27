@@ -1,9 +1,9 @@
 const PROXY_CONFIG = {
-  "/jumbo-search/*": {
-    "target": "https://mobileapi.jumbo.com/v17/search",
+  "/jumbo/*": {
+    "target": "https://mobileapi.jumbo.com/v17/",
     "secure": false,
     "pathRewrite": {
-      "^/jumbo-search": ""
+      "^/jumbo": ""
     },
     "changeOrigin": true,
     "logLevel": "debug",

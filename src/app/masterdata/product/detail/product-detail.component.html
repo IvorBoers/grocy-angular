@@ -39,10 +39,6 @@
 </ul>
 <ul>
   <li *ngFor="let product of products">
-    {{product.title}}
-    <span *ngFor="let image of product.imageInfo.primaryView">
-      <img  src="{{image.url}}" >
-    </span>
-
+   <app-jumbo-product [product]="item" [jumboProductId]="product.id"></app-jumbo-product>
   </li>
 </ul>
