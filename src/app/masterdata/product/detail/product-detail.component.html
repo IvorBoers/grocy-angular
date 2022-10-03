@@ -32,6 +32,12 @@
 
   <button mat-button class="btn btn-primary" (click)="save()" i18n="@@actionSave">Save</button>
 </div>
+
+<div *ngIf="item.picture_file_name">
+<!--  ***REMOVED***/api/files/productpictures/cGl2NGlmMWdheGVpYmJ1MHQ5Ym04MTEwMzIwMjIwMDM0XzQ3OTAwMnBvdC0xXzM2MHgzNjAud2VicA==?force_serve_as=picture&best_fit_width=400-->
+  <img src="{{getFileUrl(item.picture_file_name)}}" alt="image"/>
+</div>
+
 <ul>
   <li *ngFor="let code of barcodes">
     {{code.barcode}}

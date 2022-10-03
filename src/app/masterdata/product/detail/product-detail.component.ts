@@ -14,6 +14,7 @@ import {BarcodeService} from "../../barcode/barcode.service";
 import {ProductBarcode} from "../../../domain/product-barcode";
 import {JumboService} from "../../../external/jumbo-service";
 import {ProductData} from "../../../external/jumbo/domain/product-data";
+import {FilesService} from "../../files/files-service";
 
 @Component({
   selector: 'app-product-detail',
@@ -26,12 +27,14 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   productgroups: Productgroup[] = [];
   barcodes: ProductBarcode[] = [];
   products: ProductData[] = [];
+  imageContent: string;
 
   constructor(route: ActivatedRoute, _snackBar: MatSnackBar, service: ProductService,
               private locationService: LocationService,
               private quService: QuantityunitService,
               private productgroupService: ProductgroupService,
               private barcodeService: BarcodeService,
+              private filesService: FilesService,
               private jumboService: JumboService
   ) {
     super(route, _snackBar, service)
@@ -53,8 +56,21 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
     })
   }
 
+
+
+  setItem(one: Product): Product {
+    let item = super.setItem(one);
+    if (item.picture_file_name) {
+      this.filesService.getFile(FilesService.group_productpictures, item.picture_file_name).subscribe(result => this.imageContent = result);
+    }
+    return item;
+  }
+
   getEntityName(): string {
     return "product";
   }
 
+  getFileUrl(picture_file_name: string) {
+    return this.filesService.toFileUrl(FilesService.group_productpictures, picture_file_name);
+  }
 }
