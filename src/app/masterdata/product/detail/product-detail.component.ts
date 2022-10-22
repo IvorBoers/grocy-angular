@@ -12,7 +12,7 @@ import {Productgroup} from "../../../domain/productgroup";
 import {ProductgroupService} from "../../productgroup/productgroup.service";
 import {BarcodeService} from "../../barcode/barcode.service";
 import {ProductBarcode} from "../../../domain/product-barcode";
-import {JumboService} from "../../../external/jumbo-service";
+import {JumboService} from "../../../external/jumbo/jumbo-service";
 import {ProductData} from "../../../external/jumbo/domain/product-data";
 import {FilesService} from "../../files/files-service";
 
@@ -72,5 +72,17 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
 
   getFileUrl(picture_file_name: string) {
     return this.filesService.toFileUrl(FilesService.group_productpictures, picture_file_name);
+  }
+
+  updateGrocyProduct() {
+    this.item.userfields.jumboId = Array.prototype.map.call(this.products, function(item) { return item.id; }).join(",");
+    console.log("Saving "+ JSON.stringify(this.item))
+    this.service.userfieldsService.update(this.item.id, this.item.userfields).subscribe(response => {
+      if (response != null && response.error_message !== undefined) {
+        this.openSnackBar("Error updating userfields: " + response.error_message, this.getEntityName());
+      } else {
+        this.openSnackBar("Saved userfields", this.getEntityName());
+      }
+    });
   }
 }

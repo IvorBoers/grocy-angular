@@ -1,0 +1,22 @@
+<div *ngIf="item">
+  <img src="{{item.imageInfo.primaryView[0].url}}">
+  <h2>{{item.id}} - {{item.name}}</h2>
+  <button mat-icon-button (click)="importInGrocy()"><mat-icon>save</mat-icon></button>
+  <span>{{item.description}}</span>
+  <h3>Instructions</h3>
+    <ng-container *ngFor="let i of item.instructions">
+      <span class="instruction">
+        <p>{{i}}</p>
+      </span>
+    </ng-container>
+  <h3>Ingredients</h3>
+  <ul>
+    <li *ngFor="let i of item.ingredients">
+      <p>{{i.name}} - {{i.quantity}}</p>
+      <p *ngIf="i.productInformation && i.productInformation.product">{{i.productInformation.product.id}} - {{i.productInformation.quantity.amount}} {{i.productInformation.quantity.unit}}</p>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!item">
+  <p>Selecteer een item</p>
+</div>

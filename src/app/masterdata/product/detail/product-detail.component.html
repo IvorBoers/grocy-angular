@@ -31,20 +31,24 @@
   </mat-form-field>
 
   <button mat-button class="btn btn-primary" (click)="save()" i18n="@@actionSave">Save</button>
+
+  <div>JumboId: {{item.userfields.jumboId}}</div>
 </div>
 
-<div *ngIf="item.picture_file_name">
+<div *ngIf="item && item.picture_file_name">
 <!--  ***REMOVED***/api/files/productpictures/cGl2NGlmMWdheGVpYmJ1MHQ5Ym04MTEwMzIwMjIwMDM0XzQ3OTAwMnBvdC0xXzM2MHgzNjAud2VicA==?force_serve_as=picture&best_fit_width=400-->
   <img src="{{getFileUrl(item.picture_file_name)}}" alt="image"/>
 </div>
 
-<ul>
-  <li *ngFor="let code of barcodes">
-    {{code.barcode}}
-  </li>
-</ul>
-<ul>
-  <li *ngFor="let product of products">
+<button mat-stroked-button (click)="updateGrocyProduct()">Update Grocy with Jumbo product information</button>
+<mat-list>
+  <mat-list-item *ngFor="let code of barcodes">
+    <mat-icon mat-list-icon>qr_code_2</mat-icon>
+    <div mat-line>{{code.barcode}}</div>
+  </mat-list-item>
+</mat-list>
+<mat-tab-group>
+  <mat-tab *ngFor="let product of products" label="{{product.title}}">
    <app-jumbo-product [product]="item" [jumboProductId]="product.id"></app-jumbo-product>
-  </li>
-</ul>
+  </mat-tab>
+</mat-tab-group>

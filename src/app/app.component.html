@@ -1,5 +1,5 @@
 
-<div class="content" role="main">
+<div class="header" role="header">
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="openScanDialog()" aria-label="Open scan dialog"><mat-icon>qr_code_scanner</mat-icon></button>
     <button mat-button [matMenuTriggerFor]="masterdata">Masterdata</button>
@@ -11,7 +11,12 @@
       <button mat-button routerLink="/masterdata/productgroups">Productgroups</button>
       <button mat-button routerLink="/masterdata/quantityunits">Quantityunits</button>
     </mat-menu>
+    <button mat-button [matMenuTriggerFor]="jumbo">Jumbo</button>
+    <mat-menu #jumbo="matMenu">
+      <button mat-button routerLink="/jumbo/recipes">Recipes</button>
+    </mat-menu>
   </mat-toolbar>
 </div>
-
-<router-outlet></router-outlet>
+<div class="content" role="main">
+  <router-outlet></router-outlet>
+</div>

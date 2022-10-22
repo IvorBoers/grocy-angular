@@ -1,0 +1,22 @@
+<div *ngIf="jumboProduct">
+  <h2>{{jumboProduct.title}}</h2>
+  <h3>ID: {{jumboProduct.id}}</h3>
+
+  <h4>Nutritional info</h4>
+  <ul>
+    <li *ngFor="let info of jumboProduct.nutritionalInformation">
+      <ul>
+        <li *ngFor="let entry of info.nutritionalData.entries">{{entry.name}}: {{entry.valuePer100g}}</li>
+      </ul>
+    </li>
+  </ul>
+  <h4>Images</h4>
+  <ul>
+    <li *ngFor="let image of jumboProduct.imageInfo.primaryView">
+      (width: {{image.width}}, height: {{image.height}})
+      <img src="{{image.url}}" alt="product image" height="180px">
+      <button mat-stroked-button (click)="setAsGrocyProductPicture(image)">Gebruik in Grocy</button>
+      <button mat-stroked-button (click)="testDownload()">TEST123</button>
+    </li>
+  </ul>
+</div>

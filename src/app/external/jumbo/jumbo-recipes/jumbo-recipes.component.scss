@@ -1,0 +1,21 @@
+.results-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+}
+.detail-container {
+  margin: 10px;
+}
+.summary-table-container {
+  width: 350px;
+  margin: 10px;
+}
+
+table {
+  .mat-row:hover .mat-cell {
+    background-color: #e0e0e0;
+  }
+
+}

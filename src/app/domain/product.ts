@@ -1,4 +1,5 @@
 import {Entity} from "./entity";
+import {ProductUserfields} from "./product-userfields";
 
 export class Product implements Entity {
   id: number
@@ -33,7 +34,7 @@ export class Product implements Entity {
   "no_own_stock": number
   "default_consume_location_id": number
   "move_on_open": number
-  "userfields": []
+  "userfields": ProductUserfields;
 
   // barcode: string // Can contain multiple barcodes separated by comma
 }

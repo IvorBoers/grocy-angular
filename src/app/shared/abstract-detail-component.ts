@@ -9,7 +9,7 @@ export abstract class AbstractDetailComponent<T extends Entity> implements OnIni
   item: T;
   id;
 
-  protected constructor(private route: ActivatedRoute, private _snackBar: MatSnackBar, private service: EntityService<T>) { }
+  protected constructor(private route: ActivatedRoute, private _snackBar: MatSnackBar, protected service: EntityService<T>) { }
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');

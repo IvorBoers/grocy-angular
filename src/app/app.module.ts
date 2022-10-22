@@ -1,15 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductListComponent } from './masterdata/product/list/product-list.component';
-import { ProductDetailComponent } from './masterdata/product/detail/product-detail.component';
-import { LocationListComponent } from './masterdata/location/list/location-list.component';
-import { LocationDetailComponent } from './masterdata/location/detail/location-detail.component';
-import { QuantityunitListComponent } from './masterdata/quantityunit/list/quantityunit-list.component';
-import { QuantityunitDetailComponent } from './masterdata/quantityunit/detail/quantityunit-detail.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ProductListComponent} from './masterdata/product/list/product-list.component';
+import {ProductDetailComponent} from './masterdata/product/detail/product-detail.component';
+import {LocationListComponent} from './masterdata/location/list/location-list.component';
+import {LocationDetailComponent} from './masterdata/location/detail/location-detail.component';
+import {QuantityunitListComponent} from './masterdata/quantityunit/list/quantityunit-list.component';
+import {QuantityunitDetailComponent} from './masterdata/quantityunit/detail/quantityunit-detail.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
@@ -27,14 +27,22 @@ import {StockLocationListComponent} from "./masterdata/stock-location/list/stock
 import {ShoppingLocationListComponent} from "./masterdata/shopping-location/list/shopping-location-list.component";
 import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/detail/shopping-location-detail.component";
 import {BarcodeScannerLivestreamModule} from "ngx-barcode-scanner";
-import { BarcodescannerComponent } from './barcodescanner/barcodescanner.component';
+import {BarcodescannerComponent} from './barcodescanner/barcodescanner.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
-import { BarcodedialogComponent } from './barcodedialog/barcodedialog.component';
+import {BarcodedialogComponent} from './barcodedialog/barcodedialog.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSelectModule} from "@angular/material/select";
 import {ProductgroupDetailComponent} from "./masterdata/productgroup/detail/productgroup-detail.component";
 import {ProductgroupListComponent} from "./masterdata/productgroup/list/productgroup-list.component";
-import { JumboProductComponent } from './external/jumbo/jumbo-product/jumbo-product.component';
+import {JumboProductComponent} from './external/jumbo/jumbo-product/jumbo-product.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MasterDataComponent} from './masterdata/master-data.component';
+import {HomePageComponent} from './home-page/home-page.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {JumboRecipesComponent} from './external/jumbo/jumbo-recipes/jumbo-recipes.component';
+import {JumboRecipeSummaryComponent} from './external/jumbo/jumbo-recipe-summary/jumbo-recipe-summary.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import { JumboRecipeDetailComponent } from './external/jumbo/jumbo-recipe-detail/jumbo-recipe-detail.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +62,12 @@ import { JumboProductComponent } from './external/jumbo/jumbo-product/jumbo-prod
     BarcodescannerComponent,
     BarcodedialogComponent,
     JumboProductComponent,
+    MasterDataComponent,
+    HomePageComponent,
+    PageNotFoundComponent,
+    JumboRecipesComponent,
+    JumboRecipeSummaryComponent,
+    JumboRecipeDetailComponent,
 
   ],
   imports: [
@@ -75,7 +89,9 @@ import { JumboProductComponent } from './external/jumbo/jumbo-product/jumbo-prod
     MatSortModule,
     MatDialogModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTabsModule,
+    MatGridListModule,
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}

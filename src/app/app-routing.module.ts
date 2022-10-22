@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {ProductListComponent} from "./masterdata/product/list/product-list.component";
 import {ProductDetailComponent} from "./masterdata/product/detail/product-detail.component";
 import {QuantityunitListComponent} from "./masterdata/quantityunit/list/quantityunit-list.component";
@@ -12,9 +12,14 @@ import {ShoppingLocationListComponent} from "./masterdata/shopping-location/list
 import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/detail/shopping-location-detail.component";
 import {ProductgroupDetailComponent} from "./masterdata/productgroup/detail/productgroup-detail.component";
 import {ProductgroupListComponent} from "./masterdata/productgroup/list/productgroup-list.component";
+import {MasterDataComponent} from "./masterdata/master-data.component";
+import {HomePageComponent} from "./home-page/home-page.component";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
+import {JumboRecipesComponent} from "./external/jumbo/jumbo-recipes/jumbo-recipes.component";
 
 
 const routes: Routes = [
+  {path: 'masterdata', component: MasterDataComponent },
   {path: 'masterdata/locations', component: LocationListComponent },
   {path: 'masterdata/location/:id', component: LocationDetailComponent },
   {path: 'masterdata/stocklocations', component: StockLocationListComponent },
@@ -24,13 +29,16 @@ const routes: Routes = [
   {path: 'masterdata/quantityunits', component: QuantityunitListComponent },
   {path: 'masterdata/quantityunit/:id', component: QuantityunitDetailComponent },
   {path: 'masterdata/products', component: ProductListComponent },
-  {path: 'masterdata/product/:id', component: ProductDetailComponent},
+  {path: 'masterdata/products/:id', component: ProductDetailComponent},
   {path: 'masterdata/productgroups', component: ProductgroupListComponent },
-  {path: 'masterdata/productgroups/:id', component: ProductgroupDetailComponent}
+  {path: 'masterdata/productgroups/:id', component: ProductgroupDetailComponent},
+  {path: 'jumbo/recipes', component: JumboRecipesComponent},
+  {path: '', component: HomePageComponent},
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
