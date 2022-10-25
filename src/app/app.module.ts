@@ -43,6 +43,8 @@ import {JumboRecipesComponent} from './external/jumbo/jumbo-recipes/jumbo-recipe
 import {JumboRecipeSummaryComponent} from './external/jumbo/jumbo-recipe-summary/jumbo-recipe-summary.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import { JumboRecipeDetailComponent } from './external/jumbo/jumbo-recipe-detail/jumbo-recipe-detail.component';
+import { JumboRecipeProductComponent } from './external/jumbo/jumbo-recipe-product/jumbo-recipe-product.component';
+import { JumboidSetterComponent } from './home-page/jumboid-setter/jumboid-setter.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { JumboRecipeDetailComponent } from './external/jumbo/jumbo-recipe-detail
     JumboRecipesComponent,
     JumboRecipeSummaryComponent,
     JumboRecipeDetailComponent,
+    JumboRecipeProductComponent,
+    JumboidSetterComponent,
 
   ],
   imports: [

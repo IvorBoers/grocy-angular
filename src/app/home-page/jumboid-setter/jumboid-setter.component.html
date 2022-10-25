@@ -1,0 +1,16 @@
+<h2>Update Jumbo product ID's</h2>
+
+<button mat-raised-button (click)="start()" color="primary">Start</button>
+<div *ngIf="busy">
+  <p>Busy....</p>
+</div>
+<div *ngIf="!busy">
+  <p *ngIf="totalBarcodes == -1">Not started</p>
+  <p *ngIf="totalBarcodes != -1">Ready!</p>
+</div>
+<div *ngIf="currentBarcodeIndex != -1">
+  <p>Processing {{currentBarcodeIndex + 1}} of {{totalBarcodes}} barcodes</p>
+  <p>Updated {{updatedProducts}} products</p>
+</div>
+
+

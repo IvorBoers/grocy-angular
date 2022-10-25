@@ -1,4 +1,5 @@
 import {ProductData} from "./product-data";
+import {Product} from "../../../domain/product";
 
 export interface JumboRecipeResponse {
   recipe: Recipe;
@@ -39,6 +40,7 @@ export interface Ingredient {
   name:                string;
   quantity:            string;
   productInformation?: ProductInformation;
+  grocyProduct?: Product;
 }
 
 export interface ProductInformation {

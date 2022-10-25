@@ -1,21 +1,54 @@
 <div *ngIf="item">
   <img src="{{item.imageInfo.primaryView[0].url}}">
   <h2>{{item.id}} - {{item.name}}</h2>
-  <button mat-icon-button (click)="importInGrocy()"><mat-icon>save</mat-icon></button>
+  <button mat-icon-button (click)="importInGrocy()">
+    <mat-icon>save</mat-icon>
+  </button>
   <span>{{item.description}}</span>
   <h3>Instructions</h3>
-    <ng-container *ngFor="let i of item.instructions">
+  <ng-container *ngFor="let i of item.instructions">
       <span class="instruction">
         <p>{{i}}</p>
       </span>
-    </ng-container>
+  </ng-container>
   <h3>Ingredients</h3>
-  <ul>
-    <li *ngFor="let i of item.ingredients">
-      <p>{{i.name}} - {{i.quantity}}</p>
-      <p *ngIf="i.productInformation && i.productInformation.product">{{i.productInformation.product.id}} - {{i.productInformation.quantity.amount}} {{i.productInformation.quantity.unit}}</p>
-    </li>
-  </ul>
+  <table mat-table [dataSource]="item.ingredients">
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> Image</th>
+      <td mat-cell *matCellDef="let element">
+        <img
+          *ngIf="element.productInformation && element.productInformation.product  && element.productInformation.product.imageInfo.primaryView"
+          src="{{element.productInformation.product.imageInfo.primaryView[0].url}}" alt="product image" height="60px"></td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td mat-cell *matCellDef="let element"><strong>{{element.name}}</strong></td>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef> Quantity</th>
+      <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+    </ng-container>
+    <ng-container matColumnDef="productinfo">
+      <th mat-header-cell *matHeaderCellDef> Product</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.productInformation">{{element.productInformation.product.title}}</span>
+        <span *ngIf="element.productInformation">{{element.productInformation.quantity.unit}} {{element.productInformation.quantity.amount}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="grocy">
+      <th mat-header-cell *matHeaderCellDef> Grocy</th>
+      <td mat-cell *matCellDef="let element">
+        <span matLine *ngIf="element.productInformation && element.productInformation.product && element.grocyProduct">
+          <a routerLink="/masterdata/products/{{element.grocyProduct.id}}">{{element.grocyProduct.name}}</a>
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  </table>
+
 </div>
 <div *ngIf="!item">
   <p>Selecteer een item</p>

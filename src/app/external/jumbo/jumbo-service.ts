@@ -16,8 +16,8 @@ export class JumboService {
   protected constructor(protected http: HttpClient) {
   }
 
-  searchRecipes(query: string): Observable<JumboRecipesSearchResponse> {
-    return this.http.get<JumboRecipesSearchResponse>(this.getRecipesSearchUrl(0, 10, query));
+  searchRecipes(offset: number, limit: number, query: string): Observable<JumboRecipesSearchResponse> {
+    return this.http.get<JumboRecipesSearchResponse>(this.getRecipesSearchUrl(offset, limit, query));
   }
 
   getRecipe(id: string): Observable<JumboRecipeResponse> {

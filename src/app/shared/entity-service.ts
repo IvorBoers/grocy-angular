@@ -20,6 +20,10 @@ export abstract class EntityService<T extends Entity> extends AbstractGrocyServi
     return this.http.get<T[]>(this.getUrl());
   }
 
+  getAllLike(field: string, query: string): Observable<T[]> {
+    return this.http.get<T[]>(this.getUrl() + '&query[]=' + field + "~" + query);
+  }
+
   getOne(id: number): Observable<T> {
     return this.http.get<T>(this.getUrl("/" + id));
   }
