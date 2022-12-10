@@ -1,6 +1,6 @@
-import {Entity} from "./entity";
+import {Entity, Named} from "./entity";
 
-export class Quantityunit implements Entity {
+export class Quantityunit implements Entity, Named {
   id: number
   name: string
   name_plural: string

@@ -5,3 +5,15 @@ table {
     background-color: #e0e0e0;
   }
 }
+
+.flex-container {
+  display: flex;
+}
+
+.flex-scaler {
+  flex-grow: 1;
+}
+
+.flex-static {
+  flex-grow: 0;
+}

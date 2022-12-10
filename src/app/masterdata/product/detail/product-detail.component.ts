@@ -15,6 +15,7 @@ import {ProductBarcode} from "../../../domain/product-barcode";
 import {JumboService} from "../../../external/jumbo/jumbo-service";
 import {ProductData} from "../../../external/jumbo/domain/product-data";
 import {FilesService} from "../../files/files-service";
+import {ProductUserfieldsService} from "../../../shared/product-userfields-service";
 
 @Component({
   selector: 'app-product-detail',
@@ -35,7 +36,8 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
               private productgroupService: ProductgroupService,
               private barcodeService: BarcodeService,
               private filesService: FilesService,
-              private jumboService: JumboService
+              private jumboService: JumboService,
+              private productUserFieldsService: ProductUserfieldsService
   ) {
     super(route, _snackBar, service)
   }
@@ -77,7 +79,7 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   updateGrocyProduct() {
     this.item.userfields.jumboId = Array.prototype.map.call(this.products, function(item) { return item.id; }).join(",");
     console.log("Saving "+ JSON.stringify(this.item))
-    this.service.userfieldsService.update(this.item.id, this.item.userfields).subscribe(response => {
+    this.productUserFieldsService.update(this.item.id, this.item.userfields).subscribe(response => {
       if (response != null && response.error_message !== undefined) {
         this.openSnackBar("Error updating userfields: " + response.error_message, this.getEntityName());
       } else {

@@ -1,6 +1,6 @@
 import {ImageInfo} from "./jumbo-recipe-searchresponse";
 
-export interface JumboRecipeSummary {
+export class JumboRecipeSummary {
   id: string;
   name: string;
   numberOfIngredients: number;

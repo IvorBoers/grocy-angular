@@ -4,6 +4,13 @@ import {RecipeService} from "../../../masterdata/recipe/recipe.service";
 import {Recipe} from "../../../domain/recipe";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ProductService} from "../../../masterdata/product/product.service";
+import {Product} from "../../../domain/product";
+import {QuantityunitService} from "../../../masterdata/quantityunit/quantityunit.service";
+import {Quantityunit} from "../../../domain/quantityunit";
+import {RecipeUserfieldsService} from "../../../shared/recipe-userfields-service";
+import {RecipeUserfields} from "../../../domain/recipe-userfields";
+import {RecipeIngredient} from "../../../domain/recipe-ingredient";
+import {RecipeIngredientService} from "../../../shared/recipe-ingredient.service";
 
 @Component({
   selector: 'app-jumbo-recipe-detail',
@@ -18,10 +25,24 @@ export class JumboRecipeDetailComponent implements OnInit, OnChanges {
   @Input()
   grocyProductsByJumboId = new Map()
 
-  constructor(protected recipeService: RecipeService, protected productService: ProductService, private _snackBar: MatSnackBar) {
+  allGrocyProducts: Product[] = [];
+  allGrocyQuantityunits: Quantityunit[] = [];
+  private created_grocy_id: number;
+
+  constructor(protected recipeService: RecipeService,
+              protected recipeUserfieldsService: RecipeUserfieldsService,
+              protected productService: ProductService,
+              protected quService: QuantityunitService,
+              protected recipeIngredientService: RecipeIngredientService,
+              private _snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
+    this.productService.getAll().subscribe(r => {
+      this.allGrocyProducts = r
+    })
+    this.quService.getAll().subscribe(u => this.allGrocyQuantityunits = u)
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -29,17 +50,16 @@ export class JumboRecipeDetailComponent implements OnInit, OnChanges {
       this.item.ingredients.forEach(i => {
         if (i.productInformation && i.productInformation.product) {
           if (this.grocyProductsByJumboId.has(i.productInformation.product.id)) {
-            console.log("found grocy product by ID")
             i.grocyProduct = this.grocyProductsByJumboId.get(i.productInformation.product.id)
           } else {
-            console.log("looking for grocy product, first by productinformation. " + i.productInformation.product.title)
             this.productService.getAllLike('name', this.getCleanedName(i.productInformation.product.title)).subscribe(result => {
               if (result.length > 0) {
+                console.log("Found by product title: " + i.name)
                 i.grocyProduct = result[0];
               } else {
-                console.log("Nothing found by productinformation, try ingredient name")
                 this.productService.getAllLike('name', this.getCleanedName(i.name)).subscribe(result => {
-                  if (result) {
+                  if (result.length > 0) {
+                    console.log("Found by ingredient name (when productInformation present): " + i.name)
                     i.grocyProduct = result[0];
                   }
                 });
@@ -47,10 +67,9 @@ export class JumboRecipeDetailComponent implements OnInit, OnChanges {
             })
           }
         } else {
-          console.log("looking for grocy product, by ingredient name because there is no productinformation. " + i.name)
           this.productService.getAllLike('name', this.getCleanedName(i.name)).subscribe(result => {
             if (result.length > 0) {
-              console.log("Found " + result[0].name)
+              console.log("Found by ingredient name: " + i.name)
               i.grocyProduct = result[0];
             }
           });
@@ -64,6 +83,7 @@ export class JumboRecipeDetailComponent implements OnInit, OnChanges {
   }
 
   importInGrocy() {
+    // TODO check if a recipe with name already exists
     let recipe = new Recipe();
     recipe.base_servings = this.item.numberOfPortions;
     recipe.desired_servings = this.item.numberOfPortions;
@@ -79,7 +99,33 @@ export class JumboRecipeDetailComponent implements OnInit, OnChanges {
       if (response != null && response.error_message !== undefined) {
         this.openSnackBar("Error: " + response.error_message, "Ugh");
       } else {
+        this.created_grocy_id = response.created_object_id;
         this.openSnackBar("Saved", "Great");
+        let uf = new RecipeUserfields();
+        uf.jumboId = this.item.id;
+        this.recipeUserfieldsService.update(this.created_grocy_id, uf).subscribe(response => {
+          if (response != null && response.error_message !== undefined) {
+            this.openSnackBar("Error: " + response.error_message, "Ugh");
+          } else {
+            this.openSnackBar("Saved userfields", "Great");
+          }
+        });
+        this.item.ingredients.forEach(ingredient => {
+          if (ingredient.grocyProduct && ingredient.grocyQuantityUnit && ingredient.grocyAmount) {
+            let pos = new RecipeIngredient();
+            pos.recipe_id = this.created_grocy_id;
+            pos.amount = ingredient.grocyAmount;
+            pos.product_id = ingredient.grocyProduct.id;
+            pos.ingredient_group = 'imported'
+            pos.price_factor = 1.0
+            console.log("Importing " + JSON.stringify(pos));
+            this.recipeIngredientService.add(pos).subscribe(response => {
+              if (response != null && response.error_message == undefined) {
+                ingredient.grocyRecipeIngredientId = response.created_object_id
+              }
+            });
+          }
+        })
       }
     });
   }

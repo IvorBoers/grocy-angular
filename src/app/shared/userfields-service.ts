@@ -2,19 +2,18 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {UpdateResponse} from "../domain/update-response";
 import {AbstractGrocyService} from "./abstract-grocy-service";
-import {ProductUserfields} from "../domain/product-userfields";
 
-export class UserfieldsService extends AbstractGrocyService {
+export class UserfieldsService<T> extends AbstractGrocyService {
 
   public constructor(http: HttpClient, private entityName: string) {
     super(http, "userfields/" + entityName);
   }
 
-  getOne(id: number): Observable<ProductUserfields> {
-    return this.http.get<ProductUserfields>(this.getUrl("/" + id));
+  getOne(id: number): Observable<T> {
+    return this.http.get<T>(this.getUrl("/" + id));
   }
 
-  update(entityId: number, item: ProductUserfields): Observable<UpdateResponse> {
+  update(entityId: number, item: T): Observable<UpdateResponse> {
     let updatedItem = Object.assign({}, item);
 
     return this.http.put<UpdateResponse>(this.getUrl("/" + entityId), updatedItem);

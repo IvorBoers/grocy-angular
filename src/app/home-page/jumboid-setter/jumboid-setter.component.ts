@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BarcodeService} from "../../masterdata/barcode/barcode.service";
 import {JumboService} from "../../external/jumbo/jumbo-service";
-import {UserfieldsService} from "../../shared/userfields-service";
-import {HttpClient} from "@angular/common/http";
+import {ProductUserfieldsService} from "../../shared/product-userfields-service";
 
 @Component({
   selector: 'app-jumboid-setter',
@@ -14,10 +13,10 @@ export class JumboidSetterComponent implements OnInit {
   totalBarcodes = -1;
   currentBarcodeIndex = -1;
   updatedProducts = 0;
-  private userfieldsService: UserfieldsService;
 
-  constructor(protected barcodeService: BarcodeService, protected jumboService: JumboService, http: HttpClient) {
-    this.userfieldsService = new UserfieldsService(http, "products");
+  constructor(protected barcodeService: BarcodeService,
+              protected jumboService: JumboService,
+              protected productUserfieldsService: ProductUserfieldsService) {
   }
 
   ngOnInit(): void {
@@ -35,7 +34,7 @@ export class JumboidSetterComponent implements OnInit {
           if (jp.products.data.length > 0) {
             let jumboId = jp.products.data[0].id;
 
-            this.userfieldsService.getOne(b.product_id).subscribe(u => {
+            this.productUserfieldsService.getOne(b.product_id).subscribe(u => {
               let jumboIdArray = []
               if (u.jumboId) {
                   jumboIdArray = u.jumboId.split(',')
@@ -46,7 +45,7 @@ export class JumboidSetterComponent implements OnInit {
                 } else {
                   u.jumboId = jumboId;
                 }
-                this.userfieldsService.update(b.product_id, u).subscribe(() => {
+                this.productUserfieldsService.update(b.product_id, u).subscribe(() => {
                   this.currentBarcodeIndex++
                   this.updatedProducts++;
                 });

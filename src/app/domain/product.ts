@@ -1,7 +1,8 @@
-import {Entity} from "./entity";
+import {Entity, Named} from "./entity";
 import {ProductUserfields} from "./product-userfields";
 
-export class Product implements Entity {
+export class Product implements Entity, Named {
+  static entityName = 'products'
   id: number
   name: string
   description: string

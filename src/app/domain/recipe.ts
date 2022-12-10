@@ -1,7 +1,8 @@
 import {RecipeUserfields} from "./recipe-userfields";
-import {Entity} from "./entity";
+import {Entity, Named} from "./entity";
 
-export class Recipe implements Entity {
+export class Recipe implements Entity, Named {
+  static entityName = 'recipes'
   id:                     number;
   name:                   string;
   description:            string;

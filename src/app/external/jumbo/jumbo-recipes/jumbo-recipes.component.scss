@@ -18,4 +18,10 @@ table {
     background-color: #e0e0e0;
   }
 
+  .selected {
+    background: lightgray;
+  }
+}
+.results-list {
+  min-width: 380px;
 }

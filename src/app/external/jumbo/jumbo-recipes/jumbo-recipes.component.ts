@@ -7,6 +7,7 @@ import {Product} from "../../../domain/product";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
+import {SelectionModel} from "@angular/cdk/collections";
 
 @Component({
   selector: 'app-jumbo-recipes',
@@ -23,8 +24,18 @@ export class JumboRecipesComponent implements OnInit {
   query = "tomatenblokjes";
   detail: RecipeData;
   grocyProductsByJumboId = new Map()
+  selection: SelectionModel<JumboRecipeSummary>;
+  loading = false;
 
-  constructor(protected jumboService: JumboService, protected productService: ProductService) { }
+  constructor(protected jumboService: JumboService, protected productService: ProductService) {
+    this.selection = new SelectionModel<JumboRecipeSummary>(false, null);
+    this.selection.changed.subscribe(row => {
+      const selectedRecipe = row.added[0]
+      if (row.added[0]) {
+        this.showItem(row.added[0])
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.productService.getAll().subscribe(result => this.createProductsMap(result))
@@ -32,8 +43,17 @@ export class JumboRecipesComponent implements OnInit {
 
   setTableData(all: JumboRecipeSummary[]) {
     this.dataSource = new MatTableDataSource<JumboRecipeSummary>(all);
-    this.dataSource.paginator = this.paginator;
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator.firstPage()
+    }
     this.dataSource.sort = this.sort;
+
+    this.selection.clear()
+    if (all.length > 0) {
+      this.selection.select(all[0])
+    }
+    this.loading = false
   }
 
   private createProductsMap(products: Product[]) {
@@ -45,6 +65,10 @@ export class JumboRecipesComponent implements OnInit {
   }
 
   searchRecipe() {
+    this.selection.clear()
+    this.setTableData([])
+    this.loading = true
+
     this.jumboService.searchRecipes(0, 100, this.query).subscribe(result => this.setTableData(result.recipes.data));
   }
 

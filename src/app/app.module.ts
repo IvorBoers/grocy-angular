@@ -15,7 +15,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {HttpClientModule} from "@angular/common/http";
 import {MatIconModule} from "@angular/material/icon";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
@@ -42,9 +42,14 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {JumboRecipesComponent} from './external/jumbo/jumbo-recipes/jumbo-recipes.component';
 import {JumboRecipeSummaryComponent} from './external/jumbo/jumbo-recipe-summary/jumbo-recipe-summary.component';
 import {MatGridListModule} from "@angular/material/grid-list";
-import { JumboRecipeDetailComponent } from './external/jumbo/jumbo-recipe-detail/jumbo-recipe-detail.component';
-import { JumboRecipeProductComponent } from './external/jumbo/jumbo-recipe-product/jumbo-recipe-product.component';
-import { JumboidSetterComponent } from './home-page/jumboid-setter/jumboid-setter.component';
+import {JumboRecipeDetailComponent} from './external/jumbo/jumbo-recipe-detail/jumbo-recipe-detail.component';
+import {JumboRecipeProductComponent} from './external/jumbo/jumbo-recipe-product/jumbo-recipe-product.component';
+import {JumboidSetterComponent} from './home-page/jumboid-setter/jumboid-setter.component';
+import {
+  GrocyProductTablecellComponent
+} from './external/jumbo/jumbo-recipe-detail/grocy-product-tablecell/grocy-product-tablecell.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -72,6 +77,7 @@ import { JumboidSetterComponent } from './home-page/jumboid-setter/jumboid-sette
     JumboRecipeDetailComponent,
     JumboRecipeProductComponent,
     JumboidSetterComponent,
+    GrocyProductTablecellComponent,
 
   ],
   imports: [
@@ -96,6 +102,9 @@ import { JumboidSetterComponent } from './home-page/jumboid-setter/jumboid-sette
     MatSelectModule,
     MatTabsModule,
     MatGridListModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
