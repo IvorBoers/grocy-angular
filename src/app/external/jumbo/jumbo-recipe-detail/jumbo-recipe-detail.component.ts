@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {RecipeData} from "../domain/jumbo-recipe-response";
+import {Ingredient, RecipeData} from "../domain/jumbo-recipe-response";
 import {RecipeService} from "../../../masterdata/recipe/recipe.service";
 import {Recipe} from "../../../domain/recipe";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -48,34 +48,88 @@ export class JumboRecipeDetailComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (this.item) {
       this.item.ingredients.forEach(i => {
-        if (i.productInformation && i.productInformation.product) {
-          if (this.grocyProductsByJumboId.has(i.productInformation.product.id)) {
-            i.grocyProduct = this.grocyProductsByJumboId.get(i.productInformation.product.id)
-          } else {
-            this.productService.getAllLike('name', this.getCleanedName(i.productInformation.product.title)).subscribe(result => {
-              if (result.length > 0) {
-                console.log("Found by product title: " + i.name)
-                i.grocyProduct = result[0];
-              } else {
-                this.productService.getAllLike('name', this.getCleanedName(i.name)).subscribe(result => {
-                  if (result.length > 0) {
-                    console.log("Found by ingredient name (when productInformation present): " + i.name)
-                    i.grocyProduct = result[0];
-                  }
-                });
-              }
-            })
-          }
-        } else {
-          this.productService.getAllLike('name', this.getCleanedName(i.name)).subscribe(result => {
-            if (result.length > 0) {
-              console.log("Found by ingredient name: " + i.name)
-              i.grocyProduct = result[0];
+        console.log("---------- " + i.name + " ----------------")
+        this.findGrocyProduct(i).then(p => i.grocyProduct = p)
+      })
+      console.log("READY")
+    }
+  }
+
+  private async findGrocyProduct(i: Ingredient) {
+    if (i.productInformation && i.productInformation.product) {
+      if (this.grocyProductsByJumboId.has(i.productInformation.product.id)) {
+        return this.grocyProductsByJumboId.get(i.productInformation.product.id)
+      } else {
+        this.getGrocyProductByIngredientNameOrProductTitle(i).then(p => {
+            if (p) {
+              return p
             }
-          });
-        }
+          }
+        );
+      }
+    }
+    if (!i.grocyProduct) {
+      this.getGrocyProductByIngredientName(i).then (p => {
+        return p
       })
     }
+  }
+
+  private async getGrocyProductByIngredientNameOrProductTitle(i: Ingredient) {
+
+    let cleanedName = this.getCleanedName(i.productInformation.product.title);
+    console.log("looking for a product with a name like " + cleanedName)
+    let products = await this.productService.getAllLike('name', cleanedName).toPromise();
+    if (products) {
+      console.log("Results when looking for " + cleanedName + " are: " + products);
+
+      if (products.length > 0) {
+        console.log("Found by product title: " + i.name)
+        return products[0];
+      }
+    }
+    return;
+
+
+    // forkJoin({
+    //   productCall: this.productService.getAllLike('name', cleanedName)
+    // }).subscribe({
+    //   next: value => {
+    //     //this  will run once both observables are completed.
+    //     console.log("Results when looking for " + cleanedName + " are: " + value[0]);
+    //
+    //     if (value[0] && value[0].length > 0) {
+    //       console.log("Found by product title: " + i.name)
+    //       i.grocyProduct = value[0][0];
+    //     } else {
+    //       this.setGrocyProductByIngredientName(i);
+    //     }
+    //   }
+    //   })
+  }
+
+  private async getGrocyProductByIngredientName(i: Ingredient) {
+    let cleanedName = this.getCleanedName(i.name);
+    console.log("Looking for a product with an ingredient name like " + cleanedName)
+    let products = await this.productService.getAllLike('name', cleanedName).toPromise();
+    if (products) {
+        console.log("Results when looking for " + cleanedName + " are: " + products);
+        if (products && products.length > 0) {
+          console.log("Found by ingredient name: " + i.name)
+          return products[0];
+        }
+    }
+    return
+    // forkJoin({
+    //   call: this.productService.getAllLike('name', cleanedName)
+    // })
+    // .subscribe(result => {
+    //   console.log("Results when looking for " + cleanedName + " are: " + result[0]);
+    //   if (result[0] && result[0].length > 0) {
+    //     console.log("Found by ingredient name: " + i.name)
+    //     i.grocyProduct = result[0][0];
+    //   }
+    // });
   }
 
   private getCleanedName(name: string) {
