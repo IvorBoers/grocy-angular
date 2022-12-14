@@ -2,8 +2,7 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {AbstractGrocyService} from "../../shared/abstract-grocy-service";
-import {forkJoin, from} from 'rxjs'
-import {mergeMap, switchMap, tap} from 'rxjs/operators'
+import {mergeMap} from 'rxjs/operators'
 
 
 @Injectable({
