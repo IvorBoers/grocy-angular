@@ -2,7 +2,7 @@
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Product</mat-label>
-    <input type="text" matInput  [matAutocomplete]="auto" [formControl]="projectsControl">
+    <input type="text" matInput  [matAutocomplete]="auto" [formControl]="productsControl">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let option of filteredProducts | async" [value]="option">
         {{option.name}}

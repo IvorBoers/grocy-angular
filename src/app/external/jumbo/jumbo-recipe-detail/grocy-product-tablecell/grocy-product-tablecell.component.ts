@@ -7,6 +7,7 @@ import {map, startWith} from 'rxjs/operators';
 import {Quantityunit} from "../../../../domain/quantityunit";
 import {Named} from "../../../../domain/entity";
 import {QuantityunitConversionService} from "../../../../masterdata/quantityunit-conversion/quantityunit-conversion.service";
+import {ProductService} from "../../../../masterdata/product/product.service";
 
 @Component({
   selector: 'app-grocy-product-tablecell',
@@ -23,25 +24,28 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
   @Input()
   quantityunits: Quantityunit[] = [];
+  @Input()
+  grocyProductsByJumboId = new Map()
 
   filteredProducts: Observable<Product[]>;
   filteredQuantityunits: Observable<Quantityunit[]>;
 
-  projectsControl = new UntypedFormControl('')
+  productsControl = new UntypedFormControl('')
   quControl = new UntypedFormControl('')
   amountControl = new UntypedFormControl('')
 
-  constructor(protected quConversionService: QuantityunitConversionService) {
+  constructor(protected quConversionService: QuantityunitConversionService, protected productService: ProductService) {
   }
 
   ngOnInit(): void {
-    this.filteredProducts = this.projectsControl.valueChanges.pipe(
+    this.filteredProducts = this.productsControl.valueChanges.pipe(
       startWith(''),
       map(value => {
         return value ? this._filterProducts(value as string) : this.products.slice();
       }),
     )
-    this.projectsControl.valueChanges.subscribe(p => this.ingredient.grocyProduct = p)
+    this.productsControl.valueChanges.subscribe(p => this.ingredient.grocyProduct = p)
+    this.findGrocyProduct()
 
     this.filteredQuantityunits = this.quControl.valueChanges.pipe(
       startWith(''),
@@ -50,8 +54,7 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
       }),
     )
 
-
-    this.projectsControl.valueChanges.subscribe(p => {
+    this.productsControl.valueChanges.subscribe(p => {
       this.ingredient.grocyProduct = p;
       if (p) {
         // set to stock unit by default
@@ -89,7 +92,7 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     }
     const filterValue = name && name.length > 0 ? name.toLowerCase() : '';
 
-    this.quConversionService.getAllWhere('to_qu_id', this.projectsControl.value.qu_id_stock).subscribe(res => {
+    this.quConversionService.getAllWhere('to_qu_id', this.productsControl.value.qu_id_stock).subscribe(res => {
 
     })
 
@@ -97,6 +100,44 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.projectsControl.setValue(this.ingredient.grocyProduct)
+    this.productsControl.setValue(this.ingredient.grocyProduct)
+  }
+
+  private findGrocyProduct(): void {
+    if (this.ingredient.productInformation && this.ingredient.productInformation.product) {
+      if (this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id)) {
+        let result = this.grocyProductsByJumboId.get(this.ingredient.productInformation.product.id);
+        console.log("Found a product in the map: " + result)
+        this.productsControl.setValue(result)
+      } else {
+        let cleanedName = this.getCleanedName(this.ingredient.productInformation.product.title);
+        this.productService.getAllLike('name', cleanedName).subscribe(products => {
+          if (products.length > 0) {
+            console.log("Found product by name " + cleanedName)
+            this.productsControl.setValue(products[0])
+          } else {
+            this.getGrocyProductByIngredientName()
+          }
+        })
+      }
+    } else {
+      this.getGrocyProductByIngredientName()
+    }
+  }
+
+  private getGrocyProductByIngredientName(): void {
+    let cleanedName = this.getCleanedName(this.ingredient.name);
+    this.productService.getAllLike('name', cleanedName).subscribe(products => {
+      if (products) {
+        if (products && products.length > 0) {
+          console.log("Found by ingredient name: " + this.ingredient.name)
+          this.productsControl.setValue(products[0]);
+        }
+      }
+    })
+  }
+
+  private getCleanedName(name: string) {
+    return name.replace('Jumbo', '').replace('biologisch ', '');
   }
 }
