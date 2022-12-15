@@ -4,8 +4,8 @@ import {JumboRecipeSummary} from "../domain/jumbo-recipe-summary";
 import {RecipeData} from "../domain/jumbo-recipe-response";
 import {ProductService} from "../../../masterdata/product/product.service";
 import {Product} from "../../../domain/product";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
+import {MatLegacyPaginator as MatPaginator} from "@angular/material/legacy-paginator";
+import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {MatSort} from "@angular/material/sort";
 import {SelectionModel} from "@angular/cdk/collections";
 

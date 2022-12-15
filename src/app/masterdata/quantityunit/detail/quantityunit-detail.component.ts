@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AbstractDetailComponent} from "../../../shared/abstract-detail-component";
 import {ActivatedRoute} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatLegacySnackBar as MatSnackBar} from "@angular/material/legacy-snack-bar";
 import {Quantityunit} from "../../../domain/quantityunit";
 import {QuantityunitService} from "../quantityunit.service";
 

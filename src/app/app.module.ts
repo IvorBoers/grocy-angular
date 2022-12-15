@@ -11,16 +11,16 @@ import {LocationDetailComponent} from './masterdata/location/detail/location-det
 import {QuantityunitListComponent} from './masterdata/quantityunit/list/quantityunit-list.component';
 import {QuantityunitDetailComponent} from './masterdata/quantityunit/detail/quantityunit-detail.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatButtonModule} from "@angular/material/button";
-import {MatListModule} from "@angular/material/list";
+import {MatLegacyButtonModule as MatButtonModule} from "@angular/material/legacy-button";
+import {MatLegacyListModule as MatListModule} from "@angular/material/legacy-list";
 import {HttpClientModule} from "@angular/common/http";
 import {MatIconModule} from "@angular/material/icon";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatTableModule} from "@angular/material/table";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatLegacyFormFieldModule as MatFormFieldModule} from "@angular/material/legacy-form-field";
+import {MatLegacyInputModule as MatInputModule} from "@angular/material/legacy-input";
+import {MatLegacySnackBarModule as MatSnackBarModule} from "@angular/material/legacy-snack-bar";
+import {MatLegacyTableModule as MatTableModule} from "@angular/material/legacy-table";
+import {MatLegacyPaginatorModule as MatPaginatorModule} from "@angular/material/legacy-paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {StockLocationDetailComponent} from "./masterdata/stock-location/detail/stock-location-detail.component";
 import {StockLocationListComponent} from "./masterdata/stock-location/list/stock-location-list.component";
@@ -28,14 +28,14 @@ import {ShoppingLocationListComponent} from "./masterdata/shopping-location/list
 import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/detail/shopping-location-detail.component";
 import {BarcodeScannerLivestreamModule} from "ngx-barcode-scanner";
 import {BarcodescannerComponent} from './barcodescanner/barcodescanner.component';
-import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
+import {MAT_LEGACY_DIALOG_DEFAULT_OPTIONS as MAT_DIALOG_DEFAULT_OPTIONS, MatLegacyDialogModule as MatDialogModule} from "@angular/material/legacy-dialog";
 import {BarcodedialogComponent} from './barcodedialog/barcodedialog.component';
-import {MatMenuModule} from "@angular/material/menu";
-import {MatSelectModule} from "@angular/material/select";
+import {MatLegacyMenuModule as MatMenuModule} from "@angular/material/legacy-menu";
+import {MatLegacySelectModule as MatSelectModule} from "@angular/material/legacy-select";
 import {ProductgroupDetailComponent} from "./masterdata/productgroup/detail/productgroup-detail.component";
 import {ProductgroupListComponent} from "./masterdata/productgroup/list/productgroup-list.component";
 import {JumboProductComponent} from './external/jumbo/jumbo-product/jumbo-product.component';
-import {MatTabsModule} from "@angular/material/tabs";
+import {MatLegacyTabsModule as MatTabsModule} from "@angular/material/legacy-tabs";
 import {MasterDataComponent} from './masterdata/master-data.component';
 import {HomePageComponent} from './home-page/home-page.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
@@ -48,8 +48,8 @@ import {JumboidSetterComponent} from './home-page/jumboid-setter/jumboid-setter.
 import {
   GrocyProductTablecellComponent
 } from './external/jumbo/jumbo-recipe-detail/grocy-product-tablecell/grocy-product-tablecell.component';
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatLegacyAutocompleteModule as MatAutocompleteModule} from "@angular/material/legacy-autocomplete";
+import {MatLegacyProgressSpinnerModule as MatProgressSpinnerModule} from "@angular/material/legacy-progress-spinner";
 
 @NgModule({
   declarations: [

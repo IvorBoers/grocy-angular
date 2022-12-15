@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {Location} from "../../../domain/location";
 import {ActivatedRoute} from "@angular/router";
 import {LocationService} from "../location.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatLegacySnackBar as MatSnackBar} from "@angular/material/legacy-snack-bar";
 import {AbstractDetailComponent} from "../../../shared/abstract-detail-component";
 
 @Component({

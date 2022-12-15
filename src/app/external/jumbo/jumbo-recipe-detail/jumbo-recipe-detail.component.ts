@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Ingredient, RecipeData} from "../domain/jumbo-recipe-response";
 import {RecipeService} from "../../../masterdata/recipe/recipe.service";
 import {Recipe} from "../../../domain/recipe";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatLegacySnackBar as MatSnackBar} from "@angular/material/legacy-snack-bar";
 import {ProductService} from "../../../masterdata/product/product.service";
 import {Product} from "../../../domain/product";
 import {QuantityunitService} from "../../../masterdata/quantityunit/quantityunit.service";

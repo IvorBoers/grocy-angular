@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AbstractDetailComponent} from "../../../shared/abstract-detail-component";
 import {ProductgroupService} from "../productgroup.service";
 import {ActivatedRoute} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatLegacySnackBar as MatSnackBar} from "@angular/material/legacy-snack-bar";
 import {Productgroup} from "../../../domain/productgroup";
 
 @Component({
