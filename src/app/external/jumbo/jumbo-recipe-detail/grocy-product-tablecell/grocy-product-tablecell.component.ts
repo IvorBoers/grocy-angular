@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Ingredient} from "../../domain/jumbo-recipe-response";
 import {Product} from "../../../../domain/product";
 import {Observable} from "rxjs";
-import {FormControl} from "@angular/forms";
+import {UntypedFormControl} from "@angular/forms";
 import {map, startWith} from 'rxjs/operators';
 import {Quantityunit} from "../../../../domain/quantityunit";
 import {Named} from "../../../../domain/entity";
@@ -27,9 +27,9 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   filteredProducts: Observable<Product[]>;
   filteredQuantityunits: Observable<Quantityunit[]>;
 
-  projectsControl = new FormControl('')
-  quControl = new FormControl('')
-  amountControl = new FormControl('')
+  projectsControl = new UntypedFormControl('')
+  quControl = new UntypedFormControl('')
+  amountControl = new UntypedFormControl('')
 
   constructor(protected quConversionService: QuantityunitConversionService) {
   }
