@@ -4,7 +4,7 @@ import {Location} from "../../../domain/location";
 import {Product} from "../../../domain/product";
 import {ProductService} from "../product.service";
 import {ActivatedRoute} from "@angular/router";
-import {MatLegacySnackBar as MatSnackBar} from "@angular/material/legacy-snack-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {LocationService} from "../../location/location.service";
 import {QuantityunitService} from "../../quantityunit/quantityunit.service";
 import {Quantityunit} from "../../../domain/quantityunit";

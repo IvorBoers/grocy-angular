@@ -1,7 +1,7 @@
 import {Entity} from "../domain/entity";
 import {Component, OnInit, ViewChild} from "@angular/core";
-import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
-import {MatLegacyPaginator as MatPaginator} from "@angular/material/legacy-paginator";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {EntityService} from "./entity-service";
 
