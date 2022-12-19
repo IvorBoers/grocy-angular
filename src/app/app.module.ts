@@ -50,6 +50,10 @@ import {
 } from './external/jumbo/jumbo-recipe-detail/grocy-product-tablecell/grocy-product-tablecell.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ApiSettingsDialogComponent } from './api-settings-dialog/api-settings-dialog.component';
+import { AlertComponent } from './shared/alert/alert.component';
+import { SystemStatusComponent } from './system/system-info/system-status.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -78,6 +82,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     JumboRecipeProductComponent,
     JumboidSetterComponent,
     GrocyProductTablecellComponent,
+    ApiSettingsDialogComponent,
+    AlertComponent,
+    SystemStatusComponent,
 
   ],
   imports: [
@@ -104,7 +111,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatGridListModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}

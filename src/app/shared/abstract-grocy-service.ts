@@ -1,42 +1,43 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Constants} from "./constants";
 import {throwError} from "rxjs";
+import {AlertService} from "./alert-service";
 
 export class AbstractGrocyService {
 
 
-  constructor(protected http: HttpClient, private serviceUrl: string) {
+  constructor(protected http: HttpClient, protected serviceUrl: string, private alertService: AlertService) {
   }
 
   getApiKeyPostfix() {
-    return "?GROCY-API-KEY=" + Constants.API_KEY;
+    return "?GROCY-API-KEY=" + localStorage.getItem('grocy_api_key');
   }
 
   getApiUrl() {
-    return Constants.GROCY_URL + "/api/" + this.serviceUrl;
+    return localStorage.getItem('grocy_url') + "/api/" + this.serviceUrl;
   }
 
   getUrl(urlPart: string=''): string {
     return this.getApiUrl() + urlPart + this.getApiKeyPostfix();
   }
 
-  handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse, uiErrorHandler: any) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
+      this.alertService.error('An error occurred:' + error.error.message)
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-
+      if (error.status === 0) {
+        this.alertService.error(`Backend unreachable`)
+      } else {
+        this.alertService.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`)
+      }
       if (error.status == 400) {
-        return throwError("Unsuccesful call:" + error.error.error_message)
+        return throwError(() => new Error("Unsuccessful call:" + error.error.error_message))
       }
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
+    return throwError(() => new Error(
+      'Something bad happened; please try again later.'));
   }
 }

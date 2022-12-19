@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import {Location} from "../../../domain/location";
 import {ActivatedRoute} from "@angular/router";
 import {LocationService} from "../location.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {AbstractDetailComponent} from "../../../shared/abstract-detail-component";
+import {AlertService} from "../../../shared/alert-service";
 
 @Component({
   selector: 'app-location-detail',
@@ -12,8 +12,8 @@ import {AbstractDetailComponent} from "../../../shared/abstract-detail-component
 })
 export class LocationDetailComponent extends AbstractDetailComponent<Location> {
 
-  constructor(route: ActivatedRoute, _snackBar: MatSnackBar, service: LocationService) {
-    super(route, _snackBar, service)
+  constructor(route: ActivatedRoute, service: LocationService, alertService: AlertService) {
+    super(route, service, alertService)
   }
 
   getEntityName(): string {

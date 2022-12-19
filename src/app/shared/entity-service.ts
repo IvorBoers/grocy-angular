@@ -4,27 +4,42 @@ import {HttpClient} from "@angular/common/http";
 import {AddResponse} from "../domain/add-response";
 import {UpdateResponse} from "../domain/update-response";
 import {AbstractGrocyService} from "./abstract-grocy-service";
+import {catchError} from "rxjs/operators";
+import {AlertService} from "./alert-service";
 
 export abstract class EntityService<T extends Entity> extends AbstractGrocyService {
 
 
-  protected constructor(http: HttpClient, private entityName: string) {
-    super(http, "objects/" + entityName);
+  protected constructor(http: HttpClient, private entityName: string, alertService: AlertService) {
+    super(http, "objects/" + entityName, alertService);
   }
 
   getAll(): Observable<T[]> {
-    return this.http.get<T[]>(this.getUrl());
+    return this.http.get<T[]>(this.getUrl())
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
   }
 
   getAllLike(field: string, query: string): Observable<T[]> {
-    return this.http.get<T[]>(this.getUrl() + '&query[]=' + field + "~" + query);
+    return this.http.get<T[]>(this.getUrl() + '&query[]=' + field + "~" + query)
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
   }
+
   getAllWhere(field: string, query: string): Observable<T[]> {
-    return this.http.get<T[]>(this.getUrl() + '&query[]=' + field + "=" + query);
+    return this.http.get<T[]>(this.getUrl() + '&query[]=' + field + "=" + query)
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
   }
 
   getOne(id: number): Observable<T> {
-    return this.http.get<T>(this.getUrl("/" + id));
+    return this.http.get<T>(this.getUrl("/" + id))
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
   }
 
   add(item: T): Observable<AddResponse> {

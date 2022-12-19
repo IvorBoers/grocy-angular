@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {RecipeData} from "../domain/jumbo-recipe-response";
 import {RecipeService} from "../../../masterdata/recipe/recipe.service";
 import {Recipe} from "../../../domain/recipe";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {ProductService} from "../../../masterdata/product/product.service";
 import {Product} from "../../../domain/product";
 import {QuantityunitService} from "../../../masterdata/quantityunit/quantityunit.service";
@@ -11,6 +10,7 @@ import {RecipeUserfieldsService} from "../../../shared/recipe-userfields-service
 import {RecipeUserfields} from "../../../domain/recipe-userfields";
 import {RecipeIngredient} from "../../../domain/recipe-ingredient";
 import {RecipeIngredientService} from "../../../shared/recipe-ingredient.service";
+import {AlertService} from "../../../shared/alert-service";
 
 @Component({
   selector: 'app-jumbo-recipe-detail',
@@ -34,14 +34,16 @@ export class JumboRecipeDetailComponent implements OnInit {
               protected productService: ProductService,
               protected quService: QuantityunitService,
               protected recipeIngredientService: RecipeIngredientService,
-              private _snackBar: MatSnackBar) {
+              protected alertService: AlertService) {
   }
 
   ngOnInit(): void {
-    this.productService.getAll().subscribe(r => {
-      this.allGrocyProducts = r
-    })
-    this.quService.getAll().subscribe(u => this.allGrocyQuantityunits = u)
+    this.productService.getAll()
+      .subscribe(r => {
+        this.allGrocyProducts = r
+      })
+    this.quService.getAll()
+      .subscribe(u => this.allGrocyQuantityunits = u)
 
   }
 
@@ -60,17 +62,17 @@ export class JumboRecipeDetailComponent implements OnInit {
 
     this.recipeService.add(recipe).subscribe(response => {
       if (response != null && response.error_message !== undefined) {
-        this.openSnackBar("Error: " + response.error_message, "Ugh");
+        this.alertService.error("Error: " + response.error_message);
       } else {
         this.created_grocy_id = response.created_object_id;
-        this.openSnackBar("Saved", "Great");
+        this.alertService.success("Saved");
         let uf = new RecipeUserfields();
         uf.jumboId = this.item.id;
         this.recipeUserfieldsService.update(this.created_grocy_id, uf).subscribe(response => {
           if (response != null && response.error_message !== undefined) {
-            this.openSnackBar("Error: " + response.error_message, "Ugh");
+            this.alertService.error("Error: " + response.error_message);
           } else {
-            this.openSnackBar("Saved userfields", "Great");
+            this.alertService.success("Saved recipe userfields");
           }
         });
         this.item.ingredients.forEach(ingredient => {
@@ -93,9 +95,4 @@ export class JumboRecipeDetailComponent implements OnInit {
     });
   }
 
-  openSnackBar(message: string, entity: string) {
-    this._snackBar.open(message, entity, {
-      duration: 2000,
-    });
-  }
 }

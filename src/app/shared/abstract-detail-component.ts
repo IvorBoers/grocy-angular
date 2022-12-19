@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {Entity} from "../domain/entity";
 import {EntityService} from "./entity-service";
+import {AlertService} from "./alert-service";
 
 @Component({template: ''})
 export abstract class AbstractDetailComponent<T extends Entity> implements OnInit {
   item: T;
   id;
 
-  protected constructor(private route: ActivatedRoute, private _snackBar: MatSnackBar, protected service: EntityService<T>) { }
+  constructor(private route: ActivatedRoute, protected service: EntityService<T>, protected alertService: AlertService) { }
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
@@ -22,18 +22,12 @@ export abstract class AbstractDetailComponent<T extends Entity> implements OnIni
 
   abstract getEntityName(): string;
 
-  openSnackBar(message: string, entity: string) {
-    this._snackBar.open(message, entity, {
-      duration: 2000,
-    });
-  }
-
   save() {
     this.service.update(this.item).subscribe(response => {
       if (response != null && response.error_message !== undefined) {
-        this.openSnackBar("Error: " + response.error_message, this.getEntityName());
+        this.alertService.error("Error updating " + this.getEntityName() + ": " + response.error_message)
       } else {
-        this.openSnackBar("Saved", this.getEntityName());
+        this.alertService.success("Updated " + this.getEntityName())
       }
     });
   }

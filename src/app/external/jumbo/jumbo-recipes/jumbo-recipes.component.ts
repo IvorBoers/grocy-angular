@@ -15,7 +15,7 @@ import {SelectionModel} from "@angular/cdk/collections";
   styleUrls: ['./jumbo-recipes.component.scss']
 })
 export class JumboRecipesComponent implements OnInit {
-  displayedColumns: string[] = ['image', 'name', 'actions']
+  displayedColumns: string[] = ['image', 'name']
   dataSource: MatTableDataSource<JumboRecipeSummary>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -57,11 +57,13 @@ export class JumboRecipesComponent implements OnInit {
   }
 
   private createProductsMap(products: Product[]) {
-    products.forEach(p => {
-      if (p.userfields.jumboId) {
-        p.userfields.jumboId.split(',').forEach(sub => this.grocyProductsByJumboId.set(sub, p));
-      }
-    })
+    if (products) {
+      products.forEach(p => {
+        if (p.userfields.jumboId) {
+          p.userfields.jumboId.split(',').forEach(sub => this.grocyProductsByJumboId.set(sub, p));
+        }
+      })
+    }
   }
 
   searchRecipe() {

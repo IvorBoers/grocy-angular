@@ -1,4 +1,4 @@
-
+<app-alert></app-alert>
 <div class="header" role="header">
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="openScanDialog()" aria-label="Open scan dialog"><mat-icon>qr_code_scanner</mat-icon></button>
@@ -16,6 +16,9 @@
     <mat-menu #jumbo="matMenu">
       <button mat-menu-item routerLink="/jumbo/recipes">Recipes</button>
     </mat-menu>
+    <span class="menu-spacer"></span>
+    <app-system-status></app-system-status>
+    <button mat-icon-button (click)="openApiSettingsDialog()" aria-label="Open API Settings dialog"><mat-icon>account_circle</mat-icon></button>
   </mat-toolbar>
 </div>
 <div class="content" role="main">

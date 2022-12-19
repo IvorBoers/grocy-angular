@@ -28,7 +28,7 @@ export abstract class AbstractEntityTableComponent<T extends Entity> implements 
 
   ngOnInit() {
     this.entityService.getAll().subscribe(all => {
-      this.setTableData(all);
+        this.setTableData(all);
     });
   }
 

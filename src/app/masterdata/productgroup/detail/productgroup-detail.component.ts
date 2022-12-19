@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {AbstractDetailComponent} from "../../../shared/abstract-detail-component";
 import {ProductgroupService} from "../productgroup.service";
 import {ActivatedRoute} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {Productgroup} from "../../../domain/productgroup";
+import {AlertService} from "../../../shared/alert-service";
 
 @Component({
   selector: 'app-productgroup-detail',
@@ -12,8 +12,8 @@ import {Productgroup} from "../../../domain/productgroup";
 })
 export class ProductgroupDetailComponent extends AbstractDetailComponent<Productgroup> {
 
-  constructor(route: ActivatedRoute, _snackBar: MatSnackBar, service: ProductgroupService) {
-    super(route, _snackBar, service)
+  constructor(route: ActivatedRoute, service: ProductgroupService, alertService: AlertService) {
+    super(route, service, alertService)
   }
 
   getEntityName(): string {

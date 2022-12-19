@@ -2,11 +2,12 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {UpdateResponse} from "../domain/update-response";
 import {AbstractGrocyService} from "./abstract-grocy-service";
+import {AlertService} from "./alert-service";
 
 export class UserfieldsService<T> extends AbstractGrocyService {
 
-  public constructor(http: HttpClient, private entityName: string) {
-    super(http, "userfields/" + entityName);
+  public constructor(http: HttpClient, private entityName: string, alertService: AlertService) {
+    super(http, "userfields/" + entityName, alertService);
   }
 
   getOne(id: number): Observable<T> {

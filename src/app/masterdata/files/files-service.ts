@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {AbstractGrocyService} from "../../shared/abstract-grocy-service";
 import {mergeMap} from 'rxjs/operators'
+import {AlertService} from "../../shared/alert-service";
 
 
 @Injectable({
@@ -12,8 +13,8 @@ export class FilesService extends AbstractGrocyService {
   static readonly group_productpictures = "productpictures";
 
 
-  protected constructor(http: HttpClient) {
-    super(http, "files/");
+  protected constructor(http: HttpClient, alertService: AlertService) {
+    super(http, "files/", alertService);
   }
 
   getFile(group: string, fileName: string): Observable<string> {

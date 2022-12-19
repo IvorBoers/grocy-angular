@@ -2,12 +2,13 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Ingredient} from "../../domain/jumbo-recipe-response";
 import {Product} from "../../../../domain/product";
 import {Observable} from "rxjs";
-import {UntypedFormControl} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {map, startWith} from 'rxjs/operators';
 import {Quantityunit} from "../../../../domain/quantityunit";
 import {Named} from "../../../../domain/entity";
 import {QuantityunitConversionService} from "../../../../masterdata/quantityunit-conversion/quantityunit-conversion.service";
 import {ProductService} from "../../../../masterdata/product/product.service";
+import {ProductUserfieldsService} from "../../../../shared/product-userfields-service";
 
 @Component({
   selector: 'app-grocy-product-tablecell',
@@ -30,11 +31,12 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   filteredProducts: Observable<Product[]>;
   filteredQuantityunits: Observable<Quantityunit[]>;
 
-  productsControl = new UntypedFormControl('')
-  quControl = new UntypedFormControl('')
-  amountControl = new UntypedFormControl('')
+  productsControl = new FormControl<Product>(undefined)
+  quControl = new FormControl<Quantityunit>(undefined)
+  amountControl = new FormControl<number>(0)
 
-  constructor(protected quConversionService: QuantityunitConversionService, protected productService: ProductService) {
+  constructor(protected quConversionService: QuantityunitConversionService, protected productService: ProductService,
+              protected productUserfieldsService: ProductUserfieldsService) {
   }
 
   ngOnInit(): void {
@@ -92,7 +94,7 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     }
     const filterValue = name && name.length > 0 ? name.toLowerCase() : '';
 
-    this.quConversionService.getAllWhere('to_qu_id', this.productsControl.value.qu_id_stock).subscribe(res => {
+    this.quConversionService.getAllWhere('to_qu_id', this.productsControl.value.qu_id_stock.toString()).subscribe(res => {
 
     })
 
@@ -107,7 +109,7 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     if (this.ingredient.productInformation && this.ingredient.productInformation.product) {
       if (this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id)) {
         let result = this.grocyProductsByJumboId.get(this.ingredient.productInformation.product.id);
-        console.log("Found a product in the map: " + result)
+        console.log("Found a product in the map: " + result.name)
         this.productsControl.setValue(result)
       } else {
         let cleanedName = this.getCleanedName(this.ingredient.productInformation.product.title);
@@ -139,5 +141,30 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
   private getCleanedName(name: string) {
     return name.replace('Jumbo', '').replace('biologisch ', '');
+  }
+
+  bindGrocyProduct() {
+    //TODO copy paste from jumboid-setter
+    this.productUserfieldsService.getOne(this.ingredient.grocyProduct.id).subscribe(u => {
+      let jumboIdArray = []
+      if (u.jumboId) {
+        jumboIdArray = u.jumboId.split(',')
+      }
+      let jumboId = this.ingredient.productInformation.product.id;
+      if (!jumboIdArray.includes(jumboId)) {
+        if (u.jumboId) {
+          u.jumboId = u.jumboId + ',' + jumboId;
+        } else {
+          u.jumboId = jumboId;
+        }
+        this.productUserfieldsService.update(this.ingredient.grocyProduct.id, u).subscribe(() => {
+          this.grocyProductsByJumboId.set(jumboId, this.ingredient.grocyProduct)
+        });
+      }
+    })
+  }
+
+  isCoupledInGrocy() {
+    return this.ingredient.grocyProduct && this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id);
   }
 }

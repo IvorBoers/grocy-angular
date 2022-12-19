@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>API Settings</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Grocy URL</mat-label>
+    <input matInput [formControl]="urlControl">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>API key</mat-label>
+    <input matInput [formControl]="apiKeyControl">
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="saveSettings()">Save</button>
+</mat-dialog-actions>

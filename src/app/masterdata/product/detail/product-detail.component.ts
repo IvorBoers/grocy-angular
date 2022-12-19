@@ -4,7 +4,6 @@ import {Location} from "../../../domain/location";
 import {Product} from "../../../domain/product";
 import {ProductService} from "../product.service";
 import {ActivatedRoute} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {LocationService} from "../../location/location.service";
 import {QuantityunitService} from "../../quantityunit/quantityunit.service";
 import {Quantityunit} from "../../../domain/quantityunit";
@@ -16,6 +15,7 @@ import {JumboService} from "../../../external/jumbo/jumbo-service";
 import {ProductData} from "../../../external/jumbo/domain/product-data";
 import {FilesService} from "../../files/files-service";
 import {ProductUserfieldsService} from "../../../shared/product-userfields-service";
+import {AlertService} from "../../../shared/alert-service";
 
 @Component({
   selector: 'app-product-detail',
@@ -30,7 +30,7 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   products: ProductData[] = [];
   imageContent: string;
 
-  constructor(route: ActivatedRoute, _snackBar: MatSnackBar, service: ProductService,
+  constructor(route: ActivatedRoute, service: ProductService, alertService: AlertService,
               private locationService: LocationService,
               private quService: QuantityunitService,
               private productgroupService: ProductgroupService,
@@ -39,7 +39,7 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
               private jumboService: JumboService,
               private productUserFieldsService: ProductUserfieldsService
   ) {
-    super(route, _snackBar, service)
+    super(route, service, alertService)
   }
 
   ngOnInit() {
@@ -81,9 +81,9 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
     console.log("Saving "+ JSON.stringify(this.item))
     this.productUserFieldsService.update(this.item.id, this.item.userfields).subscribe(response => {
       if (response != null && response.error_message !== undefined) {
-        this.openSnackBar("Error updating userfields: " + response.error_message, this.getEntityName());
+        this.alertService.error("Error updating product userfields: " + response.error_message);
       } else {
-        this.openSnackBar("Saved userfields", this.getEntityName());
+        this.alertService.success("Saved updating product userfields");
       }
     });
   }

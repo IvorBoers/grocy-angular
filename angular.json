@@ -15,6 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
+          "defaultConfiguration": "development",
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/grocy-angular",
@@ -60,6 +61,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
@@ -72,6 +81,9 @@
           "configurations": {
             "production": {
               "browserTarget": "grocy-angular:build:production"
+            },
+            "development": {
+              "browserTarget": "grocy-angular:build:development"
             }
           }
         },
