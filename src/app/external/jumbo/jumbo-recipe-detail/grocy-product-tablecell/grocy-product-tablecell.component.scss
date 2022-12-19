@@ -1,3 +1,10 @@
 .link {
   cursor: pointer;
 }
+
+mat-form-field.field-amount {
+  max-width: 80px;
+}
+mat-form-field.field-qu {
+  max-width: 180px;
+}

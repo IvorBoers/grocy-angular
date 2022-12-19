@@ -25,8 +25,7 @@ export class AppComponent {
 
   openApiSettingsDialog() {
     const dialogRef = this.dialog.open(ApiSettingsDialogComponent, {
-      width: '600px',
-      height: '400px'
+      width: '600px'
     })
     dialogRef.afterClosed().subscribe(() => this.systemStatusService.refreshConnection());
   }
