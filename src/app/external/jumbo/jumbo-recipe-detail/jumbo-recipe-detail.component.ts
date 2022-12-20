@@ -11,6 +11,8 @@ import {RecipeUserfields} from "../../../domain/recipe-userfields";
 import {RecipeIngredient} from "../../../domain/recipe-ingredient";
 import {RecipeIngredientService} from "../../../shared/recipe-ingredient.service";
 import {AlertService} from "../../../shared/alert-service";
+import {QuantityunitConversion} from "../../../domain/quantityunit-conversion";
+import {QuantityunitConversionService} from "../../../masterdata/quantityunit-conversion/quantityunit-conversion.service";
 
 @Component({
   selector: 'app-jumbo-recipe-detail',
@@ -27,12 +29,16 @@ export class JumboRecipeDetailComponent implements OnInit {
 
   allGrocyProducts: Product[] = [];
   allGrocyQuantityunits: Quantityunit[] = [];
+  quantityunitConversions: QuantityunitConversion[] = [];
+
+
   private created_grocy_id: number;
 
   constructor(protected recipeService: RecipeService,
               protected recipeUserfieldsService: RecipeUserfieldsService,
               protected productService: ProductService,
               protected quService: QuantityunitService,
+              protected qucService: QuantityunitConversionService,
               protected recipeIngredientService: RecipeIngredientService,
               protected alertService: AlertService) {
   }
@@ -43,8 +49,14 @@ export class JumboRecipeDetailComponent implements OnInit {
         this.allGrocyProducts = r
       })
     this.quService.getAll()
-      .subscribe(u => this.allGrocyQuantityunits = u)
-
+      .subscribe(u => {
+        this.allGrocyQuantityunits = u
+      })
+    this.qucService.getAll()
+      .subscribe(quc => {
+        console.log("retrieved quc " + quc.length)
+        this.quantityunitConversions = quc;
+      })
   }
 
   importInGrocy() {

@@ -6,9 +6,9 @@ import {FormControl} from "@angular/forms";
 import {map, startWith} from 'rxjs/operators';
 import {Quantityunit} from "../../../../domain/quantityunit";
 import {Named} from "../../../../domain/entity";
-import {QuantityunitConversionService} from "../../../../masterdata/quantityunit-conversion/quantityunit-conversion.service";
 import {ProductService} from "../../../../masterdata/product/product.service";
 import {ProductUserfieldsService} from "../../../../shared/product-userfields-service";
+import {QuantityunitConversion} from "../../../../domain/quantityunit-conversion";
 
 @Component({
   selector: 'app-grocy-product-tablecell',
@@ -24,7 +24,10 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   products: Product[] = [];
 
   @Input()
-  quantityunits: Quantityunit[] = [];
+  allQuantityunits: Quantityunit[] = [];
+  productQuantityunits: Quantityunit[] = [];
+  @Input()
+  quantityunitConversions: QuantityunitConversion[] = [];
   @Input()
   grocyProductsByJumboId = new Map()
 
@@ -35,7 +38,7 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   quControl = new FormControl<Quantityunit>(undefined)
   amountControl = new FormControl<number>(0)
 
-  constructor(protected quConversionService: QuantityunitConversionService, protected productService: ProductService,
+  constructor(protected productService: ProductService,
               protected productUserfieldsService: ProductUserfieldsService) {
   }
 
@@ -46,33 +49,35 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
         return value ? this._filterProducts(value as string) : this.products.slice();
       }),
     )
-    this.productsControl.valueChanges.subscribe(p => this.ingredient.grocyProduct = p)
-    this.findGrocyProduct()
 
     this.filteredQuantityunits = this.quControl.valueChanges.pipe(
       startWith(''),
       map(value => {
-        return value ? this._filterQuantityunits(value as string) : this.quantityunits.slice();
+        return value ? this._filterQuantityunits(value as string) : this.productQuantityunits.slice();
       }),
     )
 
     this.productsControl.valueChanges.subscribe(p => {
       this.ingredient.grocyProduct = p;
+      this.quControl.reset()
+      this.productQuantityunits = []
       if (p) {
         // set to stock unit by default
-        this.quantityunits
-          .filter(u => u.id == this.ingredient.grocyProduct.qu_id_stock)
-          .forEach(qu => this.quControl.setValue(qu))
-        if (this.ingredient && this.ingredient.productInformation && this.ingredient.productInformation.quantity) {
-          this.amountControl.setValue(this.ingredient.productInformation.quantity.amount)
+        let convertableQuantityunits = this.getConvertableQuantityunits(p);
+        this.productQuantityunits = this.allQuantityunits
+          .filter(u => convertableQuantityunits.includes(u.id))
+
+        this.quControl.setValue(this.productQuantityunits.filter(qu => qu.id === p.qu_id_stock)[0])
+
+        if (this.ingredient) {
+          this.amountControl.setValue(parseInt(this.ingredient.quantity))
         }
-      } else {
-        this.quControl.setValue(null);
       }
     })
     this.quControl.valueChanges.subscribe(c => this.ingredient.grocyQuantityUnit = c)
     this.amountControl.valueChanges.subscribe(c => this.ingredient.grocyAmount = c)
 
+    this.findGrocyProduct()
   }
 
   displayFn(named: Named) {
@@ -94,11 +99,8 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     }
     const filterValue = name && name.length > 0 ? name.toLowerCase() : '';
 
-    this.quConversionService.getAllWhere('to_qu_id', this.productsControl.value.qu_id_stock.toString()).subscribe(res => {
-
-    })
-
-    return this.quantityunits.filter(option => option.name.toLowerCase().includes(filterValue));
+    return this.productQuantityunits
+        .filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -166,5 +168,15 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
   isCoupledInGrocy() {
     return this.ingredient.grocyProduct && this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id);
+  }
+
+  private getConvertableQuantityunits(product: Product):number[] {
+    let fromQus = this.quantityunitConversions
+      .filter(quc => quc.from_qu_id === product.qu_id_stock)
+    let result:number[] = []
+    result.push(product.qu_id_stock)
+    result.push(product.qu_id_purchase)
+    fromQus.map(quc => quc.to_qu_id).forEach(id => result.push(id))
+    return result;
   }
 }

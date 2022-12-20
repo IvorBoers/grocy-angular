@@ -45,7 +45,7 @@
     <ng-container matColumnDef="grocy">
       <th mat-header-cell *matHeaderCellDef> Grocy</th>
       <td mat-cell *matCellDef="let element">
-        <app-grocy-product-tablecell [ingredient]="element" [products]="allGrocyProducts" [quantityunits]="allGrocyQuantityunits" [grocyProductsByJumboId]="grocyProductsByJumboId"></app-grocy-product-tablecell>
+          <app-grocy-product-tablecell [ingredient]="element" [products]="allGrocyProducts" [allQuantityunits]="allGrocyQuantityunits"  [quantityunitConversions]="quantityunitConversions" [grocyProductsByJumboId]="grocyProductsByJumboId"></app-grocy-product-tablecell>
       </td>
     </ng-container>
 
