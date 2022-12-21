@@ -1,0 +1,16 @@
+.mealplan-day {
+  width: 230px;
+  background-color: #eee;
+  padding: 5px;
+  .mat-mdc-card-content {
+    padding: 0;
+  }
+}
+
+//@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
+  /* For mobile phones: */
+  .mealplan-day {
+    width: 100%;
+  }
+}

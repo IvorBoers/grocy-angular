@@ -54,6 +54,11 @@ import { ApiSettingsDialogComponent } from './api-settings-dialog/api-settings-d
 import { AlertComponent } from './shared/alert/alert.component';
 import { SystemStatusComponent } from './system/system-info/system-status.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { MealplanComponent } from './masterdata/mealplan/mealplan.component';
+import {MatCardModule} from "@angular/material/card";
+import { MealplanDayComponent } from './masterdata/mealplan/mealplan-day/mealplan-day.component';
+import { MealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/mealplan-item.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -85,36 +90,41 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     ApiSettingsDialogComponent,
     AlertComponent,
     SystemStatusComponent,
+    MealplanComponent,
+    MealplanDayComponent,
+    MealplanItemComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BarcodeScannerLivestreamModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatListModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatGridListModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BarcodeScannerLivestreamModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatListModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatSelectModule,
+        MatTabsModule,
+        MatGridListModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatProgressSpinnerModule,
+        MatTooltipModule,
+        MatCardModule
+    ],
   providers: [
+      DatePipe,
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
   ],
   bootstrap: [AppComponent]

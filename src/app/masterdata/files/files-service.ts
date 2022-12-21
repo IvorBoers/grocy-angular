@@ -11,6 +11,7 @@ import {AlertService} from "../../shared/alert-service";
 })
 export class FilesService extends AbstractGrocyService {
   static readonly group_productpictures = "productpictures";
+  static readonly group_recipepictures = "recipepictures";
 
 
   protected constructor(http: HttpClient, alertService: AlertService) {

@@ -16,6 +16,7 @@ import {MasterDataComponent} from "./masterdata/master-data.component";
 import {HomePageComponent} from "./home-page/home-page.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {JumboRecipesComponent} from "./external/jumbo/jumbo-recipes/jumbo-recipes.component";
+import {MealplanComponent} from "./masterdata/mealplan/mealplan.component";
 
 
 const routes: Routes = [
@@ -32,13 +33,14 @@ const routes: Routes = [
   {path: 'masterdata/products/:id', component: ProductDetailComponent},
   {path: 'masterdata/productgroups', component: ProductgroupListComponent },
   {path: 'masterdata/productgroups/:id', component: ProductgroupDetailComponent},
+  {path: 'mealplan', component: MealplanComponent},
   {path: 'jumbo/recipes', component: JumboRecipesComponent},
   {path: '', component: HomePageComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

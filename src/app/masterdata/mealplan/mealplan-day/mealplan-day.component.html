@@ -1,0 +1,16 @@
+<mat-card class="mealplan-day">
+  <mat-card-header>
+    <mat-card-title>{{day | date: 'EEEE, dd-MM-yy' }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-mealplan-item *ngFor="let mealplan of mealplans" [mealplan]="mealplan"></app-mealplan-item>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button  [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Voeg recept toe</button>
+      <button mat-menu-item>Voeg product toe</button>
+      <button mat-menu-item>Voeg notitie toe</button>
+    </mat-menu>
+  </mat-card-actions>
+</mat-card>
