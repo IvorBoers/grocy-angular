@@ -29,7 +29,7 @@ import {ShoppingLocationDetailComponent} from "./masterdata/shopping-location/de
 import {BarcodeScannerLivestreamModule} from "ngx-barcode-scanner";
 import {BarcodescannerComponent} from './barcodescanner/barcodescanner.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
-import {BarcodedialogComponent} from './barcodedialog/barcodedialog.component';
+import {BarcodeDialogComponent} from './barcodedialog/barcode-dialog.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSelectModule} from "@angular/material/select";
 import {ProductgroupDetailComponent} from "./masterdata/productgroup/detail/productgroup-detail.component";
@@ -59,6 +59,8 @@ import {MatCardModule} from "@angular/material/card";
 import { MealplanDayComponent } from './masterdata/mealplan/mealplan-day/mealplan-day.component';
 import { MealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/mealplan-item.component';
 import {DatePipe} from "@angular/common";
+import { ProductPickerFormComponent } from './product-picker-form/product-picker-form.component';
+import { NoteMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/note-mealplan-item/note-mealplan-item.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,7 @@ import {DatePipe} from "@angular/common";
     StockLocationDetailComponent,
     StockLocationListComponent,
     BarcodescannerComponent,
-    BarcodedialogComponent,
+    BarcodeDialogComponent,
     JumboProductComponent,
     MasterDataComponent,
     HomePageComponent,
@@ -93,6 +95,8 @@ import {DatePipe} from "@angular/common";
     MealplanComponent,
     MealplanDayComponent,
     MealplanItemComponent,
+    ProductPickerFormComponent,
+    NoteMealplanItemComponent,
 
   ],
     imports: [

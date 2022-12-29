@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {BarcodedialogComponent} from "./barcodedialog/barcodedialog.component";
+import {BarcodeDialogComponent} from "./barcodedialog/barcode-dialog.component";
 import {ApiSettingsDialogComponent} from "./api-settings-dialog/api-settings-dialog.component";
 import {SystemStatusService} from "./system/system-info/system-status.service";
 
@@ -17,7 +17,7 @@ export class AppComponent {
   }
 
   openScanDialog() {
-    this.dialog.open(BarcodedialogComponent, {
+    this.dialog.open(BarcodeDialogComponent, {
       width: '80%',
       height: '80%'
     });

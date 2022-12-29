@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BarcodedialogComponent } from './barcodedialog.component';
+import { BarcodeDialogComponent } from './barcode-dialog.component';
 
-describe('BarcodedialogComponent', () => {
-  let component: BarcodedialogComponent;
-  let fixture: ComponentFixture<BarcodedialogComponent>;
+describe('BarcodeDialogComponent', () => {
+  let component: BarcodeDialogComponent;
+  let fixture: ComponentFixture<BarcodeDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BarcodedialogComponent ]
+      declarations: [ BarcodeDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BarcodedialogComponent);
+    fixture = TestBed.createComponent(BarcodeDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
