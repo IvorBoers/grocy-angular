@@ -1,0 +1,13 @@
+.mealplan-card {
+  width: 100%;
+  margin-bottom: 3px;
+  mat-card-header {
+    min-height: 64px;
+  }
+}
+.mealplan-card.editable mat-card-header {
+  padding: 2px;
+  .mat-form-field {
+    width: 100%;
+  }
+}

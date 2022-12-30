@@ -44,7 +44,6 @@ import {JumboRecipeSummaryComponent} from './external/jumbo/jumbo-recipe-summary
 import {MatGridListModule} from "@angular/material/grid-list";
 import {JumboRecipeDetailComponent} from './external/jumbo/jumbo-recipe-detail/jumbo-recipe-detail.component';
 import {JumboRecipeProductComponent} from './external/jumbo/jumbo-recipe-product/jumbo-recipe-product.component';
-import {JumboidSetterComponent} from './home-page/jumboid-setter/jumboid-setter.component';
 import {
   GrocyProductTablecellComponent
 } from './external/jumbo/jumbo-recipe-detail/grocy-product-tablecell/grocy-product-tablecell.component';
@@ -61,6 +60,9 @@ import { MealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealpl
 import {DatePipe} from "@angular/common";
 import { ProductPickerFormComponent } from './product-picker-form/product-picker-form.component';
 import { NoteMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/note-mealplan-item/note-mealplan-item.component';
+import {JumboidSetterComponent} from "./external/jumbo/jumboid-setter/jumboid-setter.component";
+import { RecipeMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/recipe-mealplan-item/recipe-mealplan-item.component';
+import { ProductMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/product-mealplan-item/product-mealplan-item.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,8 @@ import { NoteMealplanItemComponent } from './masterdata/mealplan/mealplan-day/me
     MealplanItemComponent,
     ProductPickerFormComponent,
     NoteMealplanItemComponent,
+    RecipeMealplanItemComponent,
+    ProductMealplanItemComponent,
 
   ],
     imports: [

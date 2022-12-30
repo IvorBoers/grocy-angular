@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BarcodeService} from "../../masterdata/barcode/barcode.service";
-import {JumboService} from "../../external/jumbo/jumbo-service";
-import {ProductUserfieldsService} from "../../shared/product-userfields-service";
+import {BarcodeService} from "../../../masterdata/barcode/barcode.service";
+import {JumboService} from "../jumbo-service";
+import {ProductUserfieldsService} from "../../../shared/product-userfields-service";
 
 @Component({
   selector: 'app-jumboid-setter',

@@ -17,6 +17,7 @@ import {HomePageComponent} from "./home-page/home-page.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {JumboRecipesComponent} from "./external/jumbo/jumbo-recipes/jumbo-recipes.component";
 import {MealplanComponent} from "./masterdata/mealplan/mealplan.component";
+import {JumboidSetterComponent} from "./external/jumbo/jumboid-setter/jumboid-setter.component";
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'masterdata/productgroups', component: ProductgroupListComponent },
   {path: 'masterdata/productgroups/:id', component: ProductgroupDetailComponent},
   {path: 'mealplan', component: MealplanComponent},
+  {path: 'jumbo/maintenance', component: JumboidSetterComponent},
   {path: 'jumbo/recipes', component: JumboRecipesComponent},
   {path: '', component: HomePageComponent},
   {path: '**', component: PageNotFoundComponent}

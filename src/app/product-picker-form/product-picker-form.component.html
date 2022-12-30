@@ -1,0 +1,24 @@
+<mat-form-field class="field-product" appearance="fill">
+  <mat-label>Product</mat-label>
+  <input type="text" matInput [matAutocomplete]="auto" [formControl]="productsControl">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let option of filteredProducts | async" [value]="option">
+      {{option.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+<mat-form-field class="field-qu" appearance="fill">
+  <mat-label>Unit</mat-label>
+  <input type="text" matInput [matAutocomplete]="autoQu" [formControl]="quControl">
+  <mat-autocomplete #autoQu="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let option of filteredQuantityunits | async" [value]="option">
+      {{option.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+<mat-form-field class="field-amount" appearance="fill">
+  <mat-label>Amount</mat-label>
+  <input matInput type="number" [formControl]="amountControl">
+</mat-form-field>

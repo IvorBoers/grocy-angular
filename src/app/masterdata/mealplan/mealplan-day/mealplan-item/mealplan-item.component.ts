@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Mealplan} from "../../../../domain/mealplan";
 import {RecipeService} from "../../../recipe/recipe.service";
 import {ProductService} from "../../../product/product.service";
@@ -18,13 +18,14 @@ export class MealplanItemComponent implements OnInit {
 
   recipe: Recipe;
   product: Product;
+  @Output()
+  refreshEvent = new EventEmitter();
 
 
   constructor(protected recipeService: RecipeService, protected productService: ProductService, protected filesService: FilesService) {
   }
 
   ngOnInit() {
-
 
     if (this.mealplan.recipe_id) {
       this.recipeService.getOne(this.mealplan.recipe_id).subscribe(r => this.recipe = r);
@@ -36,5 +37,9 @@ export class MealplanItemComponent implements OnInit {
 
   getFileUrl(picture_file_name: string) {
     return this.filesService.toFileUrl(FilesService.group_recipepictures, picture_file_name);
+  }
+
+  triggerRefreshEvent() {
+    this.refreshEvent.emit(null)
   }
 }

@@ -1,0 +1,41 @@
+<mat-card *ngIf="!editMode && recipe" class="mealplan-card">
+  <mat-card-header>
+    <mat-card-title >{{recipe.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipe.picture_file_name) + ')'}"></div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button (click)="setEditMode(true)"><mat-icon>edit</mat-icon></button>
+    <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
+<mat-card *ngIf="editMode" class="mealplan-card editable">
+  <mat-card-header>
+    <mat-card-title >
+
+      <mat-form-field class="field-recipe" appearance="fill">
+        <mat-label>Recipe</mat-label>
+        <input type="text" matInput [matAutocomplete]="auto" [formControl]="recipesControl">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let option of filteredRecipes | async" [value]="option">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="field-servings" appearance="fill">
+        <mat-label>Servings</mat-label>
+        <input matInput  min="1" type="number" [formControl]="servingsControl">
+      </mat-form-field>
+
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="recipesControl.value" class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipesControl.value.picture_file_name) + ')'}"></div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button>
+    <button mat-icon-button (click)="cancel()"><mat-icon>cancel</mat-icon></button>
+  </mat-card-actions>
+</mat-card>

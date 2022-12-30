@@ -1,38 +1,4 @@
-<mat-card *ngIf="recipe" class="mealplan-card">
-  <mat-card-header>
-    <mat-card-title >{{recipe.name}}</mat-card-title>
-  </mat-card-header>
-  <div class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipe.picture_file_name) + ')'}">
-  </div>
-  <mat-card-content>
-    <p>{{mealplan.recipe_servings}} porties</p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-icon-button><mat-icon>edit</mat-icon></button>
-    <button mat-icon-button><mat-icon>delete</mat-icon></button>
-  </mat-card-actions>
-</mat-card>
-<mat-card *ngIf="product" class="mealplan-card">
-  <mat-card-header>
-    <mat-card-title >{{product.name}}</mat-card-title>
-  </mat-card-header>
-  <img mealplan-card-image src="{{getFileUrl(product.picture_file_name)}}">
-  <mat-card-content>
+<app-note-mealplan-item *ngIf="mealplan.type=='note'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-note-mealplan-item>
+<app-recipe-mealplan-item *ngIf="mealplan.type=='recipe'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-recipe-mealplan-item>
+<app-product-mealplan-item *ngIf="mealplan.type=='product'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-product-mealplan-item>
 
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-icon-button><mat-icon>edit</mat-icon></button>
-    <button mat-icon-button><mat-icon>delete</mat-icon></button>
-  </mat-card-actions>
-</mat-card>
-<mat-card *ngIf="mealplan.note" class="mealplan-card">
-  <mat-card-header>
-    <mat-card-title >{{mealplan.note}}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-icon-button><mat-icon>edit</mat-icon></button>
-    <button mat-icon-button><mat-icon>delete</mat-icon></button>
-  </mat-card-actions>
-</mat-card>
