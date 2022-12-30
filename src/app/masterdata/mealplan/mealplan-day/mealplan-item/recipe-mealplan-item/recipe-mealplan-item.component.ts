@@ -30,7 +30,7 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
 
   ngOnInit() {
     super.ngOnInit();
-    this.recipeService.getAllWhere("type", "normal").subscribe(response => this.allRecipes = response)
+
     if (this.mealplan && this.mealplan.recipe_id) {
       this.recipeService.getOne(this.mealplan.recipe_id).subscribe(response => {
         this.recipe = response
@@ -43,6 +43,18 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
           return value ? this._filterRecipes(value as string) : this.allRecipes.slice();
         }),
     )
+
+  }
+
+  setEditMode(mode: boolean) {
+    if (this.allRecipes.length == 0 && mode) {
+      this.recipeService.getAllWhere("type", "normal").subscribe(response => {
+        this.allRecipes = response
+        super.setEditMode(mode);
+      })
+    } else {
+      super.setEditMode(mode);
+    }
 
   }
 
