@@ -5,8 +5,9 @@
   <mat-card-content>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-icon-button (click)="setEditMode(true)"><mat-icon>edit</mat-icon></button>
-    <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button matTooltip="Edit" (click)="setEditMode(true)"><mat-icon>edit</mat-icon></button>
+    <button mat-icon-button matTooltip="Delete" (click)="delete()"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button matTooltip="Move to other day"><mat-icon>edit_calendar</mat-icon></button>
   </mat-card-actions>
 </mat-card>
 <mat-card *ngIf="editMode" class="mealplan-card editable">
@@ -21,7 +22,7 @@
   <mat-card-content>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button>
-    <button mat-icon-button (click)="cancel()"><mat-icon>cancel</mat-icon></button>
+    <button mat-icon-button matTooltip="Save" (click)="save()"><mat-icon>save</mat-icon></button>
+    <button mat-icon-button matTooltip="Cancel" (click)="cancel()"><mat-icon>cancel</mat-icon></button>
   </mat-card-actions>
 </mat-card>
