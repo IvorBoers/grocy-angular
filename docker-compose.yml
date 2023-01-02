@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  grocy-angular:
+    container_name: grocy-angular
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - "81:80"

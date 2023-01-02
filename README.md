@@ -1,6 +1,20 @@
-# GrocyAngular
+# Grocy Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.2.
+## Grocy
+
+[Grocy](https://grocy.info) is a web-based self-hosted groceries & household management solution for your home.
+
+## History
+
+This project was started to be able to import recipes from the website of a Dutch supermarket. It then grew to a usable frontend for more tasks related to Grocy. The main reason being the slow UI of Grocy.
+
+## Used techniques
+
+This application is based on Angular and Angular Material. It communicates with Grocy using the REST API of Grocy.
+
+## Run with docker-compose
+
+This application can be run with docker-compose. By default this application will be run on port 81. Adjust settings in docker-compose to customize.
 
 ## Development server
 
