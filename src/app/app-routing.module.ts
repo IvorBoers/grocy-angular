@@ -18,6 +18,9 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {JumboRecipesComponent} from "./external/jumbo/jumbo-recipes/jumbo-recipes.component";
 import {MealplanComponent} from "./masterdata/mealplan/mealplan.component";
 import {JumboidSetterComponent} from "./external/jumbo/jumboid-setter/jumboid-setter.component";
+import {RecipeListComponent} from "./masterdata/recipe/recipe-list/recipe-list.component";
+import {RecipeDetailViewComponent} from "./masterdata/recipe/recipe-detail-view/recipe-detail-view.component";
+import {RecipeDetailEditComponent} from "./masterdata/recipe/recipe-detail-edit/recipe-detail-edit.component";
 
 
 const routes: Routes = [
@@ -35,6 +38,9 @@ const routes: Routes = [
   {path: 'masterdata/productgroups', component: ProductgroupListComponent },
   {path: 'masterdata/productgroups/:id', component: ProductgroupDetailComponent},
   {path: 'mealplan', component: MealplanComponent},
+  {path: 'recipes', component: RecipeListComponent},
+  {path: 'recipe/:id', component: RecipeDetailViewComponent},
+  {path: 'recipe/:id/edit', component: RecipeDetailEditComponent},
   {path: 'jumbo/maintenance', component: JumboidSetterComponent},
   {path: 'jumbo/recipes', component: JumboRecipesComponent},
   {path: '', component: HomePageComponent},

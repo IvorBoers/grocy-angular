@@ -9,6 +9,7 @@ import {FormControl} from "@angular/forms";
 import {map, startWith} from "rxjs/operators";
 import {FilesService} from "../../../../files/files-service";
 import {Named} from "../../../../../domain/entity";
+import {GrocyImagePipe} from "../../../../../shared/grocy-image-pipe.pipe";
 
 @Component({
   selector: 'app-recipe-mealplan-item',
@@ -24,7 +25,7 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   servingsControl = new FormControl<number>(1)
 
   constructor(protected mealplanService: MealplanService, protected alertService: AlertService, protected recipeService: RecipeService,
-              protected filesService: FilesService) {
+              protected grocyImagePipe: GrocyImagePipe) {
     super(mealplanService, alertService);
   }
 
@@ -72,7 +73,7 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   }
 
   getFileUrl(picture_file_name: string) {
-    return this.filesService.toFileUrl(FilesService.group_recipepictures, picture_file_name);
+    return this.grocyImagePipe.transform(picture_file_name, FilesService.group_recipepictures)
   }
 
   displayFn(named: Named) {

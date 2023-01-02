@@ -1,0 +1,23 @@
+<div *ngIf="item">
+
+  <div class="recipe-view-container">
+    <div class="recipe-view-header">
+      <div class="recipe-view-image">
+        <img *ngIf="item.picture_file_name" src="{{item.picture_file_name | grocyImage:'recipepictures'}}" height="300px">
+      </div>
+      <div class="recipe-view-summary">
+        <h1>{{item.name}}</h1>
+        <p>details</p>
+      </div>
+    </div>
+    <div class="recipe-view-details">
+      <div class="recipe-view-ingredients"><h2>Ingredients</h2></div>
+      <div class="recipe-view-description">
+        <h2>Description</h2>
+        <p [innerHTML]="item.description"></p>
+      </div>
+    </div>
+  </div>
+
+
+</div>

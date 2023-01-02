@@ -63,6 +63,10 @@ import { NoteMealplanItemComponent } from './masterdata/mealplan/mealplan-day/me
 import {JumboidSetterComponent} from "./external/jumbo/jumboid-setter/jumboid-setter.component";
 import { RecipeMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/recipe-mealplan-item/recipe-mealplan-item.component';
 import { ProductMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/product-mealplan-item/product-mealplan-item.component';
+import { RecipeDetailViewComponent } from './masterdata/recipe/recipe-detail-view/recipe-detail-view.component';
+import { RecipeDetailEditComponent } from './masterdata/recipe/recipe-detail-edit/recipe-detail-edit.component';
+import { RecipeListComponent } from './masterdata/recipe/recipe-list/recipe-list.component';
+import { GrocyImagePipe } from './shared/grocy-image-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -101,6 +105,10 @@ import { ProductMealplanItemComponent } from './masterdata/mealplan/mealplan-day
     NoteMealplanItemComponent,
     RecipeMealplanItemComponent,
     ProductMealplanItemComponent,
+    RecipeDetailViewComponent,
+    RecipeDetailEditComponent,
+    RecipeListComponent,
+    GrocyImagePipe,
 
   ],
     imports: [
@@ -133,6 +141,7 @@ import { ProductMealplanItemComponent } from './masterdata/mealplan/mealplan-day
     ],
   providers: [
       DatePipe,
+      GrocyImagePipe,
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
   ],
   bootstrap: [AppComponent]

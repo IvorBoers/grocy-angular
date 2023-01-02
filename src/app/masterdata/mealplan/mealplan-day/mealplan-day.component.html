@@ -8,9 +8,9 @@
   <mat-card-actions>
     <button mat-icon-button  [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="addItem('recipe')">Voeg recept toe</button>
-      <button mat-menu-item (click)="addItem('product')">Voeg product toe</button>
-      <button mat-menu-item (click)="addItem('note')">Voeg notitie toe</button>
+      <button mat-menu-item (click)="addItem('recipe')"><mat-icon>dinner_dining</mat-icon>Add recipe</button>
+      <button mat-menu-item (click)="addItem('product')"><mat-icon>egg</mat-icon>Add product</button>
+      <button mat-menu-item (click)="addItem('note')"><mat-icon>notes</mat-icon>Add note</button>
     </mat-menu>
     <button mat-icon-button matTooltip="Move all items to another day"><mat-icon>edit_calendar</mat-icon></button>
   </mat-card-actions>
