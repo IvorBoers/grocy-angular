@@ -5,3 +5,13 @@
 .menu-spacer {
   flex: 1 1 auto;
 }
+.on-large-screen {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+.mdc-button {
+  @media (max-width: 768px) {
+    min-width: 16px;
+  }
+}

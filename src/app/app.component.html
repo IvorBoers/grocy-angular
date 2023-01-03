@@ -2,10 +2,10 @@
 <div class="header" role="header">
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="openScanDialog()" aria-label="Open scan dialog"><mat-icon>qr_code_scanner</mat-icon></button>
-    <button mat-button routerLink="/">Homepage</button>
-    <button mat-button routerLink="/mealplan">Mealplan</button>
-    <button mat-button routerLink="/recipes">Recipes</button>
-    <button mat-button [matMenuTriggerFor]="masterdata">Masterdata</button>
+    <button mat-button routerLink="/" matTooltip="Homepage"><mat-icon>home</mat-icon><span class="on-large-screen">Homepage</span></button>
+    <button mat-button routerLink="/mealplan" matTooltip="Mealplan"><mat-icon>calendar_view_week</mat-icon><span class="on-large-screen">Mealplan</span></button>
+    <button mat-button routerLink="/recipes" matTooltip="Recipes"><mat-icon>dinner_dining</mat-icon><span class="on-large-screen">Recipes</span></button>
+    <button mat-button [matMenuTriggerFor]="masterdata" matTooltip="Masterdata"><mat-icon>list</mat-icon><span class="on-large-screen">Masterdata</span></button>
     <mat-menu #masterdata="matMenu">
       <button mat-menu-item routerLink="/masterdata/locations">Locations</button>
       <button mat-menu-item routerLink="/masterdata/stocklocations">Stocklocations</button>
@@ -14,7 +14,7 @@
       <button mat-menu-item routerLink="/masterdata/productgroups">Productgroups</button>
       <button mat-menu-item routerLink="/masterdata/quantityunits">Quantityunits</button>
     </mat-menu>
-    <button mat-button [matMenuTriggerFor]="jumbo">Jumbo</button>
+    <button mat-button [matMenuTriggerFor]="jumbo" matTooltip="Jumbo"><mat-icon>store</mat-icon><span class="on-large-screen">Jumbo</span></button>
     <mat-menu #jumbo="matMenu">
       <button mat-menu-item routerLink="/jumbo/recipes">Recipes</button>
       <button mat-menu-item routerLink="/jumbo/maintenance">Maintenance</button>

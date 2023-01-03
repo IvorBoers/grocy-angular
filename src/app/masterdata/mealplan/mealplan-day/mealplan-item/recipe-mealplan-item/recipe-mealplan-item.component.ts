@@ -10,6 +10,7 @@ import {map, startWith} from "rxjs/operators";
 import {FilesService} from "../../../../files/files-service";
 import {Named} from "../../../../../domain/entity";
 import {GrocyImagePipe} from "../../../../../shared/grocy-image-pipe.pipe";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-recipe-mealplan-item',
@@ -25,7 +26,7 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   servingsControl = new FormControl<number>(1)
 
   constructor(protected mealplanService: MealplanService, protected alertService: AlertService, protected recipeService: RecipeService,
-              protected grocyImagePipe: GrocyImagePipe) {
+              protected grocyImagePipe: GrocyImagePipe, protected router: Router) {
     super(mealplanService, alertService);
   }
 
@@ -81,5 +82,9 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
       return named.name;
     }
     return '';
+  }
+
+  showRecipe() {
+    this.router.navigate(['/recipe/' + this.recipe.id])
   }
 }

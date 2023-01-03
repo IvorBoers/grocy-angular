@@ -1,6 +1,6 @@
 <mat-card *ngIf="!editMode && recipe" class="mealplan-card">
   <mat-card-header>
-    <mat-card-title><a routerLink="/recipe/{{recipe.id}}">{{recipe.name}}</a></mat-card-title>
+    <mat-card-title (click)="showRecipe()" class="link">{{recipe.name}}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div *ngIf="recipe.picture_file_name" class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipe.picture_file_name) + ')'}"></div>
