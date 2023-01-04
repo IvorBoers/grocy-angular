@@ -2,7 +2,17 @@
   <div class="flex-container">
     <div class="flex-title">
       <h2>{{item.name}}</h2>
-      <p>{{item.id}}</p>
+      <em>{{item.id}}</em>
+
+      <dl>
+        <dt>course</dt><dd>{{item.course}}</dd>
+        <dt>time</dt><dd>{{item.cookingTime}} min</dd>
+        <dt>calories</dt><dd>{{item.calories}} kcal/pers.</dd>
+        <dt>ingredients</dt><dd>{{item.ingredients.length}}</dd>
+        <dt>persons</dt><dd>{{item.numberOfPortions}}</dd>
+      </dl>
+
+
     </div>
     <div class="flex-instructions">
       <span>{{item.description}}</span>
