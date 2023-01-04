@@ -8,74 +8,96 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {SelectionModel} from "@angular/cdk/collections";
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
-  selector: 'app-jumbo-recipes',
-  templateUrl: './jumbo-recipes.component.html',
-  styleUrls: ['./jumbo-recipes.component.scss']
+    selector: 'app-jumbo-recipes',
+    templateUrl: './jumbo-recipes.component.html',
+    styleUrls: ['./jumbo-recipes.component.scss']
 })
 export class JumboRecipesComponent implements OnInit {
-  displayedColumns: string[] = ['image', 'name']
-  dataSource: MatTableDataSource<JumboRecipeSummary>;
+    displayedColumns: string[] = ['image', 'name']
+    dataSource: MatTableDataSource<JumboRecipeSummary>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
-  query = "tomatenblokjes";
-  detail: RecipeData;
-  grocyProductsByJumboId = new Map()
-  selection: SelectionModel<JumboRecipeSummary>;
-  loading = false;
 
-  constructor(protected jumboService: JumboService, protected productService: ProductService) {
-    this.selection = new SelectionModel<JumboRecipeSummary>(false, null);
-    this.selection.changed.subscribe(row => {
-      const selectedRecipe = row.added[0]
-      if (row.added[0]) {
-        this.showItem(row.added[0])
-      }
-    })
-  }
+    query = "tomatenblokjes";
+    detail: RecipeData;
+    grocyProductsByJumboId = new Map()
+    selection: SelectionModel<JumboRecipeSummary>;
+    loading = false;
+    sideNavOpened = true;
+    sideNavMode = 'side'
 
-  ngOnInit(): void {
-    this.productService.getAll().subscribe(result => this.createProductsMap(result))
-  }
 
-  setTableData(all: JumboRecipeSummary[]) {
-    this.dataSource = new MatTableDataSource<JumboRecipeSummary>(all);
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator.firstPage()
+    constructor(protected jumboService: JumboService, protected productService: ProductService, private observer: BreakpointObserver) {
+
     }
-    this.dataSource.sort = this.sort;
 
-    this.selection.clear()
-    if (all.length > 0) {
-      this.selection.select(all[0])
+    ngOnInit(): void {
+        this.productService.getAll().subscribe(result => this.createProductsMap(result))
+
+        this.selection = new SelectionModel<JumboRecipeSummary>(false, null);
+        this.selection.changed.subscribe(row => {
+            if (row.added[0]) {
+                this.showItem(row.added[0])
+            }
+        })
+
+        this.observer.observe(['(max-width: 786px)']).subscribe((res) => {
+            if (res.matches) {
+                this.sideNavMode = 'over';
+                this.sideNavOpened = false;
+            } else {
+                this.sideNavMode = 'side';
+                this.sideNavOpened = true;
+            }
+        });
     }
-    this.loading = false
-  }
 
-  private createProductsMap(products: Product[]) {
-    if (products) {
-      products.forEach(p => {
-        if (p.userfields.jumboId) {
-          p.userfields.jumboId.split(',').forEach(sub => this.grocyProductsByJumboId.set(sub, p));
+    setTableData(all: JumboRecipeSummary[]) {
+        this.dataSource = new MatTableDataSource<JumboRecipeSummary>(all);
+        this.selection.clear()
+
+        if (this.paginator) {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.paginator.firstPage()
         }
-      })
+        this.dataSource.sort = this.sort;
+
+        this.sideNavOpened = true;
+        if (all.length > 0) {
+            this.selection.select(all[0])
+        }
+
+        this.loading = false
     }
-  }
 
-  searchRecipe() {
-    this.selection.clear()
-    this.setTableData([])
-    this.loading = true
+    private createProductsMap(products: Product[]) {
+        if (products) {
+            products.forEach(p => {
+                if (p.userfields.jumboId) {
+                    p.userfields.jumboId.split(',').forEach(sub => this.grocyProductsByJumboId.set(sub, p));
+                }
+            })
+        }
+    }
 
-    this.jumboService.searchRecipes(0, 100, this.query).subscribe(result => this.setTableData(result.recipes.data));
-  }
+    searchRecipe() {
+        this.selection.clear()
+        this.setTableData([])
+        this.loading = true
 
-  showItem(element: JumboRecipeSummary) {
-    this.jumboService.getRecipe(element.id).subscribe(result => this.detail = result.recipe.data);
-  }
+        this.jumboService.searchRecipes(0, 100, this.query).subscribe(result => this.setTableData(result.recipes.data));
+    }
 
+    showItem(element: JumboRecipeSummary) {
+        this.jumboService.getRecipe(element.id).subscribe(result => this.detail = result.recipe.data);
+    }
+
+    toggleSideNav() {
+        this.sideNavOpened = !this.sideNavOpened;
+    }
 }

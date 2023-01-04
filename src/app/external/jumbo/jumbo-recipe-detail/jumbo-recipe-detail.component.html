@@ -1,8 +1,10 @@
-<div *ngIf="item">
+<div *ngIf="item" class="jumbo-recipe-item">
   <div class="flex-container">
-    <div class="flex-scaler">
-      <h2>{{item.id}} - {{item.name}}</h2>
-
+    <div class="flex-title">
+      <h2>{{item.name}}</h2>
+      <p>{{item.id}}</p>
+    </div>
+    <div class="flex-instructions">
       <span>{{item.description}}</span>
       <h3>Instructions</h3>
       <ng-container *ngFor="let i of item.instructions">
@@ -11,7 +13,7 @@
       </span>
       </ng-container>
     </div>
-    <div class="flex-static">
+    <div class="flex-image">
       <img src="{{item.imageInfo.primaryView[0].url}}" alt="recipe picture" height="450px">
     </div>
   </div>
@@ -55,7 +57,4 @@
 
   <p><button mat-raised-button color="primary" (click)="importInGrocy()">Add recipe to Grocy <mat-icon>save</mat-icon>
   </button></p>
-</div>
-<div *ngIf="!item">
-  <p>Selecteer een item</p>
 </div>

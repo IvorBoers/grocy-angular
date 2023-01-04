@@ -13,7 +13,7 @@ export class AppComponent {
   title = 'grocy-angular';
 
 
-  constructor(public dialog: MatDialog, protected systemStatusService: SystemStatusService) {
+  constructor(public dialog: MatDialog) {
   }
 
   openScanDialog() {
@@ -21,13 +21,6 @@ export class AppComponent {
       width: '80%',
       height: '80%'
     });
-  }
-
-  openApiSettingsDialog() {
-    const dialogRef = this.dialog.open(ApiSettingsDialogComponent, {
-      width: '600px'
-    })
-    dialogRef.afterClosed().subscribe(() => this.systemStatusService.refreshConnection());
   }
 
 

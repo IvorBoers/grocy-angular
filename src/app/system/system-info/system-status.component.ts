@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SystemStatusService} from "./system-status.service";
 import {SystemInfo} from "../../domain/system-info";
+import {ApiSettingsDialogComponent} from "../../api-settings-dialog/api-settings-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-system-status',
@@ -11,7 +13,7 @@ export class SystemStatusComponent implements OnInit {
   connected = false;
   status = 'Not connected';
 
-  constructor(protected systemStatusService: SystemStatusService) {
+  constructor(protected systemStatusService: SystemStatusService, protected dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -28,5 +30,12 @@ export class SystemStatusComponent implements OnInit {
       this.connected = true;
       this.status = "Connected to grocy version " + systemInfo.grocy_version.Version
     }
+  }
+
+  openApiSettingsDialog() {
+    const dialogRef = this.dialog.open(ApiSettingsDialogComponent, {
+
+    })
+    dialogRef.afterClosed().subscribe(() => this.systemStatusService.refreshConnection());
   }
 }

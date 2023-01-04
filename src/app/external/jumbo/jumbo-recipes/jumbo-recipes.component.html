@@ -10,18 +10,19 @@
     <mat-icon>search</mat-icon>
   </button>
 </div>
-<div class="results-container">
-  <div class="results-list">
-    <mat-spinner *ngIf="loading"></mat-spinner>
-    <div class="summary-table-container" *ngIf="!loading && dataSource && dataSource.data.length>0">
+<mat-sidenav-container class="jumbo-recipes-sidenav-container">
+  <mat-sidenav mode="{{sideNavMode}}" [(opened)]="sideNavOpened" (closed)="sideNavOpened = false">
+    <div class="summary-table-container">
 
-      <table mat-table [dataSource]="dataSource">
+      <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef> Image</th>
           <td mat-cell *matCellDef="let element"><img *ngIf="element.imageInfo && element.imageInfo.primaryView"
                                                       src="{{element.imageInfo.primaryView[0].url}}" alt="recipe image" height="100px"></td>
         </ng-container>
 
         <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
           <td mat-cell *matCellDef="let element"><strong>{{element.name}}</strong><br/>
             <mat-icon>kitchen</mat-icon>
             {{element.numberOfIngredients}}
@@ -29,16 +30,26 @@
             {{element.cookingTime}} </td>
         </ng-container>
 
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'selected': selection.isSelected(row)}"
             (click)="selection.select(row)"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10"></mat-paginator>
     </div>
-    <div *ngIf="!loading && (!dataSource || (dataSource && dataSource.data.length == 0))">
-      Geen resultaten
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div *ngIf="!sideNavOpened">
+      <button mat-icon-button (click)="toggleSideNav()"><mat-icon>menu</mat-icon></button>
     </div>
-  </div>
-  <div class="detail-container">
-    <app-jumbo-recipe-detail [item]="detail" [grocyProductsByJumboId]="grocyProductsByJumboId"></app-jumbo-recipe-detail>
-  </div>
-</div>
+    <div class="loading-spinner" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="no-results" *ngIf="!loading && (!dataSource || (dataSource && dataSource.data.length == 0))">
+      No search results
+    </div>
+    <div class="detail-container" *ngIf="!loading">
+      <app-jumbo-recipe-detail [item]="detail" [grocyProductsByJumboId]="grocyProductsByJumboId"></app-jumbo-recipe-detail>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

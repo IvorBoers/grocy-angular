@@ -67,6 +67,8 @@ import { RecipeDetailViewComponent } from './masterdata/recipe/recipe-detail-vie
 import { RecipeDetailEditComponent } from './masterdata/recipe/recipe-detail-edit/recipe-detail-edit.component';
 import { RecipeListComponent } from './masterdata/recipe/recipe-list/recipe-list.component';
 import { GrocyImagePipe } from './shared/grocy-image-pipe.pipe';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -137,7 +139,9 @@ import { GrocyImagePipe } from './shared/grocy-image-pipe.pipe';
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatTooltipModule,
-        MatCardModule
+        MatCardModule,
+        MatSidenavModule,
+        MatCheckboxModule
     ],
   providers: [
       DatePipe,

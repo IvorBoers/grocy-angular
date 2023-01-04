@@ -1,9 +1,21 @@
-.results-container {
+.jumbo-recipes-sidenav-container {
+  position: absolute;
+  top: 160px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.loading-spinner {
+  padding-top: 25px;
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  justify-content: flex-start;
+  width: 90px;
+  margin: auto;
+}
+
+.no-results {
+  text-align: center;
+  padding-top: 25px;
 }
 .detail-container {
   margin: 10px;

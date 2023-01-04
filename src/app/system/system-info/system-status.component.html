@@ -1,1 +1,1 @@
-<button mat-icon-button matTooltip="{{status}}"><mat-icon *ngIf="connected">cloud</mat-icon><mat-icon *ngIf="!connected">cloud_off</mat-icon></button>
+<button mat-icon-button matTooltip="{{status}}"  (click)="openApiSettingsDialog()"><mat-icon *ngIf="connected">cloud</mat-icon><mat-icon *ngIf="!connected">cloud_off</mat-icon></button>
