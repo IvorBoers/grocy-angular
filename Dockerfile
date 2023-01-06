@@ -13,9 +13,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 # the dependencies. This is a separate step so the dependencies
 # will be cached unless changes to one of those two files
 # are made.
-COPY package.json /app/package.json
+COPY package*.json /app/
 RUN npm install
-RUN npm install -g @angular/cli@15.0.4
 
 # Copy the main application
 COPY . /app
@@ -27,7 +26,7 @@ ARG configuration=production
 RUN npm run build --output-path=/dist --configuration=$configuration
 
 #### Stage 2, use the compiled app, ready for production with Nginx
-FROM nginx:alpine
+FROM nginx:1.15
 
 # Copy the angular build from Stage 1
 COPY --from=build /app/dist/grocy-angular /usr/share/nginx/html
@@ -36,8 +35,8 @@ COPY --from=build /app/dist/grocy-angular /usr/share/nginx/html
 COPY /nginx-custom.conf /etc/nginx/conf.d/default.conf
 
 
-# Expose port 80 to the Docker host, so we can access it
+# Expose port 88 to the Docker host, so we can access it
 # from the outside.
-EXPOSE 80
+EXPOSE 88
 
 ENTRYPOINT ["nginx","-g","daemon off;"]

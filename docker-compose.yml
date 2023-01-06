@@ -3,11 +3,17 @@ version: '3.7'
 services:
   grocy-angular:
     container_name: grocy-angular
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
     build:
       context: .
       dockerfile: Dockerfile
+    image: grocy-angular:latest
     volumes:
       - '.:/app'
       - '/app/node_modules'
     ports:
-      - "81:80"
+      - "88:80"
+    restart: unless-stopped
