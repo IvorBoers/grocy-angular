@@ -1,1 +1,62 @@
-<p>product-mealplan-item works!</p>
+<mat-card *ngIf="!editMode && product && mealplan && productQuantityUnit" class="mealplan-card">
+  <mat-card-header>
+    <mat-card-title>{{product.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="product.picture_file_name" class="mealplan-card-image-container"
+         [ngStyle]="{'background-image': 'url(' + getFileUrl(product.picture_file_name) + ')'}"></div>
+    <span>{{mealplan.product_amount}} {{productQuantityUnit.name}}</span>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button (click)="setEditMode(true)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button (click)="delete()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="editMode" class="mealplan-card editable">
+  <mat-card-header>
+    <mat-card-title>
+
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="productForm">
+
+
+    <mat-form-field class="field-product" appearance="fill">
+      <mat-label>Product</mat-label>
+      <input type="text" matInput [matAutocomplete]="auto" [formControl]="productForm.productsControl">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="productForm.displayFn">
+        <mat-option *ngFor="let option of productForm.filteredProducts | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="field-qu" appearance="fill">
+      <mat-label>Unit</mat-label>
+      <input type="text" matInput [matAutocomplete]="autoQu" [formControl]="productForm.quControl">
+      <mat-autocomplete #autoQu="matAutocomplete" [displayWith]="productForm.displayFn">
+        <mat-option *ngFor="let option of productForm.filteredQuantityunits | async" [value]="option">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="field-amount" appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" [formControl]="productForm.amountControl">
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button matTooltip="Save" (click)="save()">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Cancel" (click)="cancel()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
