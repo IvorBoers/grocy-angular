@@ -7,8 +7,8 @@
   <button mat-icon-button (click)="navigateDays(deltaDays+1)"><mat-icon>navigate_next</mat-icon></button>
   <button mat-icon-button (click)="navigateDays(deltaDays+7)"><mat-icon>fast_forward</mat-icon></button>
 </div>
-<div class="mealplan-day-container">
-  <div *ngFor="let day of days">
+<div class="mealplan-day-container" cdkDropListGroup>
+  <div *ngFor="let day of days" >
     <app-mealplan-day  [day]="day"></app-mealplan-day>
   </div>
 </div>

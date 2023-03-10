@@ -1,0 +1,24 @@
+
+.mealplan-card {
+  width: 100%;
+  margin-bottom: 3px;
+  mat-card-header {
+    min-height: 64px;
+  }
+
+  .mealplan-card-image-container {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 200px;
+  }
+  .mat-mdc-card-content {
+    //padding: 0;
+  }
+}
+.mealplan-card.editable mat-card-header {
+  padding: 2px;
+  .mat-form-field {
+    width: 100%;
+  }
+}

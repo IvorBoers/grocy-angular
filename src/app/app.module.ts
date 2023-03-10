@@ -69,6 +69,7 @@ import { RecipeListComponent } from './masterdata/recipe/recipe-list/recipe-list
 import { GrocyImagePipe } from './shared/grocy-image-pipe.pipe';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -141,7 +142,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatTooltipModule,
         MatCardModule,
         MatSidenavModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        DragDropModule
     ],
   providers: [
       DatePipe,

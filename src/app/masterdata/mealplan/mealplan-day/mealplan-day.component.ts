@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MealplanService} from "../mealplan.service";
 import {Mealplan} from "../../../domain/mealplan";
 import {DatePipe} from "@angular/common";
+import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import {MealplanDragDropService} from "./MealplanDragDropService";
 
 @Component({
   selector: 'app-mealplan-day',
@@ -14,11 +16,15 @@ export class MealplanDayComponent implements OnInit {
   day: Date
   mealplans: Mealplan[] = []
 
-
-  constructor(protected mealplanService: MealplanService, protected datePipe: DatePipe) {
+  constructor(protected mealplanService: MealplanService, protected datePipe: DatePipe, protected mealplanDragDropService: MealplanDragDropService) {
   }
   ngOnInit() {
     this.loadMealplansForDay();
+    this.mealplanDragDropService.mealplanDayChange$.subscribe(day => {
+      if (day === this.datePipe.transform(this.day, 'yyyy-MM-dd')) {
+        this.loadMealplansForDay();
+      }
+    })
   }
 
   loadMealplansForDay() {
@@ -41,5 +47,23 @@ export class MealplanDayComponent implements OnInit {
     const arrayCopy = [...this.mealplans]
     arrayCopy.push(note)
     this.mealplans = arrayCopy
+  }
+
+  drop(event: CdkDragDrop<any, any>) {
+    if (event.previousContainer.id === event.container.id) {
+      this.moveItemInDay(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      console.log(event.previousContainer.id)
+      this.mealplanDragDropService.dropIntoDay(event.previousContainer.data[event.previousIndex], this.day);
+    }
+
+  }
+
+  private moveItemInDay(data: any, previousIndex: number, currentIndex: number) {
+    console.log("Drop Move-in-day event " + this.day + ", obj=" +JSON.stringify(data[0]));
   }
 }

@@ -24,7 +24,6 @@ export class ProductForm {
 
 
   init(): void {
-    console.log("init productform "+ this.productsControl.value?.name + ", p=" + this.products.length + ", q=" + this.allQuantityunits.length + ", c=" + this.quantityunitConversions.length)
     this.filteredProducts = this.productsControl.valueChanges.pipe(
       startWith(''),
       map(value => {
@@ -52,8 +51,6 @@ export class ProductForm {
         // TODO: set amount ?
       }
     })
-    // this.quControl.valueChanges.subscribe(c => this.ingredient.grocyQuantityUnit = c)
-    // this.amountControl.valueChanges.subscribe(c => this.ingredient.grocyAmount = c)
   }
 
   private getConvertableQuantityunits(product: Product):number[] {
