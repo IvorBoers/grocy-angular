@@ -5,10 +5,9 @@
   align-items: stretch;
   justify-content: space-between;
   div {
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
     width: 14%;
-    min-width: 235px;
     padding: 2px;
     @media (max-width: 768px) {
       width: 100%;

@@ -21,6 +21,8 @@ import {JumboidSetterComponent} from "./external/jumbo/jumboid-setter/jumboid-se
 import {RecipeListComponent} from "./masterdata/recipe/recipe-list/recipe-list.component";
 import {RecipeDetailViewComponent} from "./masterdata/recipe/recipe-detail-view/recipe-detail-view.component";
 import {RecipeDetailEditComponent} from "./masterdata/recipe/recipe-detail-edit/recipe-detail-edit.component";
+import {MealplanSectionListComponent} from "./masterdata/mealplan-section/list/mealplan-section-list.component";
+import {MealplanSectionDetailComponent} from "./masterdata/mealplan-section/detail/mealplan-section-detail.component";
 
 
 const routes: Routes = [
@@ -38,6 +40,8 @@ const routes: Routes = [
   {path: 'masterdata/productgroups', component: ProductgroupListComponent },
   {path: 'masterdata/productgroups/:id', component: ProductgroupDetailComponent},
   {path: 'mealplan', component: MealplanComponent},
+  {path: 'mealplan/sections', component: MealplanSectionListComponent},
+  {path: 'mealplan/sections/:id', component: MealplanSectionDetailComponent},
   {path: 'recipes', component: RecipeListComponent},
   {path: 'recipe/:id', component: RecipeDetailViewComponent},
   {path: 'recipe/:id/edit', component: RecipeDetailEditComponent},

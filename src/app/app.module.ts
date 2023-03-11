@@ -70,6 +70,8 @@ import { GrocyImagePipe } from './shared/grocy-image-pipe.pipe';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MealplanSectionListComponent} from "./masterdata/mealplan-section/list/mealplan-section-list.component";
+import {MealplanSectionDetailComponent} from "./masterdata/mealplan-section/detail/mealplan-section-detail.component";
 
 @NgModule({
   declarations: [
@@ -112,6 +114,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     RecipeDetailEditComponent,
     RecipeListComponent,
     GrocyImagePipe,
+    MealplanSectionListComponent,
+    MealplanSectionDetailComponent
 
   ],
     imports: [

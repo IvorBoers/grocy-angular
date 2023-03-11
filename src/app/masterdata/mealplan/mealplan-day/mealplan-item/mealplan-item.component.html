@@ -1,4 +1,4 @@
-<div *cdkDragPlaceholder></div>
+
 <app-note-mealplan-item *ngIf="mealplan.type=='note'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"> </app-note-mealplan-item>
 <app-recipe-mealplan-item *ngIf="mealplan.type=='recipe'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-recipe-mealplan-item>
 <app-product-mealplan-item *ngIf="mealplan.type=='product'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-product-mealplan-item>

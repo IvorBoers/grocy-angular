@@ -1,0 +1,19 @@
+<div *ngIf="item">
+  <mat-form-field>
+    <mat-label>Id</mat-label>
+    <input matInput disabled [(ngModel)]="item.id">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="item.name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Time info</mat-label>
+    <input matInput [(ngModel)]="item.time_info">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Sort number</mat-label>
+    <input matInput type="number"  min="0" required [(ngModel)]="item.sort_number">
+  </mat-form-field>
+  <button mat-button class="btn btn-primary" (click)="save()" i18n="@@actionSave">Save</button>
+</div>

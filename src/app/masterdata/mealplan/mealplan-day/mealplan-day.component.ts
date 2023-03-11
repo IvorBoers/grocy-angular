@@ -3,7 +3,8 @@ import {MealplanService} from "../mealplan.service";
 import {Mealplan} from "../../../domain/mealplan";
 import {DatePipe} from "@angular/common";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
-import {MealplanDragDropService} from "./MealplanDragDropService";
+import {MealplanDragDropService} from "./mealplan-drag-drop-service";
+import {MealplanSection} from "../../../domain/mealplan-section";
 
 @Component({
   selector: 'app-mealplan-day',
@@ -12,6 +13,8 @@ import {MealplanDragDropService} from "./MealplanDragDropService";
 })
 export class MealplanDayComponent implements OnInit {
 
+  @Input()
+  sections: MealplanSection[];
   @Input()
   day: Date
   mealplans: Mealplan[] = []
@@ -24,7 +27,7 @@ export class MealplanDayComponent implements OnInit {
       if (day === this.datePipe.transform(this.day, 'yyyy-MM-dd')) {
         this.loadMealplansForDay();
       }
-    })
+    });
   }
 
   loadMealplansForDay() {
@@ -33,7 +36,7 @@ export class MealplanDayComponent implements OnInit {
       if (mealplans) {
         this.mealplans = mealplans;
       }
-    })
+    });
   }
 
   addItem(type: string) {
