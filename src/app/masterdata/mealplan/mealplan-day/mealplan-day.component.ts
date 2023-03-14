@@ -5,6 +5,7 @@ import {DatePipe} from "@angular/common";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
 import {MealplanDragDropService} from "./mealplan-drag-drop-service";
 import {MealplanSection} from "../../../domain/mealplan-section";
+import {MealplanSectionService} from "../../mealplan-section/mealplan-section.service";
 
 @Component({
   selector: 'app-mealplan-day',
@@ -19,7 +20,8 @@ export class MealplanDayComponent implements OnInit {
   day: Date
   mealplans: Mealplan[] = []
 
-  constructor(protected mealplanService: MealplanService, protected datePipe: DatePipe, protected mealplanDragDropService: MealplanDragDropService) {
+  constructor(protected mealplanService: MealplanService, protected datePipe: DatePipe,
+              protected mealplanDragDropService: MealplanDragDropService, protected mealplanSectionService: MealplanSectionService) {
   }
   ngOnInit() {
     this.loadMealplansForDay();
@@ -28,6 +30,7 @@ export class MealplanDayComponent implements OnInit {
         this.loadMealplansForDay();
       }
     });
+    this.mealplanSectionService.getAll().subscribe(result => this.sections = result);
   }
 
   loadMealplansForDay() {
@@ -39,7 +42,7 @@ export class MealplanDayComponent implements OnInit {
     });
   }
 
-  addItem(type: string) {
+  addItem(type: string, section: MealplanSection) {
     console.log("Adding " + type)
     const note = new Mealplan();
     note.type = type;
@@ -47,26 +50,22 @@ export class MealplanDayComponent implements OnInit {
     note.note = ""
     note.done = false
     note.recipe_servings = 1
+    if (section) {
+      note.section_id = section.id;
+    }
     const arrayCopy = [...this.mealplans]
     arrayCopy.push(note)
     this.mealplans = arrayCopy
   }
 
   drop(event: CdkDragDrop<any, any>) {
-    if (event.previousContainer.id === event.container.id) {
-      this.moveItemInDay(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      console.log(event.previousContainer.id)
-      this.mealplanDragDropService.dropIntoDay(event.previousContainer.data[event.previousIndex], this.day);
-    }
+    let mealplanItem = event.item.data;
+    let section = event.container.data;
 
+    this.mealplanDragDropService.dropIntoDay(mealplanItem, this.day, section);
   }
 
-  private moveItemInDay(data: any, previousIndex: number, currentIndex: number) {
-    console.log("Drop Move-in-day event " + this.day + ", obj=" +JSON.stringify(data[0]));
+  getMealplansForSection(section: MealplanSection): Mealplan[] {
+    return this.mealplans.filter(item => item.section_id === section.id);
   }
 }

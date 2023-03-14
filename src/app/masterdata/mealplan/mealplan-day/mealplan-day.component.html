@@ -2,17 +2,23 @@
   <mat-card-header>
     <mat-card-title>{{day | date: 'EEE, dd-MM-yy' }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content cdkDropList id="mp-{{day | date: 'yyyy-MM-dd' }}" (cdkDropListDropped)="drop($event)"  [cdkDropListData]="mealplans">
-    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-    <app-mealplan-item *ngFor="let mealplan of mealplans" [mealplan]="mealplan" (refreshEvent)="loadMealplansForDay()" class="mealplan-item" ></app-mealplan-item>
+  <mat-card-content>
+    <mat-card class="mealplan-day-section" *ngFor="let section of sections">
+      <mat-card-header>
+        <mat-card-title>{{section.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content cdkDropList id="mp-{{section.id}}-{{day | date: 'yyyy-MM-dd' }}" (cdkDropListDropped)="drop($event)" [cdkDropListSortingDisabled]="true" [cdkDropListData]="section">
+        <app-mealplan-item *ngFor="let mealplan of getMealplansForSection(section)" [mealplan]="mealplan" (refreshEvent)="loadMealplansForDay()" class="mealplan-item" ></app-mealplan-item>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button  [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="addItem('recipe', section)"><mat-icon>dinner_dining</mat-icon>Add recipe</button>
+          <button mat-menu-item (click)="addItem('product', section)"><mat-icon>egg</mat-icon>Add product</button>
+          <button mat-menu-item (click)="addItem('note', section)"><mat-icon>notes</mat-icon>Add note</button>
+        </mat-menu>
+      </mat-card-actions>
+    </mat-card>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-icon-button  [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="addItem('recipe')"><mat-icon>dinner_dining</mat-icon>Add recipe</button>
-      <button mat-menu-item (click)="addItem('product')"><mat-icon>egg</mat-icon>Add product</button>
-      <button mat-menu-item (click)="addItem('note')"><mat-icon>notes</mat-icon>Add note</button>
-    </mat-menu>
-    <button mat-icon-button matTooltip="Move items to another day"><mat-icon>edit_calendar</mat-icon></button>
-  </mat-card-actions>
+
 </mat-card>

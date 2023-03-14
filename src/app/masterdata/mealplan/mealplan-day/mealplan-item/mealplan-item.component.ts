@@ -26,7 +26,7 @@ export class MealplanItemComponent implements OnInit {
   }
 
   ngOnInit() {
-
+  if (this.mealplan) {
     if (this.mealplan.recipe_id) {
       this.recipeService.getOne(this.mealplan.recipe_id).subscribe(r => this.recipe = r);
     }
@@ -34,9 +34,6 @@ export class MealplanItemComponent implements OnInit {
       this.productService.getOne(this.mealplan.product_id).subscribe(p => this.product = p)
     }
   }
-
-  getFileUrl(picture_file_name: string) {
-    return this.filesService.toFileUrl(FilesService.group_recipepictures, picture_file_name);
   }
 
   triggerRefreshEvent() {
