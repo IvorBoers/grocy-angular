@@ -7,11 +7,17 @@
       </div>
       <div class="recipe-view-summary">
         <h1>{{item.name}}</h1>
-        <p>details</p>
+        <p>more summary</p>
+        <dl>
+          <dt>servings</dt>
+          <dd>{{item.base_servings}}</dd>
+          <dt>desired servings</dt>
+          <dd>{{item.desired_servings}}</dd>
+        </dl>
       </div>
     </div>
     <div class="recipe-view-details">
-      <div class="recipe-view-ingredients"><h2>Ingredients</h2></div>
+      <app-ingredient-view-list [recipeId]="item.id" class="recipe-view-ingredients"></app-ingredient-view-list>
       <div class="recipe-view-description">
         <h2>Description</h2>
         <p [innerHTML]="item.description"></p>

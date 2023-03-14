@@ -72,6 +72,12 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MealplanSectionListComponent} from "./masterdata/mealplan-section/list/mealplan-section-list.component";
 import {MealplanSectionDetailComponent} from "./masterdata/mealplan-section/detail/mealplan-section-detail.component";
+import {
+  IngredientViewListComponent
+} from "./masterdata/recipe/recipe-detail-view/ingredient-view-list/ingredient-view-list.component";
+import {
+  IngredientItemViewComponent
+} from "./masterdata/recipe/recipe-detail-view/ingredient-view-list/ingredient-item-view/ingredient-item-view.component";
 
 @NgModule({
   declarations: [
@@ -115,7 +121,9 @@ import {MealplanSectionDetailComponent} from "./masterdata/mealplan-section/deta
     RecipeListComponent,
     GrocyImagePipe,
     MealplanSectionListComponent,
-    MealplanSectionDetailComponent
+    MealplanSectionDetailComponent,
+    IngredientViewListComponent,
+    IngredientItemViewComponent
 
   ],
     imports: [

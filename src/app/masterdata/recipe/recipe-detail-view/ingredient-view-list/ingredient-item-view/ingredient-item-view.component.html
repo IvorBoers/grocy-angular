@@ -1,0 +1,9 @@
+<mat-list-item *ngIf="product && ingredient && quantityunit">
+  <span matListItemTitle>
+    <span>{{ingredient.amount}}</span>&nbsp;
+    <span *ngIf="ingredient.amount==1">{{quantityunit.name}}</span>
+    <span *ngIf="ingredient.amount!=1">{{quantityunit.name_plural}}</span>&nbsp;
+    <span>{{product.name}}</span>
+  </span>
+  <span matListItemLine>{{ingredient.note}}</span>
+</mat-list-item>
