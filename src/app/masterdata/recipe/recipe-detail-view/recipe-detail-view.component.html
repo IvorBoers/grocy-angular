@@ -7,17 +7,19 @@
       </div>
       <div class="recipe-view-summary">
         <h1>{{item.name}}</h1>
-        <p>more summary</p>
-        <dl>
-          <dt>servings</dt>
-          <dd>{{item.base_servings}}</dd>
-          <dt>desired servings</dt>
-          <dd>{{item.desired_servings}}</dd>
-        </dl>
+
+        <div class="servings-container">
+          <mat-form-field appearance="fill" floatLabel="always">
+            <mat-label>Servings</mat-label>
+            <input matInput type="number" class="input-right-align" placeholder="0" [(ngModel)]="item.desired_servings">
+            <span matTextPrefix><mat-icon>person</mat-icon>&nbsp;</span>
+          </mat-form-field>
+
+        </div>
       </div>
     </div>
     <div class="recipe-view-details">
-      <app-ingredient-view-list [recipeId]="item.id" class="recipe-view-ingredients"></app-ingredient-view-list>
+      <app-ingredient-view-list [recipe]="item" class="recipe-view-ingredients"></app-ingredient-view-list>
       <div class="recipe-view-description">
         <h2>Description</h2>
         <p [innerHTML]="item.description"></p>

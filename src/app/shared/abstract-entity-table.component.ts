@@ -51,6 +51,7 @@ export abstract class AbstractEntityTableComponent<T extends Entity> implements 
   delete(item: T) {
     this.entityService.delete(item).subscribe(response => {
       // remove from items. this.items.p
+      this.ngOnInit();
     });
   }
 }

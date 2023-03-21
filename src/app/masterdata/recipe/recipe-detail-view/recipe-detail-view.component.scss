@@ -9,20 +9,28 @@
 
     .recipe-view-image {
       flex-grow: 0;
+      img {
+        margin-left: -20px;
+        margin-top: -20px;
+        width: 500px;
+        height: 300px;
+        object-fit: cover;
+      }
     }
     .recipe-view-summary {
       flex-grow: 10;
       padding-left: 5px;
       padding-right: 5px;
+      .input-right-align {
+        text-align: right;
+      }
     }
-
 
   }
 
   .recipe-view-details {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
 
     .recipe-view-ingredients {
       flex-grow: 1;
@@ -30,14 +38,14 @@
       border: 1px solid grey;
       padding-left: 5px;
       padding-right: 5px;
-      max-width: 400px;
+      max-width: fit-content;
     }
 
     .recipe-view-description {
       flex-grow: 2;
       padding-left: 5px;
       padding-right: 5px;
-      max-width: 800px;
+      min-width: 300px;
     }
   }
 

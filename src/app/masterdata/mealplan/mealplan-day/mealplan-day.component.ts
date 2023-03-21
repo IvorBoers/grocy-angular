@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MealplanService} from "../mealplan.service";
 import {Mealplan} from "../../../domain/mealplan";
 import {DatePipe} from "@angular/common";
-import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, CdkDragEnter} from "@angular/cdk/drag-drop";
 import {MealplanDragDropService} from "./mealplan-drag-drop-service";
 import {MealplanSection} from "../../../domain/mealplan-section";
 import {MealplanSectionService} from "../../mealplan-section/mealplan-section.service";

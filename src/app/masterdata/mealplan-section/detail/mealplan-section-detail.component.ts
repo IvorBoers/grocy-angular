@@ -21,4 +21,8 @@ export class MealplanSectionDetailComponent extends AbstractDetailComponent<Meal
     return "meal_plan_sections";
   }
 
+  createNewEntity(): MealplanSection {
+    return new MealplanSection();
+  }
+
 }

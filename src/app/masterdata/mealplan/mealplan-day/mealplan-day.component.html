@@ -7,7 +7,9 @@
       <mat-card-header>
         <mat-card-title>{{section.name}}</mat-card-title>
       </mat-card-header>
-      <mat-card-content cdkDropList id="mp-{{section.id}}-{{day | date: 'yyyy-MM-dd' }}" (cdkDropListDropped)="drop($event)" [cdkDropListSortingDisabled]="true" [cdkDropListData]="section">
+      <mat-card-content cdkDropList id="mp-{{section.id}}-{{day | date: 'yyyy-MM-dd' }}"
+                        (cdkDropListDropped)="drop($event)" [cdkDropListSortingDisabled]="true" [cdkDropListData]="section"
+                        >
         <app-mealplan-item *ngFor="let mealplan of getMealplansForSection(section)" [mealplan]="mealplan" (refreshEvent)="loadMealplansForDay()" class="mealplan-item" ></app-mealplan-item>
       </mat-card-content>
       <mat-card-actions>

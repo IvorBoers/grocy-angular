@@ -13,6 +13,7 @@ import {Quantityunit} from "../../../../../domain/quantityunit";
 export class IngredientItemViewComponent implements OnInit {
 
   @Input() ingredient: RecipePos;
+  @Input() factor: number;
   product: Product;
   quantityunit: Quantityunit;
 
