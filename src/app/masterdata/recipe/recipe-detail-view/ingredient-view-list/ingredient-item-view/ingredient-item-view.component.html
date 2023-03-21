@@ -3,7 +3,7 @@
   <span matListItemTitle>
     <span>{{product.name}}</span>
   </span>
-  <span matListItemLine><span>{{ingredient.amount * factor}}</span>&nbsp;
+  <span matListItemLine><span>{{ingredient.amount * factor | number }}</span>&nbsp;
     <span *ngIf="ingredient.amount==1">{{quantityunit.name}}</span>
     <span *ngIf="ingredient.amount!=1">{{quantityunit.name_plural}}</span>&nbsp;</span>
   <span matListItemLine *ngIf="ingredient.note">{{ingredient.note}}</span>
