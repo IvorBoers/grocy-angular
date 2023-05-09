@@ -57,7 +57,7 @@ import { MealplanComponent } from './masterdata/mealplan/mealplan.component';
 import {MatCardModule} from "@angular/material/card";
 import { MealplanDayComponent } from './masterdata/mealplan/mealplan-day/mealplan-day.component';
 import { MealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/mealplan-item.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import { ProductPickerFormComponent } from './product-picker-form/product-picker-form.component';
 import { NoteMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/note-mealplan-item/note-mealplan-item.component';
 import {JumboidSetterComponent} from "./external/jumbo/jumboid-setter/jumboid-setter.component";
@@ -65,7 +65,6 @@ import { RecipeMealplanItemComponent } from './masterdata/mealplan/mealplan-day/
 import { ProductMealplanItemComponent } from './masterdata/mealplan/mealplan-day/mealplan-item/product-mealplan-item/product-mealplan-item.component';
 import { RecipeDetailViewComponent } from './masterdata/recipe/recipe-detail-view/recipe-detail-view.component';
 import { RecipeDetailEditComponent } from './masterdata/recipe/recipe-detail-edit/recipe-detail-edit.component';
-import { RecipeListComponent } from './masterdata/recipe/recipe-list/recipe-list.component';
 import { GrocyImagePipe } from './shared/grocy-image-pipe.pipe';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -78,6 +77,8 @@ import {
 import {
   IngredientItemViewComponent
 } from "./masterdata/recipe/recipe-detail-view/ingredient-view-list/ingredient-item-view/ingredient-item-view.component";
+import { RecipesOverviewComponent } from './recipes-overview/recipes-overview.component';
+import { JumboRecipeDetailpageComponent } from './external/jumbo/jumbo-recipe-detailpage/jumbo-recipe-detailpage.component';
 
 @NgModule({
   declarations: [
@@ -118,12 +119,13 @@ import {
     ProductMealplanItemComponent,
     RecipeDetailViewComponent,
     RecipeDetailEditComponent,
-    RecipeListComponent,
     GrocyImagePipe,
     MealplanSectionListComponent,
     MealplanSectionDetailComponent,
     IngredientViewListComponent,
-    IngredientItemViewComponent
+    IngredientItemViewComponent,
+    RecipesOverviewComponent,
+    JumboRecipeDetailpageComponent
 
   ],
     imports: [
@@ -155,7 +157,8 @@ import {
         MatCardModule,
         MatSidenavModule,
         MatCheckboxModule,
-        DragDropModule
+        DragDropModule,
+        NgOptimizedImage
     ],
   providers: [
       DatePipe,

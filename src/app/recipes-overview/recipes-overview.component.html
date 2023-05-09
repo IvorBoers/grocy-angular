@@ -1,0 +1,28 @@
+<div class="search-form">
+  <mat-form-field>
+    <mat-label>Source</mat-label>
+    <mat-select [(value)]="selectedProvider" (selectionChange)="changeSource()">
+      <mat-option *ngFor="let provider of providers" [value]="provider">{{provider.getName()}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Searchterm</mat-label>
+    <input matInput type="text" [(ngModel)]="query" (keyup.enter)="searchRecipe()">
+    <button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <button mat-raised-button (click)="searchRecipe()" color="primary">Search
+    <mat-icon>search</mat-icon>
+  </button>
+</div>
+<div class="results-container">
+  <mat-card *ngFor="let sm of results" (click)="navigateTo(sm)">
+    <div *ngIf="sm.imageUrl" mat-card-image class="card-content-image" [style.background-image]="'url(' + sm.imageUrl + ')'"></div>
+    <div *ngIf="!sm.imageUrl" mat-card-image class="card-content-image">&nbsp;</div>
+    <mat-card-footer>
+      <mat-card-title>{{sm.name}}</mat-card-title>
+    </mat-card-footer>
+  </mat-card>
+</div>
+<mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [showFirstLastButtons]="true" (page)="handlePageEvent($event)" [pageSizeOptions]="pageSizeOptions"></mat-paginator>

@@ -18,22 +18,23 @@ export class MealplanComponent implements OnInit {
 
   days: Date[] = []
   deltaDays = 1;
+  numberOfDaysStr = "7";
   sections: MealplanSection[];
 
   constructor(protected mealplanSectionService: MealplanSectionService) {
   }
 
   ngOnInit(): void {
-    this.setDays(7);
+    this.setDays();
     this.mealplanSectionService.getAll().subscribe(result => this.sections = result);
   }
 
-  private setDays(numberOfDays: number) {
+  setDays() {
     this.days = []
-    let firstDayOfWeek = this.getFirstDayOfCurrentWeek()
-    console.log("firstday " + firstDayOfWeek)
-    Array.from({length: numberOfDays}, (_, i) => {
-      let date = new Date(firstDayOfWeek.getTime())
+    let firstDay = new Date();//this.getFirstDayOfCurrentWeek()
+    console.log("firstday " + firstDay)
+    Array.from({length: +this.numberOfDaysStr}, (_, i) => {
+      let date = new Date(firstDay.getTime())
       date.setDate(date.getDate() + i + this.deltaDays)
       this.days.push(date);
     })
@@ -47,6 +48,6 @@ export class MealplanComponent implements OnInit {
 
   navigateDays(newDelta: number) {
     this.deltaDays = newDelta;
-    this.setDays(7);
+    this.setDays();
   }
 }

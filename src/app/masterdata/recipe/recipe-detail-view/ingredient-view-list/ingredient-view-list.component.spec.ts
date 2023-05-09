@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IngredientViewListComponent } from './ingredient-view-list.component';
 
-describe('RecipeListComponent', () => {
+describe('IngredientViewListComponent', () => {
   let component: IngredientViewListComponent;
   let fixture: ComponentFixture<IngredientViewListComponent>;
 

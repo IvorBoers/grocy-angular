@@ -2,8 +2,8 @@
 
   <div class="recipe-view-container">
     <div class="recipe-view-header">
-      <div class="recipe-view-image">
-        <img *ngIf="item.picture_file_name" src="{{item.picture_file_name | grocyImage:'recipepictures'}}" height="300px">
+      <div class="recipe-view-image" *ngIf="item.picture_file_name"
+           [ngStyle]="{'background-image': 'url(' + (item.picture_file_name | grocyImage:'recipepictures') + ')'}">
       </div>
       <div class="recipe-view-summary">
         <h1>{{item.name}}</h1>

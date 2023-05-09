@@ -21,6 +21,17 @@ export abstract class EntityService<T extends Entity> extends AbstractGrocyServi
       );
   }
 
+  query(queryItems: string[], limit: number, offset: number): Observable<T[]> {
+    let queryString = '';
+    for (let item of queryItems) {
+      queryString += '&query[]=' + item;
+    }
+    queryString += '&limit=' + limit + '&offset=' + offset;
+    return this.http.get<T[]>(this.getUrl() + queryString)
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
+  }
   getAllLike(field: string, query: string): Observable<T[]> {
     return this.http.get<T[]>(this.getUrl() + '&query[]=' + field + "~" + query)
       .pipe(

@@ -34,6 +34,23 @@ const PROXY_CONFIG = {
       req.headers["user-agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36";
     }
   },
+  "/ah-api": {
+    "target": "https://api.ah.nl/",
+    "secure": false,
+    "pathRewrite": {
+      "^/ah-api": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "bypass": function (req, res, proxyOptions) {
+      // req.headers["accept"] = "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8";
+      req.headers["User-agent"] = 'Appie/8.8.2 Model/phone Android/7.0-API24';
+      req.headers['Host'] = 'api.ah.nl';
+      req.headers['x-dynatrace'] = 'MT_3_4_772337796_1_fae7f753-3422-4a18-83c1-b8e8d21caace_0_1589_109';
+      req.headers['x-application'] =  'AHWEBSHOP';
+      req.headers['content-type'] = 'application/json; charset=UTF-8';
+    }
+  },
   "/ahimages": {
     "target": "https://static.ah.nl",
     "secure": false,
