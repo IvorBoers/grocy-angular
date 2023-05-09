@@ -26,7 +26,7 @@ ARG configuration=production
 RUN npm run build --output-path=/dist --configuration=$configuration
 
 #### Stage 2, use the compiled app, ready for production with Nginx
-FROM nginx:1.15
+FROM nginx:1.23.4-alpine
 
 # Copy the angular build from Stage 1
 COPY --from=build /app/dist/grocy-angular /usr/share/nginx/html
