@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-content  (click)="navigateToRecipe()">
+    <div *ngIf="recipe.imageUrl" mat-card-image class="card-content-image" [style.background-image]="'url(' + recipe.imageUrl + ')'"></div>
+    <div *ngIf="!recipe.imageUrl" mat-card-image class="card-content-image">&nbsp;</div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-icon-button (click)="toggleMealplanAction()" matTooltip="Schedule on mealplan"><mat-icon>calendar_view_week</mat-icon></button>
+    <div *ngIf="!showMealplanAction && nextDate" matTooltip="Next scheduled date">{{nextDate}}</div>
+    <div class="recipe-mealplan-action" *ngIf="showMealplanAction">
+      <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" [value]="mealplanDate" (dateChange)="setMealplanDate($event)">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Mealplan section</mat-label>
+        <mat-select [(value)]="mealplanSection">
+          <mat-option *ngFor="let s of sections" [value]="s">{{s.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field-servings" appearance="fill">
+        <mat-label>Servings</mat-label>
+        <input matInput  min="1" type="number" [ngModel]="mealplanServings">
+      </mat-form-field>
+      <button mat-icon-button (click)="addToMealplan()"><mat-icon>add</mat-icon></button>
+    </div>
+  </mat-card-actions>
+
+  <mat-card-footer>
+    <mat-card-title>{{recipe.name}}</mat-card-title>
+  </mat-card-footer>
+</mat-card>

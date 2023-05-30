@@ -1,0 +1,27 @@
+mat-card {
+  margin: 2px;
+  width: 300px;
+}
+.mat-mdc-card-content, .mat-mdc-card-content:first-child {
+  padding: 0;
+
+}
+
+.card-content-image {
+  width: 300px;
+  background-color: #cccccc; /* Used if the image is unavailable */
+  height: 300px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+.mat-mdc-card-actions {
+  .mat-mdc-form-field {
+    width: 100%;
+    max-width: 236px;
+    &.field-servings {
+      max-width: 188px; //236-48
+    }
+  }
+
+}

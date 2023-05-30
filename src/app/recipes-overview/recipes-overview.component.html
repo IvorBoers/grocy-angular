@@ -17,12 +17,6 @@
   </button>
 </div>
 <div class="results-container">
-  <mat-card *ngFor="let sm of results" (click)="navigateTo(sm)">
-    <div *ngIf="sm.imageUrl" mat-card-image class="card-content-image" [style.background-image]="'url(' + sm.imageUrl + ')'"></div>
-    <div *ngIf="!sm.imageUrl" mat-card-image class="card-content-image">&nbsp;</div>
-    <mat-card-footer>
-      <mat-card-title>{{sm.name}}</mat-card-title>
-    </mat-card-footer>
-  </mat-card>
+  <app-recipe-overview-item *ngFor="let item of results" [recipe]="item"  [nextDate]="getNextScheduleDay(item)" (navigateEvent)="navigateTo(item)"></app-recipe-overview-item>
 </div>
 <mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [showFirstLastButtons]="true" (page)="handlePageEvent($event)" [pageSizeOptions]="pageSizeOptions"></mat-paginator>

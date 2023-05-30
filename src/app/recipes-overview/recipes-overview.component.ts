@@ -1,16 +1,18 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RecipeSummary} from '../domain/recipe-summary';
 import {GrocyRecipeProvider} from './grocy-recipe-provider';
 import {JumboRecipeProvider} from './jumbo-recipe-provider';
 import {RecipeProvider} from './recipe-provider';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MealplanService} from '../masterdata/mealplan/mealplan.service';
+import {Mealplan} from '../domain/mealplan';
 
 @Component({
   selector: 'app-recipes-overview',
   templateUrl: './recipes-overview.component.html',
   styleUrls: ['./recipes-overview.component.scss']
 })
-export class RecipesOverviewComponent {
+export class RecipesOverviewComponent implements OnInit {
 
   query = '';
   pageSize = 10
@@ -20,12 +22,18 @@ export class RecipesOverviewComponent {
   selectedProvider: RecipeProvider;
   providers: RecipeProvider[] = []
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  futureMealplans: Mealplan[] = [];
 
-  constructor(protected grocyRecipeProvider: GrocyRecipeProvider, protected jumboRecipeProvider: JumboRecipeProvider) {
+  constructor(protected grocyRecipeProvider: GrocyRecipeProvider, protected jumboRecipeProvider: JumboRecipeProvider, private mealplanService: MealplanService) {
     this.providers.push(grocyRecipeProvider);
     this.providers.push(jumboRecipeProvider);
     this.selectedProvider = grocyRecipeProvider;
   }
+
+  ngOnInit() {
+    this.mealplanService.getAllFuture().subscribe(result => this.futureMealplans = result);
+  }
+
   changeSource() {
     // clean results or search in other source
     console.log("Selected provider is now " + this.selectedProvider.getName());
@@ -56,5 +64,13 @@ export class RecipesOverviewComponent {
     console.log('pageEvent: ' + JSON.stringify($event));
     this.pageIndex = $event.pageIndex;
     this.performSearch();
+  }
+
+  getNextScheduleDay(recipe: RecipeSummary) {
+    let mealplan = this.futureMealplans.find(mp => mp.recipe_id === recipe.id);
+    if (mealplan) {
+      return mealplan.day;
+    }
+    return undefined;
   }
 }

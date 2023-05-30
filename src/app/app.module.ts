@@ -79,6 +79,9 @@ import {
 } from "./masterdata/recipe/recipe-detail-view/ingredient-view-list/ingredient-item-view/ingredient-item-view.component";
 import { RecipesOverviewComponent } from './recipes-overview/recipes-overview.component';
 import { JumboRecipeDetailpageComponent } from './external/jumbo/jumbo-recipe-detailpage/jumbo-recipe-detailpage.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { RecipeOverviewItemComponent } from './recipes-overview/recipe-overview-item/recipe-overview-item.component';
 
 @NgModule({
   declarations: [
@@ -125,41 +128,44 @@ import { JumboRecipeDetailpageComponent } from './external/jumbo/jumbo-recipe-de
     IngredientViewListComponent,
     IngredientItemViewComponent,
     RecipesOverviewComponent,
-    JumboRecipeDetailpageComponent
+    JumboRecipeDetailpageComponent,
+    RecipeOverviewItemComponent
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BarcodeScannerLivestreamModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatListModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSnackBarModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatDialogModule,
-        MatMenuModule,
-        MatSelectModule,
-        MatTabsModule,
-        MatGridListModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        MatProgressSpinnerModule,
-        MatTooltipModule,
-        MatCardModule,
-        MatSidenavModule,
-        MatCheckboxModule,
-        DragDropModule,
-        NgOptimizedImage
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BarcodeScannerLivestreamModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatGridListModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    DragDropModule,
+    NgOptimizedImage,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
   providers: [
       DatePipe,
       GrocyImagePipe,

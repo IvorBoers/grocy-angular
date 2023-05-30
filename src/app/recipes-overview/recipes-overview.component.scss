@@ -3,16 +3,5 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  mat-card {
-    margin: 2px;
-    width: 300px;
-  }
-  .card-content-image {
-    width: 300px;
-    background-color: #cccccc; /* Used if the image is unavailable */
-    height: 300px; /* You must set a specified height */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-  }
+
 }
