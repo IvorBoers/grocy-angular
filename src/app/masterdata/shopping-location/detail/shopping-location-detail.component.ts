@@ -20,4 +20,8 @@ export class ShoppingLocationDetailComponent extends AbstractDetailComponent<Sho
     return "shoppinglocation";
   }
 
+  createNewEntity(): ShoppingLocation {
+    return new ShoppingLocation();
+  }
+
 }

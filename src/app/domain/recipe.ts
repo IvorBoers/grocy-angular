@@ -3,15 +3,15 @@ import {Entity, Named} from "./entity";
 
 export class Recipe implements Entity, Named {
   static entityName = 'recipes'
-  id:                     number;
-  name:                   string;
-  description:            string;
-  row_created_timestamp:  Date;
-  picture_file_name:      null;
-  base_servings:          number;
-  desired_servings:       number;
-  not_check_shoppinglist: string;
-  type:                   string;
-  product_id:             number;
-  userfields:             RecipeUserfields;
+  id = 0
+  name = ''
+  description = ''
+  row_created_timestamp = new Date();
+  picture_file_name = ''
+  base_servings = 0
+  desired_servings = 0
+  not_check_shoppinglist = ''
+  type = ''
+  product_id = 0
+  userfields ?: RecipeUserfields
 }

@@ -1,5 +1,5 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {throwError} from "rxjs";
+import {EMPTY, throwError} from "rxjs";
 import {AlertService} from "./alert-service";
 
 export class AbstractGrocyService {
@@ -29,11 +29,13 @@ export class AbstractGrocyService {
       // The response body may contain clues as to what went wrong.
       if (error.status === 0) {
         this.alertService.error(`Backend unreachable`)
-      } else {
-        this.alertService.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`)
       }
-      if (error.status == 400) {
+      else if (error.status == 400) {
         return throwError(() => new Error("Unsuccessful call:" + error.error.error_message))
+      }
+      else {
+        this.alertService.error(`Backend returned code ${error.status}, ` + `. Message: ${error.error.error_message}`)
+        return EMPTY;
       }
     }
     // Return an observable with a user-facing error message.

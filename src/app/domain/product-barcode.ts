@@ -1,12 +1,12 @@
 export class ProductBarcode {
-  id: number;
-  product_id: number;
-  barcode: string;
-  qu_id: number;
-  amount: number
-  shopping_location_id: number;
-  last_price: number
-  row_created_timestamp: string
-  note: string
-  userfields: []
+  id= 0
+  product_id= 0
+  barcode= ''
+  qu_id= 0
+  amount = 0
+  shopping_location_id= 0
+  last_price = 0
+  row_created_timestamp= ''
+  note= ''
+  userfields?: []
 }

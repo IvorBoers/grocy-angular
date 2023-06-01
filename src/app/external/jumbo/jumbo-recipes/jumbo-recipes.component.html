@@ -11,7 +11,7 @@
   </button>
 </div>
 <mat-sidenav-container class="jumbo-recipes-sidenav-container">
-  <mat-sidenav mode="{{sideNavMode}}" [(opened)]="sideNavOpened" (closed)="sideNavOpened = false">
+  <mat-sidenav [mode]="sideNavMode" [(opened)]="sideNavOpened" (closed)="sideNavOpened = false">
     <div class="summary-table-container">
 
       <table mat-table [dataSource]="dataSource" matSort>
@@ -47,7 +47,7 @@
     <div class="no-results" *ngIf="!loading && (!dataSource || (dataSource && dataSource.data.length == 0))">
       No search results
     </div>
-    <div class="detail-container" *ngIf="!loading">
+    <div class="detail-container" *ngIf="!loading && detail">
       <app-jumbo-recipe-detail [item]="detail" [grocyProductsByJumboId]="grocyProductsByJumboId"></app-jumbo-recipe-detail>
     </div>
   </mat-sidenav-content>

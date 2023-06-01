@@ -1,7 +1,7 @@
 export class BarcodeScan {
   private codeCountMap = new Map();
-  currentCode: string;
-  reportedCode: string;
+  currentCode = '';
+  reportedCode = '';
   currentProbability = 0;
 
 

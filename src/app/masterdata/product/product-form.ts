@@ -7,11 +7,11 @@ import {QuantityunitConversion} from "../../domain/quantityunit-conversion";
 import {Named} from "../../domain/entity";
 
 export class ProductForm {
-  filteredProducts: Observable<Product[]>;
-  filteredQuantityunits: Observable<Quantityunit[]>;
+  filteredProducts?: Observable<Product[]>;
+  filteredQuantityunits?: Observable<Quantityunit[]>;
 
-  productsControl = new FormControl<Product>(undefined)
-  quControl = new FormControl<Quantityunit>(undefined)
+  productsControl = new FormControl<Product | undefined>(undefined)
+  quControl = new FormControl<Quantityunit | undefined>(undefined)
   amountControl = new FormControl<number>(0)
 
   products: Product[] = []

@@ -1,3 +1,3 @@
 export class UpdateResponse {
-  error_message: string
+  error_message = ''
 }

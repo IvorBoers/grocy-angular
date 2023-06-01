@@ -2,26 +2,49 @@ import {RecipeProvider} from './recipe-provider';
 import {RecipeSummary} from '../domain/recipe-summary';
 import {Observable} from 'rxjs';
 import {JumboService} from '../external/jumbo/jumbo-service';
-import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
-import {JumboRecipeSummary} from '../external/jumbo/domain/jumbo-recipe-summary';
 import {Injectable} from '@angular/core';
 import {RecipeSummaryPage} from '../domain/recipe-summary-page';
 import {JumboRecipesSearchResponse} from '../external/jumbo/domain/jumbo-recipe-searchresponse';
+import {MealplanSection} from '../domain/mealplan-section';
+import {Mealplan} from '../domain/mealplan';
+
+class JumboRecipeSummary implements RecipeSummary {
+  id: any;
+  imageUrl= "";
+  name= "";
+  source= "JUMBO";
+  viewUrl= "";
+
+  getRouterCommand(): string {
+    return '/recipes/jumbo/' + this.id;
+  }
+
+  getMealplan(day: string, mealplanSection: MealplanSection, mealplanServings: number): Mealplan {
+    const mealplan = new Mealplan();
+    mealplan.type = 'note';
+    mealplan.day = day;
+    mealplan.note = '<a target="_blank" href="' + this.viewUrl + '">' + this.name + '</a>';
+    mealplan.done = false;
+    mealplan.recipe_id = this.id;
+    if (mealplanSection) {
+      mealplan.section_id = mealplanSection.id;
+    }
+
+    return mealplan;
+  }
+
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class JumboRecipeProvider implements RecipeProvider {
 
-  constructor(protected jumboService: JumboService, protected router: Router) {
+  constructor(protected jumboService: JumboService) {
   }
   getName(): string {
     return 'Jumbo';
-  }
-
-  navigateTo(recipe: RecipeSummary): void {
-    this.router.navigate(['/recipe/jumbo/' + recipe.id]);
   }
 
   searchRecipes(query: string, pageIndex: number, pageSize: number): Observable<RecipeSummaryPage> {
@@ -34,10 +57,10 @@ export class JumboRecipeProvider implements RecipeProvider {
   private fromJumbo(response: JumboRecipesSearchResponse): RecipeSummaryPage {
     const summaries: RecipeSummary[] = [];
     response.recipes.data.map(it => {
-      let summary = new RecipeSummary();
-      summary.source = 'GROCY';
+      let summary = new JumboRecipeSummary();
       summary.id = it.id;
       summary.name = it.name;
+      summary.viewUrl = it.webUrl;
       if (it.imageInfo && it.imageInfo.primaryView.length > 0 && it.imageInfo.primaryView[0].url) {
         summary.imageUrl = it.imageInfo.primaryView[0].url;
       }
@@ -50,4 +73,5 @@ export class JumboRecipeProvider implements RecipeProvider {
     page.total = response.recipes.total;
     return page;
   }
+
 }

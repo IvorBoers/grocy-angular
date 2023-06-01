@@ -9,6 +9,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {SelectionModel} from "@angular/cdk/collections";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {MatDrawerMode, MatSidenav} from '@angular/material/sidenav';
 
 @Component({
     selector: 'app-jumbo-recipes',
@@ -17,19 +18,19 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 })
 export class JumboRecipesComponent implements OnInit {
     displayedColumns: string[] = ['image', 'name']
-    dataSource: MatTableDataSource<JumboRecipeSummary>;
+    dataSource: MatTableDataSource<JumboRecipeSummary> = new MatTableDataSource<JumboRecipeSummary>();
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
 
 
     query = "tomatenblokjes";
-    detail: RecipeData;
+    detail?: RecipeData;
     grocyProductsByJumboId = new Map()
-    selection: SelectionModel<JumboRecipeSummary>;
+    selection: SelectionModel<JumboRecipeSummary | null> = new SelectionModel<JumboRecipeSummary | null>();
     loading = false;
     sideNavOpened = true;
-    sideNavMode = 'side'
+    sideNavMode: MatDrawerMode = 'side'
 
 
     constructor(protected jumboService: JumboService, protected productService: ProductService, private observer: BreakpointObserver) {
@@ -39,7 +40,7 @@ export class JumboRecipesComponent implements OnInit {
     ngOnInit(): void {
         this.productService.getAll().subscribe(result => this.createProductsMap(result))
 
-        this.selection = new SelectionModel<JumboRecipeSummary>(false, null);
+        this.selection = new SelectionModel<JumboRecipeSummary | null>(false, [null]);
         this.selection.changed.subscribe(row => {
             if (row.added[0]) {
                 this.showItem(row.added[0])
@@ -78,7 +79,7 @@ export class JumboRecipesComponent implements OnInit {
     private createProductsMap(products: Product[]) {
         if (products) {
             products.forEach(p => {
-                if (p.userfields.jumboId) {
+                if (p.userfields && p.userfields.jumboId) {
                     p.userfields.jumboId.split(',').forEach(sub => this.grocyProductsByJumboId.set(sub, p));
                 }
             })

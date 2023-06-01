@@ -9,19 +9,13 @@ import {MealplanSection} from "../../domain/mealplan-section";
 })
 export class MealplanComponent implements OnInit {
 
-  times = x => f => {
-    if (x > 0) {
-      f()
-      this.times(x - 1)(f)
-    }
-  }
-
   days: Date[] = []
   deltaDays = 1;
   numberOfDaysStr = "7";
-  sections: MealplanSection[];
+  sections: MealplanSection[] = [];
 
   constructor(protected mealplanSectionService: MealplanSectionService) {
+
   }
 
   ngOnInit(): void {

@@ -28,7 +28,7 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   productgroups: Productgroup[] = [];
   barcodes: ProductBarcode[] = [];
   products: ProductData[] = [];
-  imageContent: string;
+  imageContent?: string;
 
   constructor(route: ActivatedRoute, service: ProductService, alertService: AlertService,
               private locationService: LocationService,
@@ -42,12 +42,12 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
     super(route, service, alertService)
   }
 
-  ngOnInit() {
+  override ngOnInit() {
     super.ngOnInit();
     this.locationService.getAll().subscribe(result => this.locations = result)
     this.quService.getAll().subscribe(result => this.quantityUnits = result)
     this.productgroupService.getAll().subscribe(result => this.productgroups = result)
-    this.barcodeService.getByProductId(this.id).subscribe(result => {
+    this.barcodeService.getByProductId(Number(this.id)).subscribe(result => {
       this.barcodes = result;
       this.barcodes.forEach(barcode => {
         this.jumboService.searchProducts(barcode.barcode).subscribe(result => {
@@ -58,9 +58,11 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
     })
   }
 
+  override createNewEntity(): Product {
+    return new Product();
+  }
 
-
-  setItem(one: Product): Product {
+  override setItem(one: Product): Product {
     let item = super.setItem(one);
     if (item.picture_file_name) {
       this.filesService.getFile(FilesService.group_productpictures, item.picture_file_name).subscribe(result => this.imageContent = result);
@@ -77,14 +79,18 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   }
 
   updateGrocyProduct() {
-    this.item.userfields.jumboId = Array.prototype.map.call(this.products, function(item) { return item.id; }).join(",");
-    console.log("Saving "+ JSON.stringify(this.item))
-    this.productUserFieldsService.update(this.item.id, this.item.userfields).subscribe(response => {
-      if (response != null && response.error_message !== undefined) {
-        this.alertService.error("Error updating product userfields: " + response.error_message);
-      } else {
-        this.alertService.success("Saved updating product userfields");
-      }
-    });
+    if (this.item?.userfields) {
+      this.item.userfields.jumboId = Array.prototype.map.call(this.products, function (item) {
+        return item.id;
+      }).join(",");
+      console.log("Saving " + JSON.stringify(this.item))
+      this.productUserFieldsService.update(this.item.id, this.item.userfields).subscribe(response => {
+        if (response != null && response.error_message !== undefined) {
+          this.alertService.error("Error updating product userfields: " + response.error_message);
+        } else {
+          this.alertService.success("Saved updating product userfields");
+        }
+      });
+    }
   }
 }

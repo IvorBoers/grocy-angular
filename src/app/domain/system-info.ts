@@ -1,10 +1,10 @@
 export class SystemInfo {
-  grocy_version: GrocyVersion
-  php_version: string
-  sqlite_version: string
+  grocy_version = new GrocyVersion()
+  php_version = ''
+  sqlite_version = ''
 }
 
 export class GrocyVersion {
-  Version: string
-  ReleaseDate: string
+  Version = ''
+  ReleaseDate = ''
 }

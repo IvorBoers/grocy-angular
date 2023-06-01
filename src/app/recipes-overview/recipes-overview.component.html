@@ -17,6 +17,6 @@
   </button>
 </div>
 <div class="results-container">
-  <app-recipe-overview-item *ngFor="let item of results" [recipe]="item"  [nextDate]="getNextScheduleDay(item)" (navigateEvent)="navigateTo(item)"></app-recipe-overview-item>
+  <app-recipe-overview-item *ngFor="let item of results" [recipe]="item" [nextDate]="getNextScheduleDay(item)" (navigateEvent)="navigateTo(item)"></app-recipe-overview-item>
 </div>
 <mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [showFirstLastButtons]="true" (page)="handlePageEvent($event)" [pageSizeOptions]="pageSizeOptions"></mat-paginator>

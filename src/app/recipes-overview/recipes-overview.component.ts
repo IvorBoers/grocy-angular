@@ -6,6 +6,7 @@ import {RecipeProvider} from './recipe-provider';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MealplanService} from '../masterdata/mealplan/mealplan.service';
 import {Mealplan} from '../domain/mealplan';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-recipes-overview',
@@ -21,10 +22,10 @@ export class RecipesOverviewComponent implements OnInit {
   results: RecipeSummary[] = [];
   selectedProvider: RecipeProvider;
   providers: RecipeProvider[] = []
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
   futureMealplans: Mealplan[] = [];
 
-  constructor(protected grocyRecipeProvider: GrocyRecipeProvider, protected jumboRecipeProvider: JumboRecipeProvider, private mealplanService: MealplanService) {
+  constructor(protected grocyRecipeProvider: GrocyRecipeProvider, protected jumboRecipeProvider: JumboRecipeProvider, private mealplanService: MealplanService, protected router: Router) {
     this.providers.push(grocyRecipeProvider);
     this.providers.push(jumboRecipeProvider);
     this.selectedProvider = grocyRecipeProvider;
@@ -36,15 +37,16 @@ export class RecipesOverviewComponent implements OnInit {
 
   changeSource() {
     // clean results or search in other source
-    console.log("Selected provider is now " + this.selectedProvider.getName());
     this.searchRecipe();
   }
 
   searchRecipe() {
     this.pageIndex = 0;
     this.results = [];
-    this.paginator.length = 0;
-    this.paginator.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.length = 0;
+      this.paginator.pageIndex = 0;
+    }
     this.performSearch();
   }
 
@@ -52,25 +54,27 @@ export class RecipesOverviewComponent implements OnInit {
     this.selectedProvider.searchRecipes(this.query, this.pageIndex, this.pageSize)
       .subscribe(page => {
         this.results = page.items;
-        this.paginator.length = page.total
+        if (this.paginator) {
+          this.paginator.length = page.total
+        }
       });
   }
 
   navigateTo(recipe: RecipeSummary) {
-   this.selectedProvider.navigateTo(recipe);
+   this.router.navigate([ recipe.getRouterCommand() ]);
   }
 
   handlePageEvent($event: PageEvent) {
-    console.log('pageEvent: ' + JSON.stringify($event));
     this.pageIndex = $event.pageIndex;
     this.performSearch();
   }
 
-  getNextScheduleDay(recipe: RecipeSummary) {
-    let mealplan = this.futureMealplans.find(mp => mp.recipe_id === recipe.id);
+  getNextScheduleDay(recipe: RecipeSummary): string {
+    console.log("find future for " + recipe.id)
+    let mealplan = this.futureMealplans.find(mp => mp.recipe_id === Number(recipe.id));
     if (mealplan) {
       return mealplan.day;
     }
-    return undefined;
+    return '';
   }
 }

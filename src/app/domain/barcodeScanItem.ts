@@ -1,4 +1,4 @@
 export class BarcodeScanItem {
-  code: string;
-  probability: number;
+  code = '';
+  probability = 0;
 }

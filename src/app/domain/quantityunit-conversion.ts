@@ -1,8 +1,8 @@
 export class QuantityunitConversion {
-  id:                    number;
-  from_qu_id:            number;
-  to_qu_id:              number;
-  factor:                number;
-  product_id:            number;
-  row_created_timestamp: Date;
+  id = 0
+  from_qu_id = 0
+  to_qu_id = 0
+  factor = 0
+  product_id = 0
+  row_created_timestamp = new Date();
 }

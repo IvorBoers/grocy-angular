@@ -6,8 +6,8 @@ import {AlertService} from "./alert-service";
 
 @Component({template: ''})
 export abstract class AbstractDetailComponent<T extends Entity> implements OnInit {
-  item: T;
-  id;
+  item?: T;
+  id = '';
 
   constructor(private route: ActivatedRoute, protected service: EntityService<T>, protected alertService: AlertService) { }
 
@@ -21,17 +21,14 @@ export abstract class AbstractDetailComponent<T extends Entity> implements OnIni
   }
 
   initEditEntity() {
-    this.service.getOne(this.id).subscribe(one => this.setItem(one));
+    this.service.getOne(Number(this.id)).subscribe(one => this.setItem(one));
   }
 
   initNewEntity() {
     this.setItem(this.createNewEntity());
   }
 
-  createNewEntity(): T {
-    // override if needed
-    return undefined;
-  };
+  abstract createNewEntity(): T;
 
   setItem(one: T) {
     return this.item = one;
@@ -40,22 +37,24 @@ export abstract class AbstractDetailComponent<T extends Entity> implements OnIni
   abstract getEntityName(): string;
 
   save() {
-    if (this.item.id) {
-      this.service.update(this.item).subscribe(response => {
-        if (response != null && response.error_message !== undefined) {
-          this.alertService.error("Error updating " + this.getEntityName() + ": " + response.error_message)
-        } else {
-          this.alertService.success("Updated " + this.getEntityName())
-        }
-      });
-    } else {
-      this.service.add(this.item).subscribe(response => {
-        if (response != null && response.error_message !== undefined) {
-          this.alertService.error("Error saving " + this.getEntityName() + ": " + response.error_message)
-        } else {
-          this.alertService.success("Saved " + this.getEntityName())
-        }
-      })
+    if (this.item) {
+      if (this.item.id) {
+        this.service.update(this.item).subscribe(response => {
+          if (response != null && response.error_message !== undefined) {
+            this.alertService.error("Error updating " + this.getEntityName() + ": " + response.error_message)
+          } else {
+            this.alertService.success("Updated " + this.getEntityName())
+          }
+        });
+      } else {
+        this.service.add(this.item).subscribe(response => {
+          if (response != null && response.error_message !== undefined) {
+            this.alertService.error("Error saving " + this.getEntityName() + ": " + response.error_message)
+          } else {
+            this.alertService.success("Saved " + this.getEntityName())
+          }
+        })
+      }
     }
   }
 }

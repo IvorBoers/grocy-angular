@@ -35,7 +35,7 @@ export class JumboidSetterComponent implements OnInit {
             let jumboId = jp.products.data[0].id;
 
             this.productUserfieldsService.getOne(b.product_id).subscribe(u => {
-              let jumboIdArray = []
+              let jumboIdArray: string[] = []
               if (u.jumboId) {
                   jumboIdArray = u.jumboId.split(',')
               }

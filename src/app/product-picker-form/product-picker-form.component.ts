@@ -17,7 +17,7 @@ export class ProductPickerFormComponent implements OnInit {
 
 
   @Input()
-  productQuantityunitAmount: ProductQuantityunitAmount;
+  productQuantityunitAmount?: ProductQuantityunitAmount;
 
   @Input()
   products: Product[] = [];
@@ -29,11 +29,11 @@ export class ProductPickerFormComponent implements OnInit {
   @Input()
   quantityunitConversions: QuantityunitConversion[] = [];
 
-  filteredProducts: Observable<Product[]>;
-  filteredQuantityunits: Observable<Quantityunit[]>;
+  filteredProducts?: Observable<Product[]>;
+  filteredQuantityunits?: Observable<Quantityunit[]>;
 
-  productsControl = new FormControl<Product>(undefined)
-  quControl = new FormControl<Quantityunit>(undefined)
+  productsControl = new FormControl<Product  | undefined>(undefined)
+  quControl = new FormControl<Quantityunit  | undefined>(undefined)
   amountControl = new FormControl<number>(0)
 
 
@@ -56,7 +56,9 @@ export class ProductPickerFormComponent implements OnInit {
     )
 
     this.productsControl.valueChanges.subscribe(p => {
-      this.productQuantityunitAmount.product = p;
+      if (this.productQuantityunitAmount && p != null) {
+        this.productQuantityunitAmount.product = p;
+      }
       this.quControl.reset()
       this.productQuantityunits = []
       if (p) {
@@ -67,13 +69,13 @@ export class ProductPickerFormComponent implements OnInit {
 
         this.quControl.setValue(this.productQuantityunits.filter(qu => qu.id === p.qu_id_stock)[0])
 
-        if (this.productQuantityunitAmount.amount) {
+        if (this.productQuantityunitAmount && this.productQuantityunitAmount.amount) {
           this.amountControl.setValue(this.productQuantityunitAmount.amount)
         }
       }
     })
-    this.quControl.valueChanges.subscribe(c => this.productQuantityunitAmount.quantityunit = c)
-    this.amountControl.valueChanges.subscribe(c => this.productQuantityunitAmount.amount = c)
+    this.quControl.valueChanges.subscribe(c => {if (this.productQuantityunitAmount && c != null) this.productQuantityunitAmount.quantityunit = c})
+    this.amountControl.valueChanges.subscribe(c => {if (this.productQuantityunitAmount && c != null) this.productQuantityunitAmount.amount = c})
 
   }
 

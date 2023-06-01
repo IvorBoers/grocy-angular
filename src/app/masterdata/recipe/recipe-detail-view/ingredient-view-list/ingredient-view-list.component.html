@@ -1,4 +1,4 @@
 <h2>Ingredients</h2>
-<mat-selection-list>
+<mat-selection-list *ngIf="recipe">
   <app-ingredient-item-view *ngFor="let i of items" [ingredient]="i" [factor]="recipe.desired_servings / recipe.base_servings"></app-ingredient-item-view>
 </mat-selection-list>

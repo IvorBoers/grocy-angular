@@ -19,7 +19,7 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
 
   @Input()
-  ingredient: Ingredient;
+  ingredient?: Ingredient;
   @Input()
   products: Product[] = [];
 
@@ -31,11 +31,11 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   @Input()
   grocyProductsByJumboId = new Map()
 
-  filteredProducts: Observable<Product[]>;
-  filteredQuantityunits: Observable<Quantityunit[]>;
+  filteredProducts?: Observable<Product[]>;
+  filteredQuantityunits?: Observable<Quantityunit[]>;
 
-  productsControl = new FormControl<Product>(undefined)
-  quControl = new FormControl<Quantityunit>(undefined)
+  productsControl = new FormControl<Product | undefined>(undefined)
+  quControl = new FormControl<Quantityunit | undefined>(undefined)
   amountControl = new FormControl<number>(0)
 
   constructor(protected productService: ProductService,
@@ -58,24 +58,47 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     )
 
     this.productsControl.valueChanges.subscribe(p => {
-      this.ingredient.grocyProduct = p;
-      this.quControl.reset()
-      this.productQuantityunits = []
-      if (p) {
-        // set to stock unit by default
-        let convertableQuantityunits = this.getConvertableQuantityunits(p);
-        this.productQuantityunits = this.allQuantityunits
-          .filter(u => convertableQuantityunits.includes(u.id))
+      if (this.ingredient) {
+        if (p == null) {
+          this.ingredient.grocyProduct = undefined;
+        } else {
+          this.ingredient.grocyProduct = p;
+        }
+        this.quControl.reset()
+        this.productQuantityunits = []
+        if (p) {
+          // set to stock unit by default
+          let convertableQuantityunits = this.getConvertableQuantityunits(p);
+          this.productQuantityunits = this.allQuantityunits
+            .filter(u => convertableQuantityunits.includes(u.id))
 
-        this.quControl.setValue(this.productQuantityunits.filter(qu => qu.id === p.qu_id_stock)[0])
+          this.quControl.setValue(this.productQuantityunits.filter(qu => qu.id === p.qu_id_stock)[0])
 
-        if (this.ingredient) {
-          this.amountControl.setValue(parseInt(this.ingredient.quantity))
+          if (this.ingredient) {
+            this.amountControl.setValue(parseInt(this.ingredient.quantity))
+          }
         }
       }
     })
-    this.quControl.valueChanges.subscribe(c => this.ingredient.grocyQuantityUnit = c)
-    this.amountControl.valueChanges.subscribe(c => this.ingredient.grocyAmount = c)
+    this.quControl.valueChanges.subscribe(value => {
+        if (this.ingredient) {
+          if (value === undefined || value === null) {
+            this.ingredient.grocyQuantityUnit = undefined;
+          } else {
+            this.ingredient.grocyQuantityUnit = value
+          }
+        }
+      }
+    )
+    this.amountControl.valueChanges.subscribe(value => {
+      if (this.ingredient) {
+        if (value === undefined || value === null) {
+          this.ingredient.grocyAmount = undefined;
+        } else {
+          this.ingredient.grocyAmount = value
+        }
+      }
+    })
 
     this.findGrocyProduct()
   }
@@ -100,15 +123,17 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     const filterValue = name && name.length > 0 ? name.toLowerCase() : '';
 
     return this.productQuantityunits
-        .filter(option => option.name.toLowerCase().includes(filterValue));
+      .filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.productsControl.setValue(this.ingredient.grocyProduct)
+    if (this.ingredient) {
+      this.productsControl.setValue(this.ingredient.grocyProduct)
+    }
   }
 
   private findGrocyProduct(): void {
-    if (this.ingredient.productInformation && this.ingredient.productInformation.product) {
+    if (this.ingredient && this.ingredient.productInformation && this.ingredient.productInformation.product) {
       if (this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id)) {
         let result = this.grocyProductsByJumboId.get(this.ingredient.productInformation.product.id);
         console.log("Found a product in the map: " + result.name)
@@ -130,15 +155,17 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   }
 
   private getGrocyProductByIngredientName(): void {
-    let cleanedName = this.getCleanedName(this.ingredient.name);
-    this.productService.getAllLike('name', cleanedName).subscribe(products => {
-      if (products) {
-        if (products && products.length > 0) {
-          console.log("Found by ingredient name: " + this.ingredient.name)
-          this.productsControl.setValue(products[0]);
+    if (this.ingredient) {
+      let cleanedName = this.getCleanedName(this.ingredient.name);
+      this.productService.getAllLike('name', cleanedName).subscribe(products => {
+        if (products) {
+          if (products && products.length > 0) {
+            console.log("Found by ingredient name: " + (this.ingredient ? this.ingredient.name : "---"))
+            this.productsControl.setValue(products[0]);
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   private getCleanedName(name: string) {
@@ -147,33 +174,44 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
   bindGrocyProduct() {
     //TODO copy paste from jumboid-setter
-    this.productUserfieldsService.getOne(this.ingredient.grocyProduct.id).subscribe(u => {
-      let jumboIdArray = []
-      if (u.jumboId) {
-        jumboIdArray = u.jumboId.split(',')
-      }
-      let jumboId = this.ingredient.productInformation.product.id;
-      if (!jumboIdArray.includes(jumboId)) {
-        if (u.jumboId) {
-          u.jumboId = u.jumboId + ',' + jumboId;
-        } else {
-          u.jumboId = jumboId;
+    if (this.ingredient && this.ingredient.grocyProduct) {
+      this.productUserfieldsService.getOne(this.ingredient.grocyProduct.id).subscribe(u => {
+        if (this.ingredient) {
+          let jumboIdArray: string[] = []
+          if (u.jumboId) {
+            jumboIdArray = u.jumboId.split(',')
+          }
+          let jumboId = this.ingredient.productInformation.product.id;
+          if (!jumboIdArray.includes(jumboId)) {
+            if (u.jumboId) {
+              u.jumboId = u.jumboId + ',' + jumboId;
+            } else {
+              u.jumboId = jumboId;
+            }
+            if (this.ingredient.grocyProduct) {
+              this.productUserfieldsService.update(this.ingredient.grocyProduct.id, u).subscribe(() => {
+                if (this.ingredient) {
+                  this.grocyProductsByJumboId.set(jumboId, this.ingredient.grocyProduct)
+                }
+              });
+            }
+          }
         }
-        this.productUserfieldsService.update(this.ingredient.grocyProduct.id, u).subscribe(() => {
-          this.grocyProductsByJumboId.set(jumboId, this.ingredient.grocyProduct)
-        });
-      }
-    })
+      })
+    }
   }
 
   isCoupledInGrocy() {
-    return this.ingredient.grocyProduct && this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id);
+    if (this.ingredient) {
+      return this.ingredient.grocyProduct && this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id);
+    }
+    return false;
   }
 
-  private getConvertableQuantityunits(product: Product):number[] {
+  private getConvertableQuantityunits(product: Product): number[] {
     let fromQus = this.quantityunitConversions
       .filter(quc => quc.from_qu_id === product.qu_id_stock)
-    let result:number[] = []
+    let result: number[] = []
     result.push(product.qu_id_stock)
     result.push(product.qu_id_purchase)
     fromQus.map(quc => quc.to_qu_id).forEach(id => result.push(id))

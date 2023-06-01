@@ -1,5 +1,6 @@
 export interface Entity {
-  id: number
+  id?: number
+  userfields?: any
 }
 export interface Named {
   name: string

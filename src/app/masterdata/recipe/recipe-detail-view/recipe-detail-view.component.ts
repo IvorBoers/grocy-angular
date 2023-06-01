@@ -22,4 +22,8 @@ export class RecipeDetailViewComponent extends AbstractDetailComponent<Recipe> {
     return Recipe.entityName;
   }
 
+  createNewEntity(): Recipe {
+    return new Recipe();
+  }
+
 }

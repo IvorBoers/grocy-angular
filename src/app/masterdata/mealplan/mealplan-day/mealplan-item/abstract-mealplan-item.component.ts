@@ -1,4 +1,4 @@
-import {Component, Directive, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Directive, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Mealplan} from "../../../../domain/mealplan";
 import {MealplanService} from "../../mealplan.service";
 import {AlertService} from "../../../../shared/alert-service";
@@ -6,7 +6,7 @@ import {AlertService} from "../../../../shared/alert-service";
 @Directive()
 export abstract class AbstractMealplanItemComponent implements OnInit {
     @Input()
-    mealplan: Mealplan;
+    mealplan!: Mealplan;
 
     editMode = false;
 
@@ -23,7 +23,7 @@ export abstract class AbstractMealplanItemComponent implements OnInit {
     }
 
     setEditMode(mode: boolean) {
-        console.log("set edit mode")
+        console.log("set edit mode " + this.mealplan.id)
         this.editMode = mode;
     }
 
@@ -44,8 +44,10 @@ export abstract class AbstractMealplanItemComponent implements OnInit {
                 if (response != null && response.error_message !== undefined) {
                     this.alertService.error("Error updating mealplan: " + response.error_message);
                 } else {
-                    this.alertService.success("Added mealplan");
-                    this.mealplan.id = response.created_object_id
+                    this.alertService.success("Added mealplan. Id=" + response.created_object_id);
+                    if (response.created_object_id) {
+                      this.mealplan.id = response.created_object_id
+                    }
                 }
                 this.setEditMode(false)
                 this.refreshEvent.emit(null)
@@ -54,7 +56,7 @@ export abstract class AbstractMealplanItemComponent implements OnInit {
         }
     }
 
-    abstract updateMealplanFields()
+    abstract updateMealplanFields():void
 
     cancel() {
         this.setEditMode(false)

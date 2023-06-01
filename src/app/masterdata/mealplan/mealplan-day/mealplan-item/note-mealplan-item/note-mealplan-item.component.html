@@ -1,6 +1,6 @@
 <mat-card *ngIf="!editMode" class="mealplan-card" cdkDrag [cdkDragData]="mealplan">
   <mat-card-header>
-    <mat-card-title >{{mealplan.note}}</mat-card-title>
+    <mat-card-title [innerHTML]="mealplan.note"></mat-card-title>
   </mat-card-header>
   <mat-card-content>
   </mat-card-content>

@@ -20,4 +20,8 @@ export class QuantityunitDetailComponent extends AbstractDetailComponent<Quantit
     return "quantityunit";
   }
 
+  createNewEntity(): Quantityunit {
+    return new Quantityunit();
+  }
+
 }

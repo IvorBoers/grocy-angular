@@ -20,4 +20,8 @@ export class ProductgroupDetailComponent extends AbstractDetailComponent<Product
     return "productgroup";
   }
 
+  createNewEntity(): Productgroup {
+    return new Productgroup();
+  }
+
 }

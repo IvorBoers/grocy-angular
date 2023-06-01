@@ -13,12 +13,12 @@ import {Observable, of} from "rxjs";
   styleUrls: ['./barcodescanner.component.scss']
 })
 export class BarcodescannerComponent implements OnInit, AfterViewInit {
-  @ViewChild(BarcodeScannerLivestreamComponent) barcodeScanner: BarcodeScannerLivestreamComponent;
+  @ViewChild(BarcodeScannerLivestreamComponent) barcodeScanner?: BarcodeScannerLivestreamComponent;
 
   barcodeScan = new BarcodeScan();
-  productDetailsResponse: ProductDetailsResponse;
-  errorMessage: string;
-  stock$: Observable<ProductDetailsResponse>;
+  productDetailsResponse?: ProductDetailsResponse;
+  errorMessage = '';
+  stock$?: Observable<ProductDetailsResponse | null>;
 
   constructor(private stockByBarcodeService: StockByBarcodeService) { }
 
@@ -26,14 +26,16 @@ export class BarcodescannerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.barcodeScanner.start().then(r => {
-      console.log("Started " + r)
-    });
+    if (this.barcodeScanner) {
+      this.barcodeScanner.start().then(r => {
+        console.log("Started " + r)
+      });
+    }
   }
 
   onValueChanges(result: QuaggaJSResultObject) {
     console.log("Value changes to " + result.codeResult.code)
-    if (this.barcodeScan.add(result.codeResult.code)) {
+    if (result.codeResult.code != null && this.barcodeScan.add(result.codeResult.code)) {
       this.stock$ = this.stockByBarcodeService
         .getStock(this.barcodeScan.currentCode)
         .pipe(
@@ -46,7 +48,7 @@ export class BarcodescannerComponent implements OnInit, AfterViewInit {
 
   }
 
-  onStarted(started) {
+  onStarted(started: any) {
     console.log(started);
   }
 }

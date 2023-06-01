@@ -14,28 +14,37 @@ import {ProductService} from "../../../masterdata/product/product.service";
 export class JumboProductComponent implements OnInit {
 
   @Input()
-  product: Product;
+  product?: Product;
   @Input()
-  jumboProductId: string;
+  jumboProductId?: string;
 
-  jumboProduct: ProductData;
+  jumboProduct?: ProductData;
 
   constructor(private jumboService: JumboService, private filesService: FilesService, protected productService: ProductService) { }
 
   ngOnInit(): void {
-    this.jumboService.getProduct(this.jumboProductId).subscribe(result => this.jumboProduct = result.product.data);
+    if (this.jumboProductId) {
+      this.jumboService.getProduct(this.jumboProductId)
+        .subscribe(result => this.jumboProduct = result.product.data);
+    }
   }
 
-  setAsGrocyProductPicture(image: PrimaryView) {
-    let ext = image.url.substring(image.url.lastIndexOf('.') + 1)
-    let fileName = "productpicture_jumbo_" + this.jumboProduct.id + '.' + ext
-    let imageUrl = image.url.replace("https://static-images.jumbo.com","/jumboimages")
-    console.log("setAsGrocyProductPicture: fileName=" + fileName + ", imageUrl=" + imageUrl)
-    this.filesService.downloadAndupload(FilesService.group_productpictures, fileName, imageUrl, function() {
+  updateProductPictureName(fileName: string): void {
+    if (this.product) {
       console.log("updating product " + this.product.id + " with picture name: " + fileName)
       this.product.picture_file_name = fileName;
       this.productService.update(this.product);
-    })
+    }
+  }
+
+  setAsGrocyProductPicture(image: PrimaryView) {
+    if (this.jumboProduct && this.product) {
+      let ext = image.url.substring(image.url.lastIndexOf('.') + 1)
+      let fileName = "productpicture_jumbo_" + this.jumboProduct.id + '.' + ext
+      let imageUrl = image.url.replace("https://static-images.jumbo.com", "/jumboimages")
+      console.log("setAsGrocyProductPicture: fileName=" + fileName + ", imageUrl=" + imageUrl)
+      this.filesService.downloadAndupload(FilesService.group_productpictures, fileName, imageUrl, () => this.updateProductPictureName(fileName))
+    }
   }
 
   testDownload() {

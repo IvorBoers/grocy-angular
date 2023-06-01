@@ -9,7 +9,7 @@ import {JumboRecipeSummary} from "../domain/jumbo-recipe-summary";
 export class JumboRecipeSummaryComponent implements OnInit {
 
   @Input()
-  recipeSummary: JumboRecipeSummary;
+  recipeSummary!: JumboRecipeSummary;
 
   constructor() { }
 

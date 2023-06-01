@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MealplanService} from "../mealplan.service";
 import {Mealplan} from "../../../domain/mealplan";
 import {DatePipe} from "@angular/common";
-import {CdkDragDrop, CdkDragEnter} from "@angular/cdk/drag-drop";
+import {CdkDragDrop} from "@angular/cdk/drag-drop";
 import {MealplanDragDropService} from "./mealplan-drag-drop-service";
 import {MealplanSection} from "../../../domain/mealplan-section";
 import {MealplanSectionService} from "../../mealplan-section/mealplan-section.service";
@@ -15,9 +15,9 @@ import {MealplanSectionService} from "../../mealplan-section/mealplan-section.se
 export class MealplanDayComponent implements OnInit {
 
   @Input()
-  sections: MealplanSection[];
+  sections: MealplanSection[] = []
   @Input()
-  day: Date
+  day: Date = new Date()
   mealplans: Mealplan[] = []
 
   constructor(protected mealplanService: MealplanService, protected datePipe: DatePipe,
@@ -35,18 +35,23 @@ export class MealplanDayComponent implements OnInit {
 
   loadMealplansForDay() {
     console.log("loading mealplans for day " + this.day)
-    this.mealplanService.getAllWhere('day', this.datePipe.transform(this.day, 'yyyy-MM-dd')).subscribe(mealplans => {
-      if (mealplans) {
-        this.mealplans = mealplans;
-      }
-    });
+    let dateString = this.datePipe.transform(this.day, 'yyyy-MM-dd');
+    if (dateString) {
+      this.mealplanService.getAllWhere('day', dateString).subscribe(mealplans => {
+        if (mealplans) {
+          this.mealplans = mealplans;
+        }
+      });
+    }
   }
 
   addItem(type: string, section: MealplanSection) {
     console.log("Adding " + type)
     const note = new Mealplan();
     note.type = type;
-    note.day = this.datePipe.transform(this.day, 'yyyy-MM-dd')
+    let dateString = this.datePipe.transform(this.day, 'yyyy-MM-dd');
+    if (dateString)
+      note.day = dateString
     note.note = ""
     note.done = false
     note.recipe_servings = 1

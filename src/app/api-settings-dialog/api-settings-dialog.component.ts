@@ -9,19 +9,23 @@ import {FormControl} from "@angular/forms";
 })
 export class ApiSettingsDialogComponent implements OnInit {
 
-  apiKeyControl: FormControl
-  urlControl: FormControl
+  apiKeyControl!: FormControl
+  urlControl!: FormControl
 
   constructor(public dialogRef: MatDialogRef<ApiSettingsDialogComponent>){}
 
   ngOnInit(): void {
-    this.urlControl = new FormControl<string>(localStorage.getItem('grocy_url'))
-    this.apiKeyControl = new FormControl<string>(localStorage.getItem('grocy_api_key'))
+    this.urlControl = new FormControl<string | null>(localStorage.getItem('grocy_url'))
+    this.apiKeyControl = new FormControl<string | null>(localStorage.getItem('grocy_api_key'))
   }
 
   saveSettings() {
-    localStorage.setItem('grocy_url', this.urlControl.value)
-    localStorage.setItem('grocy_api_key', this.apiKeyControl.value)
+    if (this.urlControl) {
+      localStorage.setItem('grocy_url', this.urlControl.value)
+    }
+    if (this.apiKeyControl) {
+      localStorage.setItem('grocy_api_key', this.apiKeyControl.value)
+    }
     this.dialogRef.close()
   }
 }

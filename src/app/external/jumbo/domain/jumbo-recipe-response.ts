@@ -40,7 +40,7 @@ export interface PrimaryView {
 export interface Ingredient {
   name:                string;
   quantity:            string;
-  productInformation?: ProductInformation;
+  productInformation: ProductInformation;
 
   grocyProduct?: Product;
   grocyQuantityUnit?: Quantityunit;

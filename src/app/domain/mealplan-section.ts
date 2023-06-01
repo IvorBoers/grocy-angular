@@ -1,8 +1,9 @@
 import {Entity, Named} from "./entity";
 
 export class MealplanSection implements Entity, Named {
-  id: number;
-  name: string;
+  id= 0;
   sort_number: number = -1;
-  time_info: string;
+  time_info = '';
+  name = '';
+
 }

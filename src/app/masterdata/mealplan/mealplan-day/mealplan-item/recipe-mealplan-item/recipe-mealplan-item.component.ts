@@ -19,20 +19,19 @@ import {Router} from "@angular/router";
 })
 export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
 
-  recipe: Recipe
+  recipe?: Recipe
   allRecipes: Recipe[] = []
-  filteredRecipes: Observable<Recipe[]>
-  recipesControl = new FormControl<Recipe>(undefined)
+  filteredRecipes?: Observable<Recipe[]>
+  recipesControl = new FormControl<Recipe | undefined>(undefined)
   servingsControl = new FormControl<number>(1)
 
-  constructor(protected mealplanService: MealplanService, protected alertService: AlertService, protected recipeService: RecipeService,
+  constructor(protected override mealplanService: MealplanService, protected override alertService: AlertService, protected recipeService: RecipeService,
               protected grocyImagePipe: GrocyImagePipe, protected router: Router) {
     super(mealplanService, alertService);
   }
 
-  ngOnInit() {
+  override ngOnInit() {
     super.ngOnInit();
-
     if (this.mealplan && this.mealplan.recipe_id) {
       this.recipeService.getOne(this.mealplan.recipe_id).subscribe(response => {
         this.recipe = response
@@ -48,7 +47,7 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
 
   }
 
-  setEditMode(mode: boolean) {
+  override setEditMode(mode: boolean) {
     if (this.allRecipes.length == 0 && mode) {
       this.recipeService.getAllWhere("type", "normal").subscribe(response => {
         this.allRecipes = response
@@ -69,7 +68,11 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   updateMealplanFields() {
     if (this.recipesControl.value) {
       this.mealplan.recipe_id = this.recipesControl.value.id
-      this.mealplan.recipe_servings = this.servingsControl.value
+      if (this.servingsControl.value) {
+        this.mealplan.recipe_servings = this.servingsControl.value
+      } else {
+        this.mealplan.recipe_servings = 1;
+      }
     }
   }
 
@@ -85,6 +88,7 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   }
 
   showRecipe() {
-    this.router.navigate(['/recipe/' + this.recipe.id])
+    if (this.recipe)
+      this.router.navigate(['/recipes/' + this.recipe.id])
   }
 }

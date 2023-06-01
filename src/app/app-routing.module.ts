@@ -48,17 +48,17 @@ const routes: Routes = [
   {path: 'mealplan/sections', component: MealplanSectionListComponent},
   {path: 'mealplan/sections/:id', component: MealplanSectionDetailComponent},
   {path: 'recipes', component: RecipesOverviewComponent},
-  {path: 'recipe/:id', component: RecipeDetailViewComponent},
-  {path: 'recipe/jumbo/:id', component: JumboRecipeDetailpageComponent},
-  {path: 'recipe/:id/edit', component: RecipeDetailEditComponent},
+  {path: 'recipes/:id', component: RecipeDetailViewComponent},
+  {path: 'recipes/jumbo/:id', component: JumboRecipeDetailpageComponent},
+  {path: 'recipes/:id/edit', component: RecipeDetailEditComponent},
   {path: 'jumbo/maintenance', component: JumboidSetterComponent},
   {path: 'jumbo/recipes', component: JumboRecipesComponent},
   {path: '', component: HomePageComponent},
-  {path: '**', component: PageNotFoundComponent}
+  {path: '**', pathMatch: 'full', component: PageNotFoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: false, enableTracing: false })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

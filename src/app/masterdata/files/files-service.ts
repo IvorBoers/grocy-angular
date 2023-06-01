@@ -26,7 +26,7 @@ export class FilesService extends AbstractGrocyService {
     return this.getUrl(group + '/' + btoa(picture_file_name))
   }
 
-  downloadAndupload(group: string, fileName: string, fileUrl: string, callback) {
+  downloadAndupload(group: string, fileName: string, fileUrl: string, callback: any) {
     let url = this.getUrl(group + '/' + btoa(fileName));
     console.log("getting image from " + fileUrl + " and uploading it to " + url)
     this.http.get(fileUrl, {

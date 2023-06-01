@@ -1,17 +1,16 @@
 import {Entity} from "./entity";
 
 export class RecipePos implements Entity {
-    id:                              number;
-    recipe_id:                       number;
-    product_id:                      number;
-    amount:                          number;
-    note:                            string;
-    qu_id:                           number;
-    only_check_single_unit_in_stock: boolean;
-    ingredient_group:                string;
-    not_check_stock_fulfillment:     string;
-    row_created_timestamp:           Date;
-    variable_amount:                 number;
-    price_factor:                    number;
-    userfields:                      null;
+    id = 0
+    recipe_id = 0
+    product_id = 0
+    amount = 0
+    note = ''
+    qu_id = 0
+    only_check_single_unit_in_stock = false
+    ingredient_group = ''
+    not_check_stock_fulfillment = ''
+    row_created_timestamp = new Date()
+    variable_amount = 0
+    price_factor = 0
 }

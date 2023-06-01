@@ -20,4 +20,8 @@ export class StockLocationDetailComponent extends AbstractDetailComponent<StockL
     return "stocklocation";
   }
 
+  createNewEntity(): StockLocation {
+    return new StockLocation();
+  }
+
 }

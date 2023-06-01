@@ -11,7 +11,7 @@ import {Recipe} from "../../../../domain/recipe";
 })
 export class IngredientViewListComponent implements OnInit {
 
-  @Input() recipe: Recipe;
+  @Input() recipe?: Recipe;
   items: RecipePos[] = [];
 
   constructor(protected recipePosService: RecipePosService) {

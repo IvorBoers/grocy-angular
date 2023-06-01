@@ -22,7 +22,7 @@ import {QuantityunitConversionService} from "../../../masterdata/quantityunit-co
 export class JumboRecipeDetailComponent implements OnInit {
   displayedColumns: string[] = ['image', 'name', 'quantity', 'productinfo', 'grocy']
   @Input()
-  item: RecipeData;
+  item!: RecipeData;
 
   @Input()
   grocyProductsByJumboId = new Map()
@@ -32,7 +32,7 @@ export class JumboRecipeDetailComponent implements OnInit {
   quantityunitConversions: QuantityunitConversion[] = [];
 
 
-  private created_grocy_id: number;
+  private created_grocy_id?: number;
 
   constructor(protected recipeService: RecipeService,
               protected recipeUserfieldsService: RecipeUserfieldsService,
@@ -80,29 +80,31 @@ export class JumboRecipeDetailComponent implements OnInit {
         this.alertService.success("Saved");
         let uf = new RecipeUserfields();
         uf.jumboId = this.item.id;
-        this.recipeUserfieldsService.update(this.created_grocy_id, uf).subscribe(response => {
-          if (response != null && response.error_message !== undefined) {
-            this.alertService.error("Error: " + response.error_message);
-          } else {
-            this.alertService.success("Saved recipe userfields");
-          }
-        });
-        this.item.ingredients.forEach(ingredient => {
-          if (ingredient.grocyProduct && ingredient.grocyQuantityUnit && ingredient.grocyAmount) {
-            let pos = new RecipeIngredient();
-            pos.recipe_id = this.created_grocy_id;
-            pos.amount = ingredient.grocyAmount;
-            pos.product_id = ingredient.grocyProduct.id;
-            pos.ingredient_group = 'imported'
-            pos.price_factor = 1.0
-            console.log("Importing " + JSON.stringify(pos));
-            this.recipeIngredientService.add(pos).subscribe(response => {
-              if (response != null && response.error_message == undefined) {
-                ingredient.grocyRecipeIngredientId = response.created_object_id
-              }
-            });
-          }
-        })
+        if (this.created_grocy_id) {
+          this.recipeUserfieldsService.update(this.created_grocy_id, uf).subscribe(response => {
+            if (response != null && response.error_message !== undefined) {
+              this.alertService.error("Error: " + response.error_message);
+            } else {
+              this.alertService.success("Saved recipe userfields");
+            }
+          });
+          this.item.ingredients.forEach(ingredient => {
+            if (ingredient.grocyProduct && ingredient.grocyQuantityUnit && ingredient.grocyAmount) {
+              let pos = new RecipeIngredient();
+              pos.recipe_id = this.created_grocy_id || 0;
+              pos.amount = ingredient.grocyAmount;
+              pos.product_id = ingredient.grocyProduct.id;
+              pos.ingredient_group = 'imported'
+              pos.price_factor = 1.0
+              console.log("Importing " + JSON.stringify(pos));
+              this.recipeIngredientService.add(pos).subscribe(response => {
+                if (response != null && response.error_message == undefined) {
+                  ingredient.grocyRecipeIngredientId = response.created_object_id || 0
+                }
+              });
+            }
+          })
+        }
       }
     });
   }

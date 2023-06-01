@@ -20,4 +20,8 @@ export class LocationDetailComponent extends AbstractDetailComponent<Location> {
     return "location";
   }
 
+  createNewEntity(): Location {
+    return new Location();
+  }
+
 }

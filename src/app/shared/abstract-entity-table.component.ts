@@ -10,10 +10,10 @@ export abstract class AbstractEntityTableComponent<T extends Entity> implements 
 
 
   displayedColumns: string[] = ['actions'];
-  dataSource: MatTableDataSource<T>;
+  dataSource= new MatTableDataSource<T>();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   protected constructor(private entityService: EntityService<T>) {
 
@@ -35,8 +35,12 @@ export abstract class AbstractEntityTableComponent<T extends Entity> implements 
 
   setTableData(all: T[]) {
     this.dataSource = new MatTableDataSource<T>(all);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
   applyFilter(event: Event) {

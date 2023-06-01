@@ -5,6 +5,7 @@ import {ProductService} from "../../../product/product.service";
 import {Recipe} from "../../../../domain/recipe";
 import {Product} from "../../../../domain/product";
 import {FilesService} from "../../../files/files-service";
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-mealplan-item',
@@ -14,10 +15,8 @@ import {FilesService} from "../../../files/files-service";
 export class MealplanItemComponent implements OnInit {
 
   @Input()
-  mealplan: Mealplan;
+  mealplan!: Mealplan;
 
-  recipe: Recipe;
-  product: Product;
   @Output()
   refreshEvent = new EventEmitter();
 
@@ -26,14 +25,6 @@ export class MealplanItemComponent implements OnInit {
   }
 
   ngOnInit() {
-  if (this.mealplan) {
-    if (this.mealplan.recipe_id) {
-      this.recipeService.getOne(this.mealplan.recipe_id).subscribe(r => this.recipe = r);
-    }
-    if (this.mealplan.product_id) {
-      this.productService.getOne(this.mealplan.product_id).subscribe(p => this.product = p)
-    }
-  }
   }
 
   triggerRefreshEvent() {

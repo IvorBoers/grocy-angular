@@ -19,7 +19,9 @@ export class MealplanDragDropService {
 
   dropIntoDay(item: Mealplan, day: Date, section: MealplanSection) {
     let oldDay = item.day;
-    item.day = this.datePipe.transform(day, 'yyyy-MM-dd');
+    let dateString = this.datePipe.transform(day, 'yyyy-MM-dd');
+    if (dateString)
+      item.day = dateString;
     item.section_id = section.id;
     this.mealplanService.update(item).subscribe(result => {
       console.log("change day " + oldDay)

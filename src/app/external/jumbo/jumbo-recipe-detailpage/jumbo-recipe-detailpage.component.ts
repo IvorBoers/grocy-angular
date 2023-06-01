@@ -9,7 +9,7 @@ import {RecipeData} from '../domain/jumbo-recipe-response';
   styleUrls: ['./jumbo-recipe-detailpage.component.scss']
 })
 export class JumboRecipeDetailpageComponent implements OnInit {
-  item: RecipeData;
+  item?: RecipeData;
 
   constructor(private route: ActivatedRoute, protected service: JumboService) {
   }

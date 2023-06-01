@@ -18,14 +18,14 @@ export class NoteMealplanItemComponent extends AbstractMealplanItemComponent{
         super(mealplanService, alertService)
     }
 
-    ngOnInit() {
+    override ngOnInit() {
         super.ngOnInit()
         this.noteControl.setValue(this.mealplan.note)
 
     }
 
     updateMealplanFields() {
-        this.mealplan.note = this.noteControl.value
+        this.mealplan.note = this.noteControl.value || ''
     }
 
 }

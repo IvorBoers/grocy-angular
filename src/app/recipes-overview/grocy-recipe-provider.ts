@@ -2,26 +2,52 @@ import {RecipeProvider} from './recipe-provider';
 import {RecipeSummary} from '../domain/recipe-summary';
 import {Observable} from 'rxjs';
 import {RecipeService} from '../masterdata/recipe/recipe.service';
-import {Router} from '@angular/router';
 import {Recipe} from '../domain/recipe';
 import {map} from 'rxjs/operators';
 import {FilesService} from '../masterdata/files/files-service';
 import {Injectable} from '@angular/core';
 import {RecipeSummaryPage} from '../domain/recipe-summary-page';
+import {Mealplan} from '../domain/mealplan';
+import {MealplanSection} from '../domain/mealplan-section';
+
+class GrocySummary implements RecipeSummary {
+  id: any;
+  imageUrl= "";
+  name= "";
+  source= "GROCY";
+  viewUrl= "";
+
+  getRouterCommand(): string {
+    return '/recipes/' + this.id;
+  }
+
+  getMealplan(day: string, mealplanSection: MealplanSection, mealplanServings: number): Mealplan {
+    const mealplan = new Mealplan();
+    mealplan.type = 'recipe';
+    mealplan.day = day
+    mealplan.note = ""
+    mealplan.done = false
+    mealplan.recipe_servings = mealplanServings;
+    mealplan.recipe_id = this.id;
+    if (mealplanSection) {
+      mealplan.section_id = mealplanSection.id;
+    }
+
+    return mealplan;
+  }
+
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrocyRecipeProvider implements RecipeProvider {
-  constructor(protected recipeService: RecipeService, protected filesService: FilesService, protected router: Router) {
+
+  constructor(protected recipeService: RecipeService, protected filesService: FilesService) {
   }
 
   getName(): string {
     return 'Grocy';
-  }
-
-  navigateTo(recipe: RecipeSummary): void {
-    this.router.navigate(['/recipe/' + recipe.id]);
   }
 
   searchRecipes(query: string, pageIndex: number, pageSize: number): Observable<RecipeSummaryPage> {
@@ -38,8 +64,7 @@ export class GrocyRecipeProvider implements RecipeProvider {
   private fromGrocy(items: Recipe[]): RecipeSummaryPage {
     const summaries: RecipeSummary[] = [];
     items.map(it => {
-      let summary = new RecipeSummary();
-      summary.source = 'GROCY';
+      let summary = new GrocySummary();
       summary.id = it.id;
       summary.name = it.name;
       if (it.picture_file_name) {

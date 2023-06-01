@@ -12,10 +12,10 @@ import {Quantityunit} from "../../../../../domain/quantityunit";
 })
 export class IngredientItemViewComponent implements OnInit {
 
-  @Input() ingredient: RecipePos;
-  @Input() factor: number;
-  product: Product;
-  quantityunit: Quantityunit;
+  @Input() ingredient?: RecipePos;
+  @Input() factor: number = 1;
+  product?: Product;
+  quantityunit?: Quantityunit;
 
   constructor(protected productService: ProductService, protected quantityunitService: QuantityunitService) {
   }
