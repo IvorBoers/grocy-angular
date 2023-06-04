@@ -70,7 +70,6 @@ export class RecipesOverviewComponent implements OnInit {
   }
 
   getNextScheduleDay(recipe: RecipeSummary): string {
-    console.log("find future for " + recipe.id)
     let mealplan = this.futureMealplans.find(mp => mp.recipe_id === Number(recipe.id));
     if (mealplan) {
       return mealplan.day;

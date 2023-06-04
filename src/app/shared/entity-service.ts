@@ -59,7 +59,6 @@ export abstract class EntityService<T extends Entity> extends AbstractGrocyServi
 
   update(item: T): Observable<UpdateResponse> {
     let updatedItem = Object.assign({}, item);
-    updatedItem.id = 0;
     delete updatedItem.userfields; // userfields need to be updated with other API.
 
     return this.http.put<UpdateResponse>(this.getUrl("/" + item.id), updatedItem);
