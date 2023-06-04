@@ -10,7 +10,7 @@ import {MealplanSection} from "../../domain/mealplan-section";
 export class MealplanComponent implements OnInit {
 
   days: Date[] = []
-  deltaDays = 1;
+  deltaDays = 0;
   numberOfDaysStr = "7";
   sections: MealplanSection[] = [];
 
@@ -25,19 +25,12 @@ export class MealplanComponent implements OnInit {
 
   setDays() {
     this.days = []
-    let firstDay = new Date();//this.getFirstDayOfCurrentWeek()
-    console.log("firstday " + firstDay)
+    let firstDay = new Date();
     Array.from({length: +this.numberOfDaysStr}, (_, i) => {
       let date = new Date(firstDay.getTime())
       date.setDate(date.getDate() + i + this.deltaDays)
       this.days.push(date);
     })
-  }
-
-  private getFirstDayOfCurrentWeek(): Date {
-    let curr = new Date; // get current date
-    let first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-    return new Date(curr.setDate(first));
   }
 
   navigateDays(newDelta: number) {
