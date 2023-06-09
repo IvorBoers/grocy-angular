@@ -1,7 +1,12 @@
 .mealplan-navigation-group {
+  display: flex;
   .mat-mdc-form-field {
-    max-width: 70px;
+    max-width: 80px;
   }
+  .buttons {
+    padding-top: 4px;
+  }
+
 }
 
 .mealplan-day-container {

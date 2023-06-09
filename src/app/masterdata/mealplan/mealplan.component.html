@@ -2,12 +2,15 @@
 
 <a [routerLink]="'/mealplan/sections'">Manage sections</a>
 <div class="mealplan-navigation-group">
-  <button mat-icon-button (click)="navigateDays(deltaDays-7)"><mat-icon>fast_rewind</mat-icon></button>
-  <button mat-icon-button (click)="navigateDays(deltaDays-1)"><mat-icon>navigate_before</mat-icon></button>
-  <button mat-icon-button (click)="navigateDays(0)"><mat-icon>today</mat-icon></button>
-  <button mat-icon-button (click)="navigateDays(deltaDays+1)"><mat-icon>navigate_next</mat-icon></button>
-  <button mat-icon-button (click)="navigateDays(deltaDays+7)"><mat-icon>fast_forward</mat-icon></button>
+  <div class="buttons">
+    <button mat-icon-button (click)="navigateDays(deltaDays-7)"><mat-icon>fast_rewind</mat-icon></button>
+    <button mat-icon-button (click)="navigateDays(deltaDays-1)"><mat-icon>navigate_before</mat-icon></button>
+    <button mat-icon-button (click)="navigateDays(0)"><mat-icon>today</mat-icon></button>
+    <button mat-icon-button (click)="navigateDays(deltaDays+1)"><mat-icon>navigate_next</mat-icon></button>
+    <button mat-icon-button (click)="navigateDays(deltaDays+7)"><mat-icon>fast_forward</mat-icon></button>
+  </div>
   <mat-form-field>
+    <mat-label>Days</mat-label>
     <mat-select [(value)]="numberOfDaysStr" (selectionChange)="setDays()">
       <mat-option value="1">1</mat-option>
       <mat-option value="3">3</mat-option>

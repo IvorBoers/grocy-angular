@@ -47,19 +47,23 @@ export class MealplanDayComponent implements OnInit {
 
   addItem(type: string, section: MealplanSection) {
     console.log("Adding " + type)
-    const note = new Mealplan();
-    note.type = type;
+    const mealplan = new Mealplan();
+    mealplan.type = type;
+    if (type === 'product') {
+      mealplan.product_amount = 1
+    }
     let dateString = this.datePipe.transform(this.day, 'yyyy-MM-dd');
-    if (dateString)
-      note.day = dateString
-    note.note = ""
-    note.done = false
-    note.recipe_servings = 1
+    if (dateString) {
+      mealplan.day = dateString
+    }
+    mealplan.note = ""
+    mealplan.done = false
+    mealplan.recipe_servings = 1
     if (section) {
-      note.section_id = section.id;
+      mealplan.section_id = section.id;
     }
     const arrayCopy = [...this.mealplans]
-    arrayCopy.push(note)
+    arrayCopy.push(mealplan)
     this.mealplans = arrayCopy
   }
 
@@ -71,6 +75,10 @@ export class MealplanDayComponent implements OnInit {
   }
 
   getMealplansForSection(section: MealplanSection): Mealplan[] {
-    return this.mealplans.filter(item => item.section_id === section.id);
+    let mealplans1 = this.mealplans.filter(item => item.section_id === section.id);
+    if ('2023-06-07' === this.datePipe.transform(this.day, 'yyyy-MM-dd') && section.id === -1) {
+      console.log("get for section : " + JSON.stringify(mealplans1))
+    }
+    return mealplans1;
   }
 }

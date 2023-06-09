@@ -16,10 +16,14 @@
     //padding: 0;
   }
 }
-.mealplan-card.editable mat-card-header {
-  padding: 2px;
-  .mat-form-field {
-    width: 100%;
+.mealplan-card.editable {
+  .mat-mdc-card-header {
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+  .mat-mdc-card-content {
+    padding: 6px;
   }
 }
 

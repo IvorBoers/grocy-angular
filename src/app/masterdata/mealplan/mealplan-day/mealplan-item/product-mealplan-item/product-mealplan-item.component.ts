@@ -88,4 +88,8 @@ export class ProductMealplanItemComponent extends AbstractMealplanItemComponent 
   getFileUrl(picture_file_name: string) {
     return this.grocyImagePipe.transform(picture_file_name, FilesService.group_productpictures)
   }
+
+  addToShoppingList() {
+    console.log("Add to shopping list")
+  }
 }
