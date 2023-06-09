@@ -35,7 +35,7 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div *ngIf="recipesControl.value" class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipesControl.value.picture_file_name) + ')'}"></div>
+    <div *ngIf="recipesControl.value && recipesControl.value?.picture_file_name" class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipesControl.value?.picture_file_name) + ')'}"></div>
 
   </mat-card-content>
   <mat-card-actions>

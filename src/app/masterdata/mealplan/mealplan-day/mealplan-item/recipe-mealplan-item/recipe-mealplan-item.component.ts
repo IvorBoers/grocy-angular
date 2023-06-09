@@ -76,8 +76,10 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
     }
   }
 
-  getFileUrl(picture_file_name: string) {
-    return this.grocyImagePipe.transform(picture_file_name, FilesService.group_recipepictures)
+  getFileUrl(picture_file_name: string | undefined | null) {
+    if (picture_file_name)
+      return this.grocyImagePipe.transform(picture_file_name, FilesService.group_recipepictures);
+    return "";
   }
 
   displayFn(named: Named) {
