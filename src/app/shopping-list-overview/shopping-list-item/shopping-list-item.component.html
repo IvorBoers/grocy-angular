@@ -1,0 +1,7 @@
+<div class="shopping-list-item">
+  <div class="product" *ngIf="item.product" >{{item.product.name}}</div>
+  <div class="quantityunit" *ngIf="item.qu">{{item.qu.name}}</div>
+  <div class="amount">{{item.item.amount}}</div>
+  <div class="note">{{item.item.note}}</div>
+  <div class="group" *ngIf="item.group">{{item.group?.name}}</div>
+</div>

@@ -45,6 +45,14 @@ export abstract class EntityService<T extends Entity> extends AbstractGrocyServi
         catchError(this.handleError.bind(this))
       );
   }
+  getByIdSet(idSet: Set<number>): Observable<T[]> {
+    console.log("Requesting " + idSet.size + " " + this.entityName + " items");
+    let expression = Array.from(idSet.values()).sort(function(a,b){return a - b}).map(it => '^' + it + '$').join('|');
+    return this.http.get<T[]>(this.getUrl() + '&query[]=' + encodeURIComponent('id§' + expression))
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
+  }
 
   getOne(id: number): Observable<T> {
     return this.http.get<T>(this.getUrl("/" + id))

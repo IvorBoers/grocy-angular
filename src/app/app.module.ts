@@ -82,6 +82,10 @@ import { JumboRecipeDetailpageComponent } from './external/jumbo/jumbo-recipe-de
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { RecipeOverviewItemComponent } from './recipes-overview/recipe-overview-item/recipe-overview-item.component';
+import { ShoppingListOverviewComponent } from './shopping-list-overview/shopping-list-overview.component';
+import { ShoppingListsComponent } from './masterdata/shopping-lists/shopping-lists.component';
+import { ShoppingListsItemComponent } from './masterdata/shopping-lists/shopping-lists-item/shopping-lists-item.component';
+import { ShoppingListItemComponent } from './shopping-list-overview/shopping-list-item/shopping-list-item.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +133,11 @@ import { RecipeOverviewItemComponent } from './recipes-overview/recipe-overview-
     IngredientItemViewComponent,
     RecipesOverviewComponent,
     JumboRecipeDetailpageComponent,
-    RecipeOverviewItemComponent
+    RecipeOverviewItemComponent,
+    ShoppingListOverviewComponent,
+    ShoppingListsComponent,
+    ShoppingListsItemComponent,
+    ShoppingListItemComponent,
 
   ],
   imports: [

@@ -3,6 +3,7 @@
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="openScanDialog()" aria-label="Open scan dialog"><mat-icon>qr_code_scanner</mat-icon></button>
     <button mat-button routerLink="/" matTooltip="Homepage"><mat-icon>home</mat-icon><span class="on-large-screen">Homepage</span></button>
+    <button mat-button routerLink="/shopping-list" matTooltip="Shopping list"><mat-icon>shopping_cart</mat-icon><span class="on-large-screen">Shopping list</span></button>
     <button mat-button routerLink="/mealplan" matTooltip="Mealplan"><mat-icon>calendar_view_week</mat-icon><span class="on-large-screen">Mealplan</span></button>
     <button mat-button routerLink="/recipes" matTooltip="Recipes"><mat-icon>dinner_dining</mat-icon><span class="on-large-screen">Recipes</span></button>
     <button mat-button [matMenuTriggerFor]="masterdata" matTooltip="Masterdata"><mat-icon>list</mat-icon><span class="on-large-screen">Masterdata</span></button>

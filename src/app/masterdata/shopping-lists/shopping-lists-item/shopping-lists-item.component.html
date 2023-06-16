@@ -1,0 +1,18 @@
+<div class="shopping-list-item">
+  <div class="details">
+
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput type="text" [(ngModel)]="name">
+      <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+  </div>
+  <div class="actions">
+    <button mat-icon-button (click)="save()" *ngIf="name != item.name"><mat-icon matTooltip="Save">save</mat-icon></button>
+    <button mat-icon-button (click)="cancelEdit()" *ngIf="name != item.name"><mat-icon matTooltip="Cancel">cancel</mat-icon></button>
+    <button mat-icon-button (click)="delete()" *ngIf="item.id != 1"><mat-icon matTooltip="Delete">delete</mat-icon></button>
+  </div>
+</div>

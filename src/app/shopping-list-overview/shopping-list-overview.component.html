@@ -1,0 +1,18 @@
+<h1>Shopping list</h1>
+
+<a [routerLink]="'/shopping-list/manage'">Manage shopping lists</a>
+<div>
+  <mat-form-field>
+    <mat-label>Shopping list</mat-label>
+    <mat-select [(value)]="selectedList" (selectionChange)="loadItems()">
+      <mat-option *ngFor="let list of lists" [value]="list">{{list.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="group-container">
+  <div class="group" *ngFor="let pg of productGroups">
+    <h2>{{pg.name}}</h2>
+    <app-shopping-list-item *ngFor="let item of itemsForGroup(pg)" [item]="item"></app-shopping-list-item>
+  </div>
+</div>
+

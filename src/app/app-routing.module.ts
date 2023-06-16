@@ -28,6 +28,8 @@ import {RecipesOverviewComponent} from './recipes-overview/recipes-overview.comp
 import {
   JumboRecipeDetailpageComponent
 } from './external/jumbo/jumbo-recipe-detailpage/jumbo-recipe-detailpage.component';
+import {ShoppingListOverviewComponent} from './shopping-list-overview/shopping-list-overview.component';
+import {ShoppingListsComponent} from './masterdata/shopping-lists/shopping-lists.component';
 
 
 const routes: Routes = [
@@ -51,6 +53,8 @@ const routes: Routes = [
   {path: 'recipes/:id', component: RecipeDetailViewComponent},
   {path: 'recipes/jumbo/:id', component: JumboRecipeDetailpageComponent},
   {path: 'recipes/:id/edit', component: RecipeDetailEditComponent},
+  {path: 'shopping-list', component: ShoppingListOverviewComponent},
+  {path: 'shopping-list/manage', component: ShoppingListsComponent},
   {path: 'jumbo/maintenance', component: JumboidSetterComponent},
   {path: 'jumbo/recipes', component: JumboRecipesComponent},
   {path: '', component: HomePageComponent},
