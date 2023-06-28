@@ -1,21 +1,49 @@
 .shopping-list-item {
   display: flex;
   border-bottom: 1px solid #999999;
+  width: 100%;
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
   .note {
     font-size: small;
   }
   .info-container {
-    .product-name {
-      font-weight: bold;
-      font-size: larger;
-      padding: 4px;
+    width: 100%;
+    .title-row {
+      display: flex;
+      .done-status {
+        padding-top: 3px;
+      }
+      .product-name {
+        font-weight: bold;
+        font-size: larger;
+        padding: 4px;
+      }
     }
     .amount {
       padding: 4px;
     }
 
     &.editable {
+      max-width: 600px;
+      .topline {
+        display: flex;
+        flex-wrap: wrap;
+        .field-product {
+          flex-grow: 2;
+        }
+        .field-amount {
+          flex-grow: 0;
+          max-width: 80px;
+        }
+      }
       .field-note {
+        width: 100%;
+      }
+      mat-mdc-form-field {
         width: 100%;
       }
     }

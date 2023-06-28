@@ -43,6 +43,7 @@ export class ShoppingListItemComponent implements OnInit {
 
   toggleDone() {
     this.item.item.done = !this.item.item.done;
+    console.log("set done to " + this.item.item.done)
     this.saveEvent.emit(this.item);
   }
 

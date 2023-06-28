@@ -1,10 +1,6 @@
 <div class="shopping-list-item">
+  <mat-checkbox [(ngModel)]="item.checked"  *ngIf="!editable" (change)="toggleCheck()"></mat-checkbox>
   <div class="actions">
-    <mat-checkbox [(ngModel)]="item.checked" (change)="toggleCheck()"></mat-checkbox>
-    <button mat-icon-button (click)="toggleDone()" *ngIf="!editable">
-      <mat-icon *ngIf="item.item.done">check_circle</mat-icon>
-      <mat-icon *ngIf="!item.item.done">radio_button_unchecked</mat-icon>
-    </button>
     <button mat-icon-button color="primary" (click)="toggleEdit()" *ngIf="!editable">
       <mat-icon>edit</mat-icon>
     </button>
@@ -18,10 +14,15 @@
       <mat-icon>delete</mat-icon>
     </button>
   </div>
-  <div class="info-container" *ngIf="!editable">
+  <div class="info-container link" *ngIf="!editable" (click)="toggleDone()">
     <div class="topline">
-      <div class="product-name" [style.text-decoration]="item.item.done?'line-through':'none'" *ngIf="item.product"
-           (click)="toggleDone()">{{item.product.name}}</div>
+      <div class="title-row" [style.text-decoration]="item.item.done?'line-through':'none'" *ngIf="item.product">
+        <div class="done-status">
+          <mat-icon *ngIf="item.item.done">check_circle</mat-icon>
+          <mat-icon *ngIf="!item.item.done">radio_button_unchecked</mat-icon>
+        </div>
+        <div class="product-name">{{item.product.name}}</div>
+      </div>
       <div class="amount">
         <span>{{item.item.amount}}&nbsp;</span>
         <span class="quantityunit" *ngIf="item.qu">
