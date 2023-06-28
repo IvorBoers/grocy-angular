@@ -70,16 +70,24 @@ export class ShoppingListOverviewComponent implements OnInit {
   }
 
   private addProductGroups() {
-    this.productgroupService.getAll().subscribe(response => {
-      this.productGroups = response;
-      response.forEach(pg => {
-        this.items.forEach(it => {
-          if (it.product?.product_group_id === pg.id) {
-            it.group = pg;
-          }
-        })
+    if (this.productGroups.length > 0) {
+      this.updateProductGroupsOnItems();
+    } else {
+      this.productgroupService.getAll().subscribe(response => {
+        this.productGroups = response;
+        this.updateProductGroupsOnItems();
       })
-    })
+    }
+  }
+
+  private updateProductGroupsOnItems() {
+    this.productGroups.forEach(pg => {
+      this.items.forEach(it => {
+        if (it.product?.product_group_id === pg.id) {
+          it.group = pg;
+        }
+      })
+    });
   }
 
   private addQus() {
