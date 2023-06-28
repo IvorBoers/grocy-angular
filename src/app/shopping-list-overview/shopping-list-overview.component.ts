@@ -120,6 +120,7 @@ export class ShoppingListOverviewComponent implements OnInit {
 
   itemsForGroup(pg: Productgroup) {
     return this.items.filter(it => it.group?.id === pg.id)
+      .sort((a, b) => a.product?.name.localeCompare(b.product?.name ?? '') ?? 0)
   }
 
   addItem() {
