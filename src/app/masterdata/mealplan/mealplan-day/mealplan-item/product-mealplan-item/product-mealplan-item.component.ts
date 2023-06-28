@@ -23,7 +23,7 @@ export class ProductMealplanItemComponent extends AbstractMealplanItemComponent 
   product?: Product;
   productQuantityUnit?: Quantityunit;
 
-  productForm: ProductForm = new ProductForm();
+  productForm = new ProductForm();
 
   constructor( protected override mealplanService: MealplanService, protected override alertService: AlertService,
               protected grocyImagePipe: GrocyImagePipe, protected productService: ProductService,
@@ -39,7 +39,7 @@ export class ProductMealplanItemComponent extends AbstractMealplanItemComponent 
     }
 
 
-    if (this.mealplan && this.mealplan.product_id) {
+    if (this.mealplan?.product_id) {
       this.productService.getOne(this.mealplan.product_id).subscribe(response => {
         this.product = response
       })

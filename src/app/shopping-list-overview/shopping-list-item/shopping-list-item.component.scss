@@ -1,7 +1,23 @@
 .shopping-list-item {
   display: flex;
-  div {
-    padding: 4px;
-  }
   border-bottom: 1px solid #999999;
+  .note {
+    font-size: small;
+  }
+  .info-container {
+    .product-name {
+      font-weight: bold;
+      font-size: larger;
+      padding: 4px;
+    }
+    .amount {
+      padding: 4px;
+    }
+
+    &.editable {
+      .field-note {
+        width: 100%;
+      }
+    }
+  }
 }

@@ -9,10 +9,21 @@
     </mat-select>
   </mat-form-field>
 </div>
+<div class="add-container">
+  <button mat-raised-button (click)="addItem()" color="primary"><mat-icon>add</mat-icon>Add item</button>
+  <button mat-button (click)="loadItems()"><mat-icon>refresh</mat-icon>Refresh</button>
+  <div *ngIf="newItem">
+    <h2>New item</h2>
+    <app-shopping-list-item [item]="newItem" [editable]="true" (saveEvent)="onSaveItem($event)"
+                            (cancelEvent)="onCancelNewItem($event)"></app-shopping-list-item>
+  </div>
+
+</div>
 <div class="group-container">
-  <div class="group" *ngFor="let pg of productGroups">
+  <div class="group" *ngFor="let pg of getFilledGroups()">
     <h2>{{pg.name}}</h2>
-    <app-shopping-list-item *ngFor="let item of itemsForGroup(pg)" [item]="item"></app-shopping-list-item>
+    <app-shopping-list-item *ngFor="let item of itemsForGroup(pg)" [item]="item" [editable]="false"
+                            (deleteEvent)="onDeleteItem($event)" (saveEvent)="onSaveItem($event)"></app-shopping-list-item>
   </div>
 </div>
 

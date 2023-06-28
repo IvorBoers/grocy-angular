@@ -1,7 +1,67 @@
 <div class="shopping-list-item">
-  <div class="product" *ngIf="item.product" >{{item.product.name}}</div>
-  <div class="quantityunit" *ngIf="item.qu">{{item.qu.name}}</div>
-  <div class="amount">{{item.item.amount}}</div>
-  <div class="note">{{item.item.note}}</div>
-  <div class="group" *ngIf="item.group">{{item.group?.name}}</div>
+  <div class="actions">
+    <mat-checkbox [(ngModel)]="item.item.done" (change)="saveItem()"></mat-checkbox>
+    <button mat-icon-button color="primary" (click)="toggleEdit()"  *ngIf="!editable">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="cancelEdit()"  *ngIf="editable">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="saveItem()"  *ngIf="editable">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="deleteItem()" *ngIf="!editable">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  <div class="info-container" *ngIf="!editable">
+    <div class="topline">
+      <div class="product-name" [style.text-decoration]="item.item.done?'line-through':'none'" *ngIf="item.product"
+           (click)="toggleDone()">{{item.product.name}}</div>
+      <div class="amount">
+        <span>{{item.item.amount}}&nbsp;</span>
+        <span class="quantityunit" *ngIf="item.qu">
+          <span *ngIf="item.item.amount == 1">{{item.qu.name}}</span>
+          <span *ngIf="item.item.amount != 1">{{item.qu.name_plural}}</span>
+        </span>
+      </div>
+    </div>
+    <div class="note">{{item.item.note}}</div>
+  </div>
+
+  <div class="info-container editable" *ngIf="editable">
+    <div class="topline">
+      <mat-form-field class="field-product" appearance="fill">
+        <mat-label>Product</mat-label>
+        <input type="text" matInput [matAutocomplete]="auto" [formControl]="productForm.productsControl">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="productForm.displayFn">
+          <mat-option *ngFor="let option of productForm.filteredProducts | async" [value]="option">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="field-qu" appearance="fill">
+        <mat-label>Unit</mat-label>
+        <input type="text" matInput [matAutocomplete]="autoQu" [formControl]="productForm.quControl">
+        <mat-autocomplete #autoQu="matAutocomplete" [displayWith]="productForm.displayFn">
+          <mat-option *ngFor="let option of productForm.filteredQuantityunits | async" [value]="option">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="field-amount" appearance="fill">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" [formControl]="productForm.amountControl">
+      </mat-form-field>
+    </div>
+    <div class="note">
+      <mat-form-field class="field-note" appearance="fill">
+        <mat-label>Note</mat-label>
+        <textarea matInput [formControl]="productForm.noteControl"></textarea>
+      </mat-form-field>
+
+    </div>
+  </div>
 </div>

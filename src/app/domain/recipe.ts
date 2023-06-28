@@ -7,7 +7,7 @@ export class Recipe implements Entity, Named {
   name = ''
   description = ''
   row_created_timestamp = new Date();
-  picture_file_name = ''
+  picture_file_name ?: string
   base_servings = 0
   desired_servings = 0
   not_check_shoppinglist = ''

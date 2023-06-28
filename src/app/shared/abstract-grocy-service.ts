@@ -42,4 +42,8 @@ export class AbstractGrocyService {
     return throwError(() => new Error(
       'Something bad happened; please try again later.'));
   }
+
+  showAlertSuccess(message: string) {
+    this.alertService.success(message);
+  }
 }

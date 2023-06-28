@@ -13,6 +13,7 @@ export class ProductForm {
   productsControl = new FormControl<Product | undefined>(undefined)
   quControl = new FormControl<Quantityunit | undefined>(undefined)
   amountControl = new FormControl<number>(0)
+  noteControl = new FormControl<string>('')
 
   products: Product[] = []
   allQuantityunits: Quantityunit[] = [];
