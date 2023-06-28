@@ -92,10 +92,14 @@ export class ShoppingListItemComponent implements OnInit {
     } else {
       console.log("item is missing required fields")
     }
-    this.toggleEdit();
+    this.editable = false
   }
 
   deleteItem() {
     this.deleteEvent.emit(this.item);
+  }
+
+  toggleCheck() {
+    this.saveEvent.emit(this.item);
   }
 }

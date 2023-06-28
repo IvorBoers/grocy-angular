@@ -123,8 +123,6 @@ export class ShoppingListOverviewComponent implements OnInit {
   }
 
   onSaveItem($event: ShoppingListModel) {
-    console.log("On Save: ");
-
     if ($event.item.id) {
       console.log("is update")
       this.itemService.update($event.item).subscribe(() => {
