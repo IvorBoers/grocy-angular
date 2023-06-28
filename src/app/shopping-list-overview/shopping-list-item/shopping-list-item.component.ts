@@ -43,7 +43,7 @@ export class ShoppingListItemComponent implements OnInit {
 
   toggleDone() {
     this.item.item.done = !this.item.item.done;
-    this.saveItem();
+    this.saveEvent.emit(this.item);
   }
 
   toggleEdit() {
@@ -100,6 +100,5 @@ export class ShoppingListItemComponent implements OnInit {
   }
 
   toggleCheck() {
-    this.saveEvent.emit(this.item);
   }
 }

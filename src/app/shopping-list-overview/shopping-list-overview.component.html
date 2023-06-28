@@ -1,8 +1,9 @@
 <h1>Shopping list</h1>
-
-<a [routerLink]="'/shopping-list/manage'">Manage shopping lists</a>
+<p>
+  <a [routerLink]="'/shopping-list/manage'">Manage shopping lists</a>
+</p>
 <div>
-  <mat-form-field>
+  <mat-form-field class="shopping-list-select">
     <mat-label>Shopping list</mat-label>
     <mat-select [(value)]="selectedList" (selectionChange)="loadItems()">
       <mat-option *ngFor="let list of lists" [value]="list">{{list.name}}</mat-option>

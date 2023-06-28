@@ -1,13 +1,17 @@
 <div class="shopping-list-item">
   <div class="actions">
-    <mat-checkbox [(ngModel)]="item.item.done" (change)="toggleCheck()"></mat-checkbox>
-    <button mat-icon-button color="primary" (click)="toggleEdit()"  *ngIf="!editable">
+    <mat-checkbox [(ngModel)]="item.checked" (change)="toggleCheck()"></mat-checkbox>
+    <button mat-icon-button (click)="toggleDone()" *ngIf="!editable">
+      <mat-icon *ngIf="item.item.done">check_circle</mat-icon>
+      <mat-icon *ngIf="!item.item.done">radio_button_unchecked</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="toggleEdit()" *ngIf="!editable">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-icon-button color="warn" (click)="cancelEdit()"  *ngIf="editable">
+    <button mat-icon-button color="warn" (click)="cancelEdit()" *ngIf="editable">
       <mat-icon>cancel</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="saveItem()"  *ngIf="editable">
+    <button mat-icon-button color="primary" (click)="saveItem()" *ngIf="editable">
       <mat-icon>save</mat-icon>
     </button>
     <button mat-icon-button color="warn" (click)="deleteItem()" *ngIf="!editable">

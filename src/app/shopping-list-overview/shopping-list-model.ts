@@ -14,5 +14,6 @@ export class ShoppingListModel {
   group?: Productgroup;
   product?: Product;
   qu?: Quantityunit;
+  checked = false;
 
 }
