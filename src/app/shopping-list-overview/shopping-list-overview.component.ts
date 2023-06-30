@@ -170,8 +170,38 @@ export class ShoppingListOverviewComponent implements OnInit {
       let arr = this.items;
       arr.splice(arr.indexOf($event), 1);
       this.items = arr;
-      this.itemService.showAlertSuccess("Delete successful")
+      // this.itemService.showAlertSuccess("Delete successful")
     })
 
+  }
+
+  selectAll() {
+    if (this.allSelected()) {
+      this.items.forEach(it => it.checked = false);
+    } else {
+      this.items.forEach(it => it.checked = true);
+    }
+  }
+
+  anySelected(): boolean {
+    return this.items.find(it => it.checked) !== undefined;
+  }
+
+  allSelected(): boolean {
+    return this.items.find(it => !it.checked) === undefined;
+  }
+
+  selectDone() {
+    this.items.forEach(it => {
+      if (it.item.done) {
+        it.checked = true
+      }
+    });
+  }
+
+  deleteSelected() {
+    this.items
+      .filter(it => it.checked)
+      .forEach(it => this.onDeleteItem(it))
   }
 }

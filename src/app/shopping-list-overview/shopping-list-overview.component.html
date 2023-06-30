@@ -20,6 +20,11 @@
   </div>
 
 </div>
+<div class="selection-actions">
+  <button mat-button (click)="selectAll()"><mat-icon>checklist</mat-icon>Select all</button>
+  <button mat-button (click)="selectDone()"><mat-icon>rule</mat-icon>Select done</button>
+  <button mat-button (click)="deleteSelected()" [disabled]="!anySelected()" color="warn"><mat-icon>delete</mat-icon>Delete selected</button>
+</div>
 <div class="group-container">
   <div class="group" *ngFor="let pg of getFilledGroups()">
     <h2>{{pg.name}}</h2>
