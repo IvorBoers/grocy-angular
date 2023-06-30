@@ -2,21 +2,30 @@
   display: flex;
   border-bottom: 1px solid #999999;
   width: 100%;
+  .shopping-item-check {
+    margin-top: 4px;
+  }
   .actions {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
   }
   .note {
-    font-size: small;
+    font-size: smaller;
+    padding-left: 4px;
   }
   .info-container {
     width: 100%;
+    padding-top: 8px;
+    display: flex;
+    .done-status {
+      padding-top: 4px;
+    }
+    .shopping-item-info {
+      padding-left: 8px;
+    }
     .title-row {
       display: flex;
-      .done-status {
-        padding-top: 3px;
-      }
       .product-name {
         font-weight: bold;
         font-size: larger;
@@ -29,7 +38,7 @@
 
     &.editable {
       max-width: 600px;
-      .topline {
+      .shopping-item-info {
         display: flex;
         flex-wrap: wrap;
         .field-product {
