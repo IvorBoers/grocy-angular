@@ -12,7 +12,8 @@
 </div>
 <div class="add-container">
   <button mat-raised-button (click)="addItem()" color="primary"><mat-icon>add</mat-icon>Add item</button>
-  <button mat-button (click)="loadItems()"><mat-icon>refresh</mat-icon>Refresh</button>
+  <button mat-stroked-button (click)="addMissingItems()"><mat-icon>add</mat-icon>Add missing items</button>
+  <button mat-stroked-button (click)="loadItems()"><mat-icon>refresh</mat-icon>Refresh</button>
   <div *ngIf="newItem">
     <h2>New item</h2>
     <app-shopping-list-item [item]="newItem" [editable]="true" (saveEvent)="onSaveItem($event)"
@@ -26,6 +27,7 @@
   <button mat-button (click)="deleteSelected()" [disabled]="!anySelected()" color="warn"><mat-icon>delete</mat-icon>Delete selected</button>
 </div>
 <div class="group-container">
+  <p>{{items.length}} items in the list</p>
   <div class="group" *ngFor="let pg of getFilledGroups()">
     <h2>{{pg.name}}</h2>
     <app-shopping-list-item *ngFor="let item of itemsForGroup(pg)" [item]="item" [editable]="false"

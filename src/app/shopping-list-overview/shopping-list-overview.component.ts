@@ -8,6 +8,7 @@ import {ShoppingListModel} from './shopping-list-model';
 import {QuantityunitService} from '../masterdata/quantityunit/quantityunit.service';
 import {Productgroup} from '../domain/productgroup';
 import {ShoppingListItem} from '../domain/shopping-list-item';
+import {ShoppinglistStockService} from './shoppinglist-stock.service';
 
 @Component({
   selector: 'app-shopping-list-overview',
@@ -23,7 +24,7 @@ export class ShoppingListOverviewComponent implements OnInit {
 
   constructor(protected listService: ShoppingListService, protected itemService: ShoppingListItemService,
               protected productService: ProductService, protected productgroupService: ProductgroupService,
-              protected quService: QuantityunitService) {
+              protected quService: QuantityunitService, protected shoppinglistStockService: ShoppinglistStockService) {
   }
 
   ngOnInit() {
@@ -203,5 +204,12 @@ export class ShoppingListOverviewComponent implements OnInit {
     this.items
       .filter(it => it.checked)
       .forEach(it => this.onDeleteItem(it))
+  }
+
+  addMissingItems() {
+    if (this.selectedList?.id) {
+      this.shoppinglistStockService.addMissingStockToShoppingList(this.selectedList?.id)
+        .subscribe(() => this.loadItems());
+    }
   }
 }
