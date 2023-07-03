@@ -24,8 +24,10 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   filteredRecipes?: Observable<Recipe[]>
   recipesControl = new FormControl<Recipe | undefined>(undefined)
   servingsControl = new FormControl<number>(1)
+  busyAddingItemsToShoppingList = false
 
-  constructor(protected override mealplanService: MealplanService, protected override alertService: AlertService, protected recipeService: RecipeService,
+  constructor(protected override mealplanService: MealplanService, protected override alertService: AlertService,
+              protected recipeService: RecipeService,
               protected grocyImagePipe: GrocyImagePipe, protected router: Router) {
     super(mealplanService, alertService);
   }
@@ -92,5 +94,16 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   showRecipe() {
     if (this.recipe)
       this.router.navigate(['/recipes/' + this.recipe.id])
+  }
+
+  addShoppingListItems() {
+    if (this.recipe) {
+      this.busyAddingItemsToShoppingList = true;
+      this.recipeService.addMissingItemsToShoppingList(this.recipe.id)
+        .subscribe(() => {
+          this.alertService.success("Added items to shopping list")
+          this.busyAddingItemsToShoppingList = false;
+        });
+    }
   }
 }
