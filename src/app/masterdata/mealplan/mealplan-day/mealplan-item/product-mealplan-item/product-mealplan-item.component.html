@@ -30,7 +30,7 @@
   <mat-card-content *ngIf="productForm">
 
 
-    <mat-form-field class="field-product" appearance="fill">
+    <mat-form-field class="mealplan-form-field field-product" appearance="fill">
       <mat-label>Product</mat-label>
       <input type="text" matInput [matAutocomplete]="auto" [formControl]="productForm.productsControl">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="productForm.displayFn">
@@ -40,7 +40,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="field-qu" appearance="fill">
+    <mat-form-field class="mealplan-form-field field-qu" appearance="fill">
       <mat-label>Unit</mat-label>
       <input type="text" matInput [matAutocomplete]="autoQu" [formControl]="productForm.quControl">
       <mat-autocomplete #autoQu="matAutocomplete" [displayWith]="productForm.displayFn">
@@ -50,7 +50,7 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="field-amount" appearance="fill">
+    <mat-form-field class="mealplan-form-field field-amount" appearance="fill">
       <mat-label>Amount</mat-label>
       <input matInput type="number" [formControl]="productForm.amountControl">
     </mat-form-field>

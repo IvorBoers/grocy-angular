@@ -5,9 +5,9 @@
     min-height: 64px;
   }
 }
-.mealplan-card.editable mat-card-header {
+.mealplan-card.editable .mat-mdc-card-header {
   padding: 2px;
-  .mat-form-field {
+  .mealplan-form-field {
     width: 100%;
   }
 }

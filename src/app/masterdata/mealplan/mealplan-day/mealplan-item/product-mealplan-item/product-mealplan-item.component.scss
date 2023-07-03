@@ -23,7 +23,10 @@
     }
   }
   .mat-mdc-card-content {
-    padding: 6px;
+    padding: 2px;
+    .mealplan-form-field {
+      width: 100%;
+    }
   }
 }
 

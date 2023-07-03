@@ -4,7 +4,7 @@
   </mat-card-header>
   <mat-card-content>
     <div *ngIf="recipe.picture_file_name" class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipe.picture_file_name) + ')'}"></div>
-    <div>{{mealplan.recipe_servings}} servings</div>
+    <div class="mealplan-servings">{{mealplan.recipe_servings}} servings</div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-icon-button (click)="setEditMode(true)" [disabled]="busyAddingItemsToShoppingList">
@@ -26,7 +26,7 @@
   <mat-card-header>
     <mat-card-title >
 
-      <mat-form-field class="field-recipe" appearance="fill">
+      <mat-form-field class="mealplan-form-field field-recipe" appearance="fill">
         <mat-label>Recipe</mat-label>
         <input type="text" matInput [matAutocomplete]="auto" [formControl]="recipesControl">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -35,7 +35,7 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <mat-form-field class="field-servings" appearance="fill">
+      <mat-form-field class="mealplan-form-field field-servings" appearance="fill">
         <mat-label>Servings</mat-label>
         <input matInput  min="1" type="number" [formControl]="servingsControl">
       </mat-form-field>

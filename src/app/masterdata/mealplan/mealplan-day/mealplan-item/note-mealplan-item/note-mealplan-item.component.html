@@ -5,8 +5,12 @@
   <mat-card-content>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-icon-button matTooltip="Edit" (click)="setEditMode(true)"><mat-icon>edit</mat-icon></button>
-    <button mat-icon-button matTooltip="Delete" (click)="delete()"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button matTooltip="Edit" (click)="setEditMode(true)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Delete" (click)="delete()">
+      <mat-icon>delete</mat-icon>
+    </button>
     <button mat-icon-button cdkDragHandle matTooltip="Drag item to another section">
       <mat-icon>drag_indicator</mat-icon>
     </button>
@@ -14,17 +18,19 @@
 </mat-card>
 <mat-card *ngIf="editMode" class="mealplan-card editable">
   <mat-card-header>
-    <mat-card-title >
-      <mat-form-field class="field-amount" appearance="fill">
-        <mat-label>Note</mat-label>
-        <textarea matInput [formControl]="noteControl"></textarea>
-      </mat-form-field>
-    </mat-card-title>
+    <mat-form-field class="mealplan-form-field field-amount" appearance="fill">
+      <mat-label>Note</mat-label>
+      <textarea matInput [formControl]="noteControl"></textarea>
+    </mat-form-field>
   </mat-card-header>
   <mat-card-content>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-icon-button matTooltip="Save" (click)="save()"><mat-icon>save</mat-icon></button>
-    <button mat-icon-button matTooltip="Cancel" (click)="cancel()"><mat-icon>cancel</mat-icon></button>
+    <button mat-icon-button matTooltip="Save" (click)="save()">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Cancel" (click)="cancel()">
+      <mat-icon>cancel</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>
