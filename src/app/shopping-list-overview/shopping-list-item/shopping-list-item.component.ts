@@ -21,6 +21,8 @@ export class ShoppingListItemComponent implements OnInit {
 
   @Input()
   editable = false;
+  @Input()
+  dense = false;
 
   @Output()
   saveEvent = new EventEmitter<ShoppingListModel>();

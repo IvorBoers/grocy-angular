@@ -1,4 +1,4 @@
-<div class="shopping-list-item">
+<div class="shopping-list-item" [ngClass]="{'dense': dense}">
   <mat-checkbox class="shopping-item-check" [(ngModel)]="item.checked"  *ngIf="!editable" (change)="toggleCheck()"></mat-checkbox>
   <div class="actions">
     <button mat-icon-button color="primary" (click)="toggleEdit()" *ngIf="!editable">
@@ -10,17 +10,17 @@
     <button mat-icon-button color="primary" (click)="saveItem()" *ngIf="editable">
       <mat-icon>save</mat-icon>
     </button>
-    <button mat-icon-button color="warn" (click)="deleteItem()" *ngIf="!editable">
+    <button mat-icon-button color="warn" (click)="deleteItem()" *ngIf="!editable && !dense">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
-  <div class="info-container link" *ngIf="!editable" (click)="toggleDone()">
+  <div class="info-container" *ngIf="!editable">
     <div class="done-status">
       <mat-icon *ngIf="item.item.done">check_circle</mat-icon>
       <mat-icon *ngIf="!item.item.done">radio_button_unchecked</mat-icon>
     </div>
     <div class="shopping-item-info">
-      <div class="title-row" [style.text-decoration]="item.item.done?'line-through':'none'" *ngIf="item.product">
+      <div class="title-row link" [style.text-decoration]="item.item.done?'line-through':'none'" *ngIf="item.product" (click)="toggleDone()">
         <div class="product-name">{{item.product.name}}</div>
       </div>
       <div class="amount">
@@ -30,7 +30,7 @@
           <span *ngIf="item.item.amount != 1">{{item.qu.name_plural}}</span>
         </span>
       </div>
-      <div class="note">{{item.item.note}}</div>
+      <span class="note">{{item.item.note}}</span>
     </div>
   </div>
 

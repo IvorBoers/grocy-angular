@@ -10,11 +10,18 @@
     </mat-select>
   </mat-form-field>
 </div>
+
+<div class="view-options-container">
+  <mat-checkbox [(ngModel)]="dense">Dense view</mat-checkbox>
+</div>
 <div class="add-container">
-  <button mat-raised-button (click)="addItem()" color="primary"><mat-icon>add</mat-icon>Add item</button>
+  <button mat-stroked-button (click)="expandNewItem()" color="primary">
+    <mat-icon *ngIf="!newItemExpanded">expand_more</mat-icon>
+    <mat-icon *ngIf="newItemExpanded">expand_less</mat-icon>
+    Add item</button>
   <button mat-stroked-button (click)="addMissingItems()"><mat-icon>add</mat-icon>Add missing items</button>
   <button mat-stroked-button (click)="loadItems()"><mat-icon>refresh</mat-icon>Refresh</button>
-  <div *ngIf="newItem">
+  <div *ngIf="newItemExpanded && newItem">
     <h2>New item</h2>
     <app-shopping-list-item [item]="newItem" [editable]="true" (saveEvent)="onSaveItem($event)"
                             (cancelEvent)="onCancelNewItem($event)"></app-shopping-list-item>
@@ -25,12 +32,22 @@
   <button mat-button (click)="selectAll()"><mat-icon>checklist</mat-icon>Select all</button>
   <button mat-button (click)="selectDone()"><mat-icon>rule</mat-icon>Select done</button>
   <button mat-button (click)="deleteSelected()" [disabled]="!anySelected()" color="warn"><mat-icon>delete</mat-icon>Delete selected</button>
+  <button mat-button (click)="preMoveSelected()" [disabled]="!anySelected()"><mat-icon>sync_alt</mat-icon>Move selected</button>
+  <div class="move-container" *ngIf="moveActive">
+    <mat-form-field class="shopping-list-select">
+      <mat-label>Shopping list</mat-label>
+      <mat-select [(value)]="moveToList">
+        <mat-option *ngFor="let list of lists" [value]="list">{{list.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-icon-button (click)="moveSelected()" color="primary"><mat-icon>save</mat-icon></button>
+  </div>
 </div>
 <div class="group-container">
   <p>{{items.length}} items in the list</p>
   <div class="group" *ngFor="let pg of getFilledGroups()">
     <h2>{{pg.name}}</h2>
-    <app-shopping-list-item *ngFor="let item of itemsForGroup(pg)" [item]="item" [editable]="false"
+    <app-shopping-list-item *ngFor="let item of itemsForGroup(pg)" [item]="item" [editable]="false" [dense]="dense"
                             (deleteEvent)="onDeleteItem($event)" (saveEvent)="onSaveItem($event)"></app-shopping-list-item>
   </div>
 </div>

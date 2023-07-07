@@ -22,8 +22,9 @@ export abstract class AbstractMealplanItemComponent implements OnInit {
         }
     }
 
+
     setEditMode(mode: boolean) {
-        console.log("set edit mode " + this.mealplan.id)
+        console.log("set edit mode " + mode)
         this.editMode = mode;
     }
 

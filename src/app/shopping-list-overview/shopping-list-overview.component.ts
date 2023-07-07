@@ -21,6 +21,10 @@ export class ShoppingListOverviewComponent implements OnInit {
   selectedList?: ShoppingList;
   productGroups: Productgroup[] = [];
   newItem?: ShoppingListModel;
+  newItemExpanded = false;
+  dense = false;
+  moveToList?: ShoppingList;
+  moveActive = false;
 
   constructor(protected listService: ShoppingListService, protected itemService: ShoppingListItemService,
               protected productService: ProductService, protected productgroupService: ProductgroupService,
@@ -47,6 +51,7 @@ export class ShoppingListOverviewComponent implements OnInit {
           response.forEach(it => this.items.push(new ShoppingListModel(it)));
           this.addProducts();
           this.addQus();
+          this.startNewItem();
         });
     }
   }
@@ -124,8 +129,14 @@ export class ShoppingListOverviewComponent implements OnInit {
       .sort((a, b) => a.product?.name.localeCompare(b.product?.name ?? '') ?? 0)
   }
 
-  addItem() {
+  expandNewItem() {
+    console.log("expanding");
+    this.newItemExpanded = !this.newItemExpanded;
+  }
+
+  private startNewItem() {
     if (this.selectedList) {
+      console.log("starting new")
       this.newItem = new ShoppingListModel(new ShoppingListItem());
       this.newItem.list = this.selectedList;
       this.newItem.item.shopping_list_id = this.selectedList.id;
@@ -153,7 +164,7 @@ export class ShoppingListOverviewComponent implements OnInit {
       console.log("is adding")
       this.itemService.add($event.item).subscribe(it => {
         console.log("add response: " + JSON.stringify(it));
-        this.newItem = undefined;
+        this.newItem = undefined
         // FIXME prevent reload
         this.loadItems();
       });
@@ -211,5 +222,23 @@ export class ShoppingListOverviewComponent implements OnInit {
       this.shoppinglistStockService.addMissingStockToShoppingList(this.selectedList?.id)
         .subscribe(() => this.loadItems());
     }
+  }
+
+  preMoveSelected() {
+    this.moveToList = this.selectedList;
+    this.moveActive = !this.moveActive;
+  }
+
+  moveSelected() {
+    this.items
+      .filter(it => it.checked)
+      .forEach(it => {
+        if (this.moveToList) {
+          it.list = this.moveToList;
+          it.item.shopping_list_id = this.moveToList.id;
+          this.itemService.update(it.item).subscribe(() => this.loadItems());
+          this.moveActive = false;
+        }
+      });
   }
 }

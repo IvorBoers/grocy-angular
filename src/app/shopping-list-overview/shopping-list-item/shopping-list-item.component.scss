@@ -57,4 +57,16 @@
       }
     }
   }
+  &.dense .shopping-item-info {
+    display: flex;
+    .title-row {
+
+    }
+    .amount {
+
+    }
+    span {
+      line-height: 24px;
+    }
+  }
 }

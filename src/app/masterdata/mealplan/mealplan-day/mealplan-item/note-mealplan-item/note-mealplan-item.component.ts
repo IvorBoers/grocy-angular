@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {MealplanService} from "../../../mealplan.service";
 import {AlertService} from "../../../../../shared/alert-service";
 import {AbstractMealplanItemComponent} from "../abstract-mealplan-item.component";
+import {debug} from 'util';
 
 @Component({
     selector: 'app-note-mealplan-item',
@@ -12,7 +13,7 @@ import {AbstractMealplanItemComponent} from "../abstract-mealplan-item.component
 export class NoteMealplanItemComponent extends AbstractMealplanItemComponent{
 
     noteControl = new FormControl<string>('')
-
+    @ViewChild('noteInput') noteInput?: ElementRef;
 
     constructor(mealplanService: MealplanService, alertService: AlertService) {
         super(mealplanService, alertService)
