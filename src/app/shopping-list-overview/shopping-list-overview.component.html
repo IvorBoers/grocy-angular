@@ -2,16 +2,22 @@
 <p>
   <a [routerLink]="'/shopping-list/manage'">Manage shopping lists</a>
 </p>
-<div>
+<div class="shopping-list-container">
   <mat-form-field class="shopping-list-select">
     <mat-label>Shopping list</mat-label>
     <mat-select [(value)]="selectedList" (selectionChange)="loadItems()">
       <mat-option *ngFor="let list of lists" [value]="list">{{list.name}}</mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field class="field-filter" appearance="fill">
+    <mat-label>Filter</mat-label>
+    <input matInput [(ngModel)]="filterText">
+    <mat-icon matSuffix>filter_list</mat-icon>
+  </mat-form-field>
 </div>
 
 <div class="view-options-container">
+
   <mat-checkbox [(ngModel)]="dense">Dense view</mat-checkbox>
 </div>
 <div class="add-container">

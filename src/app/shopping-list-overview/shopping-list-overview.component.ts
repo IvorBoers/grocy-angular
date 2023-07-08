@@ -25,6 +25,7 @@ export class ShoppingListOverviewComponent implements OnInit {
   dense = false;
   moveToList?: ShoppingList;
   moveActive = false;
+  filterText: any;
 
   constructor(protected listService: ShoppingListService, protected itemService: ShoppingListItemService,
               protected productService: ProductService, protected productgroupService: ProductgroupService,
@@ -117,15 +118,16 @@ export class ShoppingListOverviewComponent implements OnInit {
   getFilledGroups() {
     let pgSet = new Set<Productgroup>();
     this.items.forEach(it => {
-      if (it.group) {
+      if (it.group && !this.isFilteredOut(it)) {
         pgSet.add(it.group)
       }
-    })
+    });
     return Array.from(pgSet).sort((a, b) => a.name.localeCompare(b.name));
   }
 
   itemsForGroup(pg: Productgroup) {
-    return this.items.filter(it => it.group?.id === pg.id)
+    return this.items
+      .filter(it => it.group?.id === pg.id && !this.isFilteredOut(it))
       .sort((a, b) => a.product?.name.localeCompare(b.product?.name ?? '') ?? 0)
   }
 
@@ -240,5 +242,14 @@ export class ShoppingListOverviewComponent implements OnInit {
           this.moveActive = false;
         }
       });
+  }
+
+  isFilteredOut(item: ShoppingListModel): boolean {
+    if (this.filterText && item.product) {
+      const upperCasedProductName = item.product.name.toUpperCase();
+      const upperCasedSearchText = this.filterText.toUpperCase();
+      return !upperCasedProductName.includes(upperCasedSearchText);
+    }
+    return false;
   }
 }
