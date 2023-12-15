@@ -16,6 +16,7 @@ import {ProductData} from "../../../external/jumbo/domain/product-data";
 import {FilesService} from "../../files/files-service";
 import {ProductUserfieldsService} from "../../../shared/product-userfields-service";
 import {AlertService} from "../../../shared/alert-service";
+import {ProductForm} from '../product-form';
 
 @Component({
   selector: 'app-product-detail',
@@ -28,7 +29,9 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
   productgroups: Productgroup[] = [];
   barcodes: ProductBarcode[] = [];
   products: ProductData[] = [];
+  possibleParents: Product[] = [];
   imageContent?: string;
+  productForm = new ProductForm();
 
   constructor(route: ActivatedRoute, service: ProductService, alertService: AlertService,
               private locationService: LocationService,
@@ -40,6 +43,17 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
               private productUserFieldsService: ProductUserfieldsService
   ) {
     super(route, service, alertService)
+    this.productForm.productsControl.valueChanges.subscribe(change => {
+      console.log("change on parent")
+      if (this.item) {
+        if (change?.id) {
+          this.item.parent_product_id = change?.id
+        } else {
+          this.item.parent_product_id = undefined;
+        }
+      }
+
+    })
   }
 
   override ngOnInit() {
@@ -56,6 +70,10 @@ export class ProductDetailComponent extends AbstractDetailComponent<Product> {
         })
       })
     })
+    this.service.getAllWhere('parent_product_id', "null").subscribe(possibleParents => {
+      this.productForm.products = possibleParents;
+      this.productForm.init();
+    });
   }
 
   override createNewEntity(): Product {

@@ -22,7 +22,7 @@ export class Product implements Entity, Named {
   enable_tare_weight_handling= 0
   tare_weight= 0
   not_check_stock_fulfillment_for_recipes= 0
-  parent_product_id= 0
+  parent_product_id?= 0
   calories= 0
   cumulative_min_stock_amount_of_sub_products= 0
   due_type= 0

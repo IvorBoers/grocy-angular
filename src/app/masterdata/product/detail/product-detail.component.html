@@ -30,7 +30,18 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-button class="btn btn-primary" (click)="save()" i18n="@@actionSave">Save</button>
+  <mat-form-field class="field-product-parent" appearance="fill">
+    <mat-label>Parent</mat-label>
+    <input type="text" matInput [matAutocomplete]="auto" [formControl]="productForm.productsControl">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="productForm.displayFn">
+      <mat-option *ngFor="let option of productForm.filteredProducts | async" [value]="option">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+  <button mat-button class="btn btn-primary" (click)="save()">Save</button>
 
   <div *ngIf="item.userfields">JumboId: {{item.userfields.jumboId}}</div>
 </div>
