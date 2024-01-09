@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, isDevMode} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -86,6 +86,8 @@ import { ShoppingListOverviewComponent } from './shopping-list-overview/shopping
 import { ShoppingListsComponent } from './masterdata/shopping-lists/shopping-lists.component';
 import { ShoppingListsItemComponent } from './masterdata/shopping-lists/shopping-lists-item/shopping-lists-item.component';
 import { ShoppingListItemComponent } from './shopping-list-overview/shopping-list-item/shopping-list-item.component';
+import { MealplanTodayComponent } from './home-page/mealplan-today/mealplan-today.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -138,6 +140,7 @@ import { ShoppingListItemComponent } from './shopping-list-overview/shopping-lis
     ShoppingListsComponent,
     ShoppingListsItemComponent,
     ShoppingListItemComponent,
+    MealplanTodayComponent,
 
   ],
   imports: [
@@ -172,7 +175,13 @@ import { ShoppingListItemComponent } from './shopping-list-overview/shopping-lis
     DragDropModule,
     NgOptimizedImage,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
       DatePipe,

@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@angular/service-worker": "^16.0.0",
     "@ericblade/quagga2": "^1.8.2",
     "core-js": "^3.30.2",
     "ngx-barcode-scanner": "^14.0.1",
