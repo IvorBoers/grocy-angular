@@ -3,7 +3,7 @@ import {Entity, Named} from "./entity";
 
 export class Recipe implements Entity, Named {
   static entityName = 'recipes'
-  id = 0
+  id ?: number
   name = ''
   description = ''
   row_created_timestamp = new Date();

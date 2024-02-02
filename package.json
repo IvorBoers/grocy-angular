@@ -22,12 +22,15 @@
     "@angular/router": "^17.3.6",
     "@angular/service-worker": "^17.3.6",
     "@ericblade/quagga2": "^1.8.2",
+    "apollo-angular": "^5.0.2",
     "core-js": "^3.30.2",
     "ngx-barcode-scanner": "^14.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0",
-    "zone.js": "~0.14.4"
+    "zone.js": "~0.14.4",
+    "@apollo/client": "^3.0.0",
+    "graphql": "^16"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.6",

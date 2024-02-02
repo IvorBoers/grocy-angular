@@ -7,6 +7,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MealplanService} from '../masterdata/mealplan/mealplan.service';
 import {Mealplan} from '../domain/mealplan';
 import {Router} from '@angular/router';
+import {AhRecipeProvider} from './ah-recipe-provider';
 
 @Component({
   selector: 'app-recipes-overview',
@@ -25,9 +26,11 @@ export class RecipesOverviewComponent implements OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   futureMealplans: Mealplan[] = [];
 
-  constructor(protected grocyRecipeProvider: GrocyRecipeProvider, protected jumboRecipeProvider: JumboRecipeProvider, private mealplanService: MealplanService, protected router: Router) {
+  constructor(protected grocyRecipeProvider: GrocyRecipeProvider, protected jumboRecipeProvider: JumboRecipeProvider,
+              protected ahRecipeProvider: AhRecipeProvider, private mealplanService: MealplanService, protected router: Router) {
     this.providers.push(grocyRecipeProvider);
     this.providers.push(jumboRecipeProvider);
+    this.providers.push(ahRecipeProvider);
     this.selectedProvider = grocyRecipeProvider;
   }
 

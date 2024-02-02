@@ -88,6 +88,11 @@ import { ShoppingListsItemComponent } from './masterdata/shopping-lists/shopping
 import { ShoppingListItemComponent } from './shopping-list-overview/shopping-list-item/shopping-list-item.component';
 import { MealplanTodayComponent } from './home-page/mealplan-today/mealplan-today.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { GraphQLModule } from './graphql.module';
+import { AhRecipeDetailpageComponent } from './external/albertheijn/ah-recipe-detailpage/ah-recipe-detailpage.component';
+import {
+  GrocyAhProductTablecellComponent
+} from './external/albertheijn/ah-recipe-detailpage/grocy-product-tablecell/grocy-ah-product-tablecell.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +146,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ShoppingListsItemComponent,
     ShoppingListItemComponent,
     MealplanTodayComponent,
+    AhRecipeDetailpageComponent,
+    GrocyAhProductTablecellComponent
 
   ],
   imports: [
@@ -181,7 +188,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    GraphQLModule
   ],
   providers: [
       DatePipe,

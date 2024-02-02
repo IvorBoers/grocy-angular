@@ -8,9 +8,9 @@ import {ProductSearchResponse} from './domain/product-search-response';
 })
 export class AhService {
   baseUrl = '/ah-api/mobile-services/'
-  accessToken: string;
-  refreshToken: string;
-  expiryTime: Date;
+  accessToken?: string;
+  refreshToken?: string;
+  expiryTime = new Date;
 
   protected constructor(protected http: HttpClient) {
   }

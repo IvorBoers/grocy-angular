@@ -30,6 +30,7 @@ import {
 } from './external/jumbo/jumbo-recipe-detailpage/jumbo-recipe-detailpage.component';
 import {ShoppingListOverviewComponent} from './shopping-list-overview/shopping-list-overview.component';
 import {ShoppingListsComponent} from './masterdata/shopping-lists/shopping-lists.component';
+import {AhRecipeDetailpageComponent} from './external/albertheijn/ah-recipe-detailpage/ah-recipe-detailpage.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
   {path: 'recipes', component: RecipesOverviewComponent},
   {path: 'recipes/:id', component: RecipeDetailViewComponent},
   {path: 'recipes/jumbo/:id', component: JumboRecipeDetailpageComponent},
+  {path: 'recipes/ah/:id', component: AhRecipeDetailpageComponent},
   {path: 'recipes/:id/edit', component: RecipeDetailEditComponent},
   {path: 'shopping-list', component: ShoppingListOverviewComponent},
   {path: 'shopping-list/manage', component: ShoppingListsComponent},

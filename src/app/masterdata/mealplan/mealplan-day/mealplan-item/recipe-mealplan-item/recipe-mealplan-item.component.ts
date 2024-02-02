@@ -97,7 +97,7 @@ export class RecipeMealplanItemComponent extends AbstractMealplanItemComponent {
   }
 
   addShoppingListItems() {
-    if (this.recipe) {
+    if (this.recipe && this.recipe.id) {
       this.busyAddingItemsToShoppingList = true;
       this.recipeService.addMissingItemsToShoppingList(this.recipe.id)
         .subscribe(() => {

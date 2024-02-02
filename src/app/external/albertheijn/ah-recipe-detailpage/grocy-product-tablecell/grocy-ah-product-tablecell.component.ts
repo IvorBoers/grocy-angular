@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Ingredient} from "../../domain/jumbo-recipe-response";
+import {Ingredient} from "../../domain/ah-recipe";
 import {Product} from "../../../../domain/product";
 import {Observable} from "rxjs";
 import {FormControl} from "@angular/forms";
@@ -9,17 +9,18 @@ import {Named} from "../../../../domain/entity";
 import {ProductService} from "../../../../masterdata/product/product.service";
 import {ProductUserfieldsService} from "../../../../shared/product-userfields-service";
 import {QuantityunitConversion} from "../../../../domain/quantityunit-conversion";
+import {IngredientWrapper} from '../../../ingredient-wrapper';
 
 @Component({
-  selector: 'app-grocy-product-tablecell',
-  templateUrl: './grocy-product-tablecell.component.html',
-  styleUrls: ['./grocy-product-tablecell.component.scss']
+  selector: 'app-grocy-ah-product-tablecell',
+  templateUrl: './grocy-ah-product-tablecell.component.html',
+  styleUrls: ['./grocy-ah-product-tablecell.component.scss']
 })
-export class GrocyProductTablecellComponent implements OnInit, OnChanges {
+export class GrocyAhProductTablecellComponent implements OnInit, OnChanges {
 
 
   @Input()
-  ingredient?: Ingredient;
+  ingredient!: IngredientWrapper<Ingredient>;
   @Input()
   products: Product[] = [];
 
@@ -28,8 +29,8 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
   productQuantityunits: Quantityunit[] = [];
   @Input()
   quantityunitConversions: QuantityunitConversion[] = [];
-  @Input()
-  grocyProductsByJumboId = new Map()
+  // @Input()
+  // grocyProductsByJumboId = new Map()
 
   filteredProducts?: Observable<Product[]>;
   filteredQuantityunits?: Observable<Quantityunit[]>;
@@ -60,9 +61,9 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     this.productsControl.valueChanges.subscribe(p => {
       if (this.ingredient) {
         if (p == null) {
-          this.ingredient.grocyProduct = undefined;
+          this.ingredient.grocyIngredient.product = undefined;
         } else {
-          this.ingredient.grocyProduct = p;
+          this.ingredient.grocyIngredient.product = p;
         }
         this.quControl.reset()
         this.productQuantityunits = []
@@ -74,8 +75,8 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
           this.quControl.setValue(this.productQuantityunits.filter(qu => qu.id === p.qu_id_stock)[0])
 
-          if (this.ingredient) {
-            this.amountControl.setValue(parseInt(this.ingredient.quantity))
+          if (this.ingredient.externalIngredient) {
+            this.amountControl.setValue(this.ingredient.externalIngredient.quantity)
           }
         }
       }
@@ -83,9 +84,9 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     this.quControl.valueChanges.subscribe(value => {
         if (this.ingredient) {
           if (value === undefined || value === null) {
-            this.ingredient.grocyQuantityUnit = undefined;
+            this.ingredient.grocyIngredient.quantityUnit = undefined;
           } else {
-            this.ingredient.grocyQuantityUnit = value
+            this.ingredient.grocyIngredient.quantityUnit = value
           }
         }
       }
@@ -93,9 +94,9 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
     this.amountControl.valueChanges.subscribe(value => {
       if (this.ingredient) {
         if (value === undefined || value === null) {
-          this.ingredient.grocyAmount = undefined;
+          this.ingredient.grocyIngredient.amount = undefined;
         } else {
-          this.ingredient.grocyAmount = value
+          this.ingredient.grocyIngredient.amount = value
         }
       }
     })
@@ -128,19 +129,18 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.ingredient) {
-      this.productsControl.setValue(this.ingredient.grocyProduct)
+      this.productsControl.setValue(this.ingredient.grocyIngredient.product)
     }
   }
 
   private findGrocyProduct(): void {
-    console.log("Looking for product " + this.ingredient)
-    if (this.ingredient && this.ingredient.productInformation && this.ingredient.productInformation.product) {
-      if (this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id)) {
-        let result = this.grocyProductsByJumboId.get(this.ingredient.productInformation.product.id);
-        console.log("Found a product in the map: " + result.name)
-        this.productsControl.setValue(result)
-      } else {
-        let cleanedName = this.getCleanedName(this.ingredient.productInformation.product.title);
+    if (this.ingredient ) {//&& this.ingredient.productInformation && this.ingredient.productInformation.product) {
+      // if (this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id)) {
+      //   let result = this.grocyProductsByJumboId.get(this.ingredient.productInformation.product.id);
+      //   console.log("Found a product in the map: " + result.name)
+      //   this.productsControl.setValue(result)
+      // } else {
+        let cleanedName = this.getCleanedName(this.ingredient.externalIngredient.name.singular);
         this.productService.getAllLike('name', cleanedName).subscribe(products => {
           if (products.length > 0) {
             console.log("Found product by name " + cleanedName)
@@ -149,7 +149,7 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
             this.getGrocyProductByIngredientName()
           }
         })
-      }
+      // }
     } else {
       this.getGrocyProductByIngredientName()
     }
@@ -157,19 +157,32 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
   private getGrocyProductByIngredientName(): void {
     if (this.ingredient) {
-      let cleanedName = this.getCleanedName(this.ingredient.name);
-      this.productService.getAllLike('name', cleanedName).subscribe(products => {
+      this.productService.getAllLike('name', this.getCleanedName(this.ingredient.externalIngredient.name.singular)).subscribe(products => {
         if (products) {
           if (products && products.length > 0) {
-            console.log("Found by ingredient name: " + (this.ingredient ? this.ingredient.name : "---"))
+            console.log("Found by ingredient name: " + (this.ingredient ? this.ingredient.externalIngredient.name.singular : "---"))
             this.productsControl.setValue(products[0]);
+          } else {
+            const cleanedName = this.getCleanedName(this.ingredient.externalIngredient.name.plural);
+            if (cleanedName) {
+              this.productService.getAllLike('name', cleanedName).subscribe(products => {
+                if (products) {
+                  if (products && products.length > 0) {
+                    console.log("Found by ingredient name: " + (this.ingredient ? this.ingredient.externalIngredient.name.plural : "---"))
+                    this.productsControl.setValue(products[0]);
+                  }
+                }
+              })
+            }
           }
+        } else {
+          console.log("no products")
         }
       })
     }
   }
 
-  private getCleanedName(name: string) {
+  private getCleanedName(name?: string) {
     if (name) {
       return name.replace('Jumbo', '').replace('biologisch ', '');
     }
@@ -178,37 +191,37 @@ export class GrocyProductTablecellComponent implements OnInit, OnChanges {
 
   bindGrocyProduct() {
     //TODO copy paste from jumboid-setter
-    if (this.ingredient && this.ingredient.grocyProduct) {
-      this.productUserfieldsService.getOne(this.ingredient.grocyProduct.id).subscribe(u => {
+    if (this.ingredient && this.ingredient.grocyIngredient.product) {
+      this.productUserfieldsService.getOne(this.ingredient.grocyIngredient.product.id).subscribe(u => {
         if (this.ingredient) {
           let jumboIdArray: string[] = []
           if (u.jumboId) {
             jumboIdArray = u.jumboId.split(',')
           }
-          let jumboId = this.ingredient.productInformation.product.id;
-          if (!jumboIdArray.includes(jumboId)) {
-            if (u.jumboId) {
-              u.jumboId = u.jumboId + ',' + jumboId;
-            } else {
-              u.jumboId = jumboId;
-            }
-            if (this.ingredient.grocyProduct) {
-              this.productUserfieldsService.update(this.ingredient.grocyProduct.id, u).subscribe(() => {
-                if (this.ingredient) {
-                  this.grocyProductsByJumboId.set(jumboId, this.ingredient.grocyProduct)
-                }
-              });
-            }
-          }
+          // let jumboId = this.ingredient.productInformation.product.id;
+          // if (!jumboIdArray.includes(jumboId)) {
+          //   if (u.jumboId) {
+          //     u.jumboId = u.jumboId + ',' + jumboId;
+          //   } else {
+          //     u.jumboId = jumboId;
+          //   }
+          //   if (this.ingredient.grocyProduct) {
+          //     this.productUserfieldsService.update(this.ingredient.grocyProduct.id, u).subscribe(() => {
+          //       if (this.ingredient) {
+          //         this.grocyProductsByJumboId.set(jumboId, this.ingredient.grocyProduct)
+          //       }
+          //     });
+          //   }
+          // }
         }
       })
     }
   }
 
   isCoupledInGrocy() {
-    if (this.ingredient) {
-      return this.ingredient.grocyProduct && this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id);
-    }
+    // if (this.ingredient) {
+    //   return this.ingredient.grocyProduct && this.grocyProductsByJumboId.has(this.ingredient.productInformation.product.id);
+    // }
     return false;
   }
 

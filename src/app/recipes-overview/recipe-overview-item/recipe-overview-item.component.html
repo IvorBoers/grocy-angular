@@ -1,5 +1,5 @@
 <mat-card *ngIf="recipe">
-  <mat-card-content  (click)="navigateToRecipe()">
+  <mat-card-content  (click)="navigateToRecipe()" class="link">
     <div *ngIf="recipe.imageUrl" mat-card-image class="card-content-image" [style.background-image]="'url(' + recipe.imageUrl + ')'"></div>
     <div *ngIf="!recipe.imageUrl" mat-card-image class="card-content-image">&nbsp;</div>
   </mat-card-content>

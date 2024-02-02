@@ -1,0 +1,72 @@
+<div *ngIf="item" class="jumbo-recipe-item">
+  <div class="recipe-view-container">
+    <div class="recipe-view-header">
+      <div class="recipe-view-image"
+           [ngStyle]="{'background-image': 'url(' + getImage('D1024X748') + ')'}">
+      </div>
+      <div class="recipe-view-summary">
+        <h1>{{item.title}}</h1>
+        <em>{{item.id}}</em>
+
+        <dl>
+          <dt>course</dt><dd>{{item.courses.join(', ')}}</dd>
+          <dt>time</dt><dd>{{item.cookTime}} min</dd>
+          <dt>calories</dt><dd>{{item.nutritions.energy.value}} {{item.nutritions.energy.unit}}</dd>
+          <dt>ingredients</dt><dd>{{item.ingredients.length}}</dd>
+          <dt>persons</dt><dd>{{item.servings.number}}</dd>
+        </dl>
+      </div>
+
+    </div>
+    <div class="recipe-view-details">
+
+      <div>{{item.description}}</div>
+      <div>
+        <h3>Instructions</h3>
+        <mat-list>
+          <mat-list-item class="instruction"  *ngFor="let i of item.preparation.steps">{{i}}</mat-list-item>
+        </mat-list>
+      </div>
+      <div>
+        <h3>Ingredients</h3>
+        <table mat-table [dataSource]="ingredientWrappers">
+          <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef> Image</th>
+            <td mat-cell *matCellDef="let element">
+              TODO product image</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name</th>
+            <td mat-cell *matCellDef="let element">
+              <strong *ngIf="element.externalIngredient.quantity === 1">{{element.externalIngredient.name.singular}}</strong>
+              <strong *ngIf="element.externalIngredient.quantity > 1">{{element.externalIngredient.name.plural}}</strong>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef> Quantity</th>
+            <td mat-cell *matCellDef="let element">{{element.externalIngredient.quantity}}</td>
+          </ng-container>
+          <ng-container matColumnDef="productinfo">
+            <th mat-header-cell *matHeaderCellDef> Product</th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.externalIngredient.text">{{element.externalIngredient.text}}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="grocy">
+            <th mat-header-cell *matHeaderCellDef> Grocy</th>
+            <td mat-cell *matCellDef="let element">
+              <app-grocy-ah-product-tablecell [ingredient]="element" [products]="allGrocyProducts" [allQuantityunits]="allGrocyQuantityunits"  [quantityunitConversions]="quantityunitConversions"></app-grocy-ah-product-tablecell>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+        </table>
+
+        <p><button mat-raised-button color="primary" (click)="importInGrocy()">Add recipe to Grocy <mat-icon>save</mat-icon>
+        </button></p>
+      </div>
+    </div>
+  </div>
+</div>
