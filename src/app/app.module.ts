@@ -93,6 +93,12 @@ import { AhRecipeDetailpageComponent } from './external/albertheijn/ah-recipe-de
 import {
   GrocyAhProductTablecellComponent
 } from './external/albertheijn/ah-recipe-detailpage/grocy-product-tablecell/grocy-ah-product-tablecell.component';
+import {
+  MultiRecipeMealplanItemComponent
+} from './masterdata/mealplan/mealplan-day/mealplan-item/multi-recipe-mealplan-item/multi-recipe-mealplan-item.component';
+import {
+  RecipeSelectItemComponent
+} from './masterdata/mealplan/mealplan-day/mealplan-item/multi-recipe-mealplan-item/recipe-select-item/recipe-select-item.component';
 
 @NgModule({
   declarations: [
@@ -130,6 +136,8 @@ import {
     ProductPickerFormComponent,
     NoteMealplanItemComponent,
     RecipeMealplanItemComponent,
+    MultiRecipeMealplanItemComponent,
+    RecipeSelectItemComponent,
     ProductMealplanItemComponent,
     RecipeDetailViewComponent,
     RecipeDetailEditComponent,

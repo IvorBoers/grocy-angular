@@ -1,0 +1,25 @@
+.recipe-select-item {
+  box-sizing: border-box;
+  padding: 0;
+  border-radius: 4px;
+  background-color: #cab9ef;
+  margin-bottom: 4px;
+  :hover {
+    border-radius: 4px;
+    background-color: #ede2f8;
+  }
+
+  img {
+    width: 100%;
+    box-sizing: border-box;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 3 / 1;
+    border-radius: 4px;
+  }
+
+  .recipe-title {
+    padding: 4px;
+    font-size: small;
+  }
+}

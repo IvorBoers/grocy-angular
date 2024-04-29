@@ -1,0 +1,6 @@
+<div *ngIf="recipe" class="recipe-select-item">
+  <div (click)="selectRecipe()" class="link">
+    <img *ngIf="recipe.imageUrl" src="{{recipe.imageUrl}}" alt="preview of recipe">
+    <div class="recipe-title">{{recipe.name}}</div>
+  </div>
+</div>
