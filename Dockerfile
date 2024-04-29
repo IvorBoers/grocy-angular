@@ -1,5 +1,5 @@
 #### Stage 1: Build the angular application
-FROM node:20-alpine as build
+FROM node:22-alpine as build
 
 # Configure the main working directory inside the docker image.
 # This is the base directory used in any further RUN, COPY, and ENTRYPOINT
@@ -26,7 +26,7 @@ ARG configuration=production
 RUN npm run build --output-path=/dist --configuration=$configuration
 
 #### Stage 2, use the compiled app, ready for production with Nginx
-FROM nginx:1.25.3-alpine
+FROM nginx:1.25.5-alpine
 
 # Copy the angular build from Stage 1
 COPY --from=build /app/dist/grocy-angular /usr/share/nginx/html
