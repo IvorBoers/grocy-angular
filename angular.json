@@ -74,11 +74,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "grocy-angular:build:production"
+              "buildTarget": "grocy-angular:build:production"
             },
             "development": {
-              "browserTarget": "grocy-angular:build:development",
-              "proxyConfig": "src/proxy.conf.js"
+              "proxyConfig": "src/proxy.conf.js",
+              "buildTarget": "grocy-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "grocy-angular:build"
+            "buildTarget": "grocy-angular:build"
           }
         },
         "test": {
