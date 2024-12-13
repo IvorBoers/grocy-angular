@@ -10,7 +10,7 @@ import {RecipeSummaryPage} from '../domain/recipe-summary-page';
 import {Mealplan} from '../domain/mealplan';
 import {MealplanSection} from '../domain/mealplan-section';
 
-class GrocySummary implements RecipeSummary {
+export class GrocySummary implements RecipeSummary {
   id: any;
   imageUrl= "";
   name= "";
@@ -50,6 +50,10 @@ export class GrocyRecipeProvider implements RecipeProvider {
     return 'Grocy';
   }
 
+  findById(id: any): Observable<GrocySummary> {
+    return this.recipeService.getOne(id).pipe(map((item) => this.fromGrocyRecipe(item)))
+  }
+
   searchRecipes(query: string, pageIndex: number, pageSize: number): Observable<RecipeSummaryPage> {
     console.log('searching grocy recipe query=' + query + ', pageIndex=' + pageIndex);
     let queryItems = ['type=normal'];
@@ -64,13 +68,7 @@ export class GrocyRecipeProvider implements RecipeProvider {
   private fromGrocy(items: Recipe[]): RecipeSummaryPage {
     const summaries: RecipeSummary[] = [];
     items.map(it => {
-      let summary = new GrocySummary();
-      summary.id = it.id;
-      summary.name = it.name;
-      if (it.picture_file_name) {
-        summary.imageUrl = this.filesService.toFileUrl('recipepictures', it.picture_file_name);
-      }
-      return summary;
+      return this.fromGrocyRecipe(it);
     }).forEach(summary => summaries.push(summary));
 
     let result = new RecipeSummaryPage();
@@ -80,4 +78,13 @@ export class GrocyRecipeProvider implements RecipeProvider {
     return result;
   }
 
+  private fromGrocyRecipe(it: Recipe) {
+    let summary = new GrocySummary();
+    summary.id = it.id;
+    summary.name = it.name;
+    if (it.picture_file_name) {
+      summary.imageUrl = this.filesService.toFileUrl('recipepictures', it.picture_file_name);
+    }
+    return summary;
+  }
 }

@@ -47,6 +47,18 @@ export class AhRecipeProvider implements RecipeProvider {
   constructor(private ahRecipeService: AhRecipeService) {
   }
 
+  findById(id: any): Observable<RecipeSummary> {
+    console.log("find AH recipe "+ id);
+    return this.ahRecipeService.getRecipe(parseInt(id)).pipe(map(item => {
+      if (item.data && item.data.recipe) {
+        return this.toAhSummary(item.data.recipe)
+      }
+      return new AlbertHeijnRecipeSummary(); // TODO this should be an empty response
+    }
+
+    ));
+  }
+
   searchRecipes(query: string, pageIndex: number, pageSize: number): Observable<RecipeSummaryPage> {
     const queryParams = new AhRecipeSearchParams();
     queryParams.searchText = query;
@@ -67,17 +79,21 @@ export class AhRecipeProvider implements RecipeProvider {
     const queryItems: AhRecipeSummary[] = queryResult.data.recipeSearch.result;
 
     page.items = queryItems.map(it => {
-      let summary = new AlbertHeijnRecipeSummary();
-      summary.id = it.id;
-      summary.name = it.title;
-      summary.source = 'Albert Heijn';
-      const at = it.images.filter(i => i.rendition === 'D612X450').at(0);
-      if (at) {
-        summary.imageUrl = at.url
-      }
-
-      return summary;
+      return this.toAhSummary(it);
     });
     return page;
+  }
+
+  private toAhSummary(it: AhRecipeSummary) {
+    let summary = new AlbertHeijnRecipeSummary();
+    summary.id = it.id;
+    summary.name = it.title;
+    summary.source = 'Albert Heijn';
+    const at = it.images.filter(i => i.rendition === 'D612X450').at(0);
+    if (at) {
+      summary.imageUrl = at.url
+    }
+
+    return summary;
   }
 }

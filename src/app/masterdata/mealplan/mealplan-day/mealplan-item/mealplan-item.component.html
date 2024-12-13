@@ -1,5 +1,5 @@
 
 <app-note-mealplan-item *ngIf="mealplan && mealplan.type=='note'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"> </app-note-mealplan-item>
-<app-multi-recipe-mealplan-item *ngIf="mealplan && mealplan.type=='recipe'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-multi-recipe-mealplan-item>
+<app-multi-recipe-mealplan-item *ngIf="mealplan && (mealplan.type=='recipe' || mealplan.type =='external_recipe')" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-multi-recipe-mealplan-item>
 <app-product-mealplan-item *ngIf="mealplan && mealplan.type=='product'" [mealplan]="mealplan" (refreshEvent)="triggerRefreshEvent()"></app-product-mealplan-item>
 

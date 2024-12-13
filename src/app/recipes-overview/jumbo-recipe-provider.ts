@@ -74,4 +74,18 @@ export class JumboRecipeProvider implements RecipeProvider {
     return page;
   }
 
+  findById(id: any): Observable<JumboRecipeSummary> {
+    return this.jumboService.getRecipe(id).pipe(map(item =>  {
+      const data = item.recipe.data;
+      let summary = new JumboRecipeSummary();
+      summary.id = data.id;
+      summary.name = data.name;
+      summary.viewUrl = data.webUrl;
+      if (data.imageInfo && data.imageInfo.primaryView.length > 0 && data.imageInfo.primaryView[0].url) {
+        summary.imageUrl = data.imageInfo.primaryView[0].url;
+      }
+      return summary;
+    }));
+  }
+
 }

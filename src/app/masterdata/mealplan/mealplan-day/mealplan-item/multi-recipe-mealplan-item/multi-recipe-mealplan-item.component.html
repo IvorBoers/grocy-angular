@@ -1,64 +1,73 @@
-<mat-card *ngIf="!editMode && recipe" class="mealplan-card" cdkDrag [cdkDragData]="mealplan">
-  <mat-card-header>
-    <mat-card-title (click)="showRecipe()" class="link">{{recipe.name}}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div *ngIf="recipe.picture_file_name" class="mealplan-card-image-container" [ngStyle]="{'background-image': 'url(' + getFileUrl(recipe.picture_file_name) + ')'}"></div>
-    <div class="mealplan-servings">{{mealplan.recipe_servings}} servings</div>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-icon-button (click)="setEditMode(true)" [disabled]="busyAddingItemsToShoppingList">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button mat-icon-button (click)="delete()" [disabled]="busyAddingItemsToShoppingList">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-icon-button (click)="addShoppingListItems()" matTooltip="Add missing items to shopping list" *ngIf="!busyAddingItemsToShoppingList">
-      <mat-icon>add_shopping_cart</mat-icon>
-    </button>
-    <mat-spinner *ngIf="busyAddingItemsToShoppingList" class="button-spinner"></mat-spinner>
-    <button mat-icon-button cdkDragHandle matTooltip="Drag item to another section">
-      <mat-icon>drag_indicator</mat-icon>
-    </button>
-  </mat-card-actions>
+<mat-card *ngIf="!editMode && selectedRecipeSummary" class="mealplan-card" cdkDrag [cdkDragData]="mealplan">
+    <mat-card-header>
+        <mat-card-title (click)="showRecipe()" class="link">{{ selectedRecipeSummary.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngIf="selectedRecipeSummary.imageUrl" class="mealplan-card-image-container"
+             [ngStyle]="{'background-image': 'url(' + selectedRecipeSummary.imageUrl + ')'}"></div>
+        <div class="mealplan-servings">{{ mealplan.recipe_servings }} servings</div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-icon-button (click)="setEditMode(true)" [disabled]="busyAddingItemsToShoppingList">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="delete()" [disabled]="busyAddingItemsToShoppingList">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="addShoppingListItems()" matTooltip="Add missing items to shopping list"
+                *ngIf="!busyAddingItemsToShoppingList">
+            <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+        <mat-spinner *ngIf="busyAddingItemsToShoppingList" class="button-spinner"></mat-spinner>
+        <button mat-icon-button cdkDragHandle matTooltip="Drag item to another section">
+            <mat-icon>drag_indicator</mat-icon>
+        </button>
+    </mat-card-actions>
 </mat-card>
 <mat-card *ngIf="editMode" class="mealplan-card editable">
-  <mat-card-header>
-    <mat-card-title>
-      <mat-form-field class="mealplan-form-field">
-        <mat-label>Source</mat-label>
-        <mat-select [(value)]="selectedProvider" (selectionChange)="changeSource()">
-          <mat-option *ngFor="let provider of providers" [value]="provider">{{provider.getName()}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="mealplan-form-field input-with-suffix">
-        <mat-label>Searchterm</mat-label>
-        <input matInput type="text" [(ngModel)]="query" (keyup.enter)="searchRecipe()">
-        <button matSuffix mat-icon-button aria-label="Clear" (click)="query=''">
-          <mat-icon>close</mat-icon>
+    <mat-card-header>
+        <mat-card-title>
+            <div class="recipe-search"  *ngIf="editRecipeMode">
+                <mat-form-field class="mealplan-form-field">
+                    <mat-label>Source</mat-label>
+                    <mat-select [(value)]="selectedProvider" (selectionChange)="changeSource()">
+                        <mat-option *ngFor="let provider of providers" [value]="provider">{{ provider.getName() }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="mealplan-form-field input-with-suffix">
+                    <mat-label>Searchterm</mat-label>
+                    <input matInput type="text" [(ngModel)]="query" (keyup.enter)="searchRecipe()">
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="query=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <button mat-icon-button (click)="searchRecipe()"><mat-icon>search</mat-icon></button>
+
+                <div *ngIf="results" class="preview-list">
+                    <app-recipe-select-item *ngFor="let item of results" [recipe]="item"
+                                            (selectEvent)="select(item)"></app-recipe-select-item>
+                </div>
+            </div>
+            <div *ngIf="!editRecipeMode">
+                <app-recipe-select-item [recipe]="selectedRecipeSummary"
+                                        (selectEvent)="toggleEditRecipeMode()"></app-recipe-select-item>
+            </div>
+            <mat-form-field class="mealplan-form-field field-servings" appearance="fill">
+                <mat-label>Servings</mat-label>
+                <input matInput min="1" type="number" [formControl]="servingsControl">
+            </mat-form-field>
+
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-icon-button (click)="save()" *ngIf="selectedRecipeSummary">
+            <mat-icon>save</mat-icon>
         </button>
-      </mat-form-field>
-
-      <div *ngIf="results" class="preview-list">
-        <app-recipe-select-item *ngFor="let item of results" [recipe]="item" (selectEvent)="select(item)"></app-recipe-select-item>
-      </div>
-
-      <mat-form-field class="mealplan-form-field field-servings" appearance="fill">
-        <mat-label>Servings</mat-label>
-        <input matInput  min="1" type="number" [formControl]="servingsControl">
-      </mat-form-field>
-
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <ng-container *ngIf="recipesControl.value && true && recipesControl.value?.picture_file_name">
-      <div *ngIf="recipesControl.value && recipesControl.value?.picture_file_name" class="mealplan-card-image-container"
-           [ngStyle]="{'background-image': 'url(' + getFileUrl(recipesControl.value?.picture_file_name) + ')'}"></div>
-    </ng-container>
-
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-icon-button (click)="save()"><mat-icon>save</mat-icon></button>
-    <button mat-icon-button (click)="cancel()"><mat-icon>cancel</mat-icon></button>
-  </mat-card-actions>
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-card-actions>
 </mat-card>
